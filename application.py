@@ -74,7 +74,7 @@ class SmartGrid():
     def play(self):
         # Print dictionary of bateries
         #for i in self.batteries:
-            print(self.batteries[i])
+        #    print(self.batteries[i])
 
         # Print dictionary of houses
         #for i in self.houses:

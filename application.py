@@ -59,22 +59,11 @@ class SmartGrid():
             for line in infile:
                 # Filter chars out of line
                 line = line.replace('[', '').replace(']', '').replace(',', '').replace('\t\t', ' ').replace('\t', ' ').replace('\n', '')
-                firstspaceFound = False
-                firstSpace = None
-                secondSpace = None
-                # Go over index of line
-                for i in range(len(line)):
-                    # Check for space and save index
-                    if (line[i] == ' '):
-                        if (firstspaceFound == False):
-                            firstSpace = i
-                            firstspaceFound = True
-                        if (firstspaceFound == True):
-                            secondSpace = i
+                line = line.split(' ')
                 # Set values for battery
-                xpos = int(line[:firstSpace])
-                ypos = int(line[firstSpace+1:secondSpace])
-                capacity = float(line[secondSpace+1:])
+                xpos = int(line[0])
+                ypos = int(line[1])
+                capacity = float(line[2])
                 # Create battery object and put in dict with id as key
                 battery = Battery(id, xpos, ypos, capacity)
                 batteries[id] = battery
@@ -85,7 +74,7 @@ class SmartGrid():
     def play(self):
         # Print dictionary of bateries
         #for i in self.batteries:
-        #    print(self.batteries[i])
+            print(self.batteries[i])
 
         # Print dictionary of houses
         #for i in self.houses:

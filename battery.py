@@ -13,5 +13,4 @@ class Battery(object):
         self.capacity = capacity
 
     def __str__(self):
-        return f"{self.xpos} {self.ypos} {self.output}"
-        
+        return f"BatteryId {self.id} (xpos: {self.xpos}, ypos: {self.ypos}, capcity: {self.capacity})"

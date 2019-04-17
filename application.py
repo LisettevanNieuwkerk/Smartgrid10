@@ -148,7 +148,7 @@ class SmartGrid():
             writer.writerows(connections)
 
             writer = csv.writer(csvFile, delimiter=',')
-            writer.writerow([f'total distance: {total_distance}, costs grid: {costs_grid}, costs batteries: {costs_batteries } total costs: {total_costs}'])
+            writer.writerow(['total distance: ' + str(total_distance), 'costs grid:' + str(costs_grid), 'costs batteries:' + str(costs_batteries), 'total costs:' + str(total_costs), ''])
 
 
 if __name__ == "__main__":

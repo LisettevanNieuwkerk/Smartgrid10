@@ -166,15 +166,15 @@ class SmartGrid():
         total_costs = costs_batteries + costs_grid
 
         # Write results to csv file
-        with open('results_random_algorithm_1.csv', 'w') as csvFile:
-            fields = ['house', 'battery', 'distance', 'max_output_house', 'current_capacity_battery']
-            writer = csv.DictWriter(csvFile, fieldnames=fields)
-            writer.writeheader()
-            writer.writerows(connections)
+        if counter == 150:
+            with open('results_random_algorithm_1.csv', 'w') as csvFile:
+                fields = ['house', 'battery', 'distance', 'max_output_house', 'current_capacity_battery']
+                writer = csv.DictWriter(csvFile, fieldnames=fields)
+                writer.writeheader()
+                writer.writerows(connections)
 
-            writer = csv.writer(csvFile, delimiter=',')
-            writer.writerow(['total distance: ' + str(total_distance), 'costs grid:' + str(costs_grid), 'costs batteries:' + str(costs_batteries), 'total costs:' + str(total_costs), ''])
-
+                writer = csv.writer(csvFile, delimiter=',')
+                writer.writerow(['total distance: ' + str(total_distance), 'costs grid:' + str(costs_grid), 'costs batteries:' + str(costs_batteries), 'total costs:' + str(total_costs), ''])
 
 if __name__ == "__main__":
     smartgrid = SmartGrid(1)

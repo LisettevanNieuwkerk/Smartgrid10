@@ -106,6 +106,9 @@ class SmartGrid():
 
 
     def calculate_costs(self):
+        """
+        Calculates the costs of the distances
+        """
         # Set total distance Grid to 0 and create empty list with connections of houses to batteries
         total_distance = 0
         connections = []
@@ -119,7 +122,7 @@ class SmartGrid():
                 # Pick random battery
                 battery = random.randint(1,5)
                 max_capacity = self.batteries[battery].capacity
-                current_capacity = self.batteries[battery ].currentCapacity
+                current_capacity = self.batteries[battery].currentCapacity
                 possible_capacity = current_capacity + max_output
 
                 # Check if max capacity not yet reached

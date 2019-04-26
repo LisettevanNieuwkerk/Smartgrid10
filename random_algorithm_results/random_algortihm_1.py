@@ -111,6 +111,7 @@ class SmartGrid():
         connections = []
 
         # Iterate over all houses and get max output
+
         for i in range(150):
             house = i + 1
             max_output = self.houses[house].max_output

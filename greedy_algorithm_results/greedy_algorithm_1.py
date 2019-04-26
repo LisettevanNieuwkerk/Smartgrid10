@@ -114,21 +114,37 @@ class SmartGrid():
 
         counter = 0
         
-        # Iterate over all houses and get max output
-        for i in range(150):
-            house = i + 1
-            max_output = self.houses[house].max_output
-                # Iterates over the batteries
-            for battery in self.batteries:
-                max_capacity = self.batteries[battery].capacity
-                current_capacity = self.batteries[battery].currentCapacity
+        for i in range(5):
+            battery = i + 1
+            max_capacity = self.batteries[battery].capacity
+            current_capacity = self.batteries[battery].currentCapacity
+        
+            for house in self.houses:
+                max_output = self.houses[house].max_output
                 needed_capacity = current_capacity + max_output
-                    # Sorts the dict on closest distance to the battery
-                    # Sorteert the dict op kortste afstand naar de batterij dit op het moment wordt behandel
-                    #sorted(self.distances.items(), key=lambda x: x[1][battery], reverse=False)
-                
                 od = OrderedDict(sorted(self.distances.items(), key=lambda x: x[1][battery], reverse=True))
+            
             print(od)
+
+        
+        
+        
+        # # Iterate over all houses and get max output
+        # for i in range(150):
+        #     house = i + 1
+        #     max_output = self.houses[house].max_output
+        #         # Iterates over the batteries
+        #     for battery in self.batteries:
+        #         max_capacity = self.batteries[battery].capacity
+        #         current_capacity = self.batteries[battery].currentCapacity
+        #         needed_capacity = current_capacity + max_output
+        #             # Sorts the dict on closest distance to the battery
+        #             # Sorteert the dict op kortste afstand naar de batterij dit op het moment wordt behandel
+        #             #sorted(self.distances.items(), key=lambda x: x[1][battery], reverse=False)
+                
+                
+        #     print(od)
+        #     print(counter)
                 #Currently prints dict where house 5 is the main house multiple times
  
         

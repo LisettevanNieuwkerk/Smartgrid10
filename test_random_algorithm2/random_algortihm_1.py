@@ -109,22 +109,25 @@ class SmartGrid():
         # Set total distance Grid to 0 and create empty list with connections of houses to batteries
         total_distance = 0
         connections = []
+        current_score = 5500
+        houses_used = 0
 
+        for i in range(1500000000):
         # Iterate over all houses and get max output
 
-        for i in range(150):
-            house = i + 1
-            max_output = self.houses[house].max_output
+            for i in range(150):
+                house = i + 1
+                max_output = self.houses[house].max_output
 
-            while True:
+
                 # Pick random battery
                 battery = random.randint(1,5)
                 max_capacity = self.batteries[battery].capacity
                 current_capacity = self.batteries[battery].currentCapacity
-                possible_capacity = current_capacity + max_output
+                needed_capacity = current_capacity + max_output
 
                 # Check if max capacity not yet reached
-                if possible_capacity <= max_capacity:
+                if needed_capacity <= max_capacity:
                     # Check distance from house to battery and add to total distances
                     distances_house = self.distances[house]
                     distance = distances_house[battery]
@@ -133,8 +136,13 @@ class SmartGrid():
                     self.batteries[battery].currentCapacity += max_output
                     house_to_battery = {'house': house, 'battery': battery, 'distance': distance, 'max_output_house': max_output, 'current_capacity_battery': self.batteries[battery].currentCapacity}
                     connections.append(house_to_battery)
+                    houses_used += 1
                     print(house_to_battery)
+
+                else:
                     break
+            if current_score > total_distance and houses_used == 150:
+                break
 
         # Calculate total costs
         price_grid = 9
@@ -142,7 +150,7 @@ class SmartGrid():
         costs_batteries = 5 * 5000
         total_costs = costs_batteries + costs_grid
 
-        # Write results to csv file
+
         with open('results_random_algorithm_1.csv', 'w') as csvFile:
             fields = ['house', 'battery', 'distance', 'max_output_house', 'current_capacity_battery']
             writer = csv.DictWriter(csvFile, fieldnames=fields)
@@ -151,7 +159,6 @@ class SmartGrid():
 
             writer = csv.writer(csvFile, delimiter=',')
             writer.writerow(['total distance: ' + str(total_distance), 'costs grid:' + str(costs_grid), 'costs batteries:' + str(costs_batteries), 'total costs:' + str(total_costs), ''])
-
 
 if __name__ == "__main__":
     smartgrid = SmartGrid(1)

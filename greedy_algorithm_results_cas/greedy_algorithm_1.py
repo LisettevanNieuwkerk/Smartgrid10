@@ -124,7 +124,7 @@ class SmartGrid():
 
             house = list(od)[0]
             house_number = list(house)[0]
-            print(house)
+            #print(house)
             max_output = self.houses[house_number].max_output
             needed_capacity = current_capacity + max_output
 
@@ -138,14 +138,33 @@ class SmartGrid():
                     'distance': distance, 'max_output_house': max_output, \
                         'current_capacity_battery': self.batteries[battery].currentCapacity}
                 connections.append(house_to_battery)
-                print(house_to_battery)
-                print("TEST", od[0], od[1])
+                #print(house_to_battery)
                 od.pop(0)
-                print("TEST2", od[0], od[1])
                 counter += 1
 
+            else:
+                for i in self.batteries:
+                    battery = i
+                    max_capacity = self.batteries[battery].capacity
+                    current_capacity = self.batteries[battery].currentCapacity
+                    od = sorted(od, key=lambda x: x[1][battery], reverse=False)
 
+                    if needed_capacity <= max_capacity:
+                        distances_house = self.distances[house_number]
+                        distance = distances_house[battery]
+                        total_distance += distance
 
+                        self.batteries[battery].currentCapacity += max_output
+                        house_to_battery = {'house': house, 'battery': battery,\
+                            'distance': distance, 'max_output_house': max_output, \
+                                'current_capacity_battery': self.batteries[battery].currentCapacity}
+                        connections.append(house_to_battery)
+                        #print(house_to_battery)
+                        od.pop(0)
+                        counter += 1
+                        
+        print(counter)
+        print(od)
             # print(od)
 
 

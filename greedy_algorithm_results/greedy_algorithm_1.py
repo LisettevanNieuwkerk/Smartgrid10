@@ -3,6 +3,8 @@ from battery import Battery
 import sys
 import csv
 import random
+import operator
+from collections import OrderedDict
 
 class SmartGrid():
     """
@@ -44,7 +46,6 @@ class SmartGrid():
                 id += 1
 
         return houses
-
 
     def load_batteries(self, filename):
         """
@@ -106,36 +107,67 @@ class SmartGrid():
 
 
     def calculate_costs(self):
-        """
-        Calculates the costs of the distances
-        """
         # Set total distance Grid to 0 and create empty list with connections of houses to batteries
         total_distance = 0
         connections = []
 
-        # Iterate over all houses and get max output
+        counter = 0
+        od = self.distances.items()
+
         for i in range(150):
-            house = i + 1
-            max_output = self.houses[house].max_output
+            battery = (i%5) + 1
+            max_capacity = self.batteries[battery].capacity
+            current_capacity = self.batteries[battery].currentCapacity
+            od = sorted(od, key=lambda x: x[1][battery], reverse=False)
+            #print(od[0])
 
-            while True:
-                # Pick random battery
-                battery = random.randint(1,5)
-                max_capacity = self.batteries[battery].capacity
-                current_capacity = self.batteries[battery].currentCapacity
-                possible_capacity = current_capacity + max_output
+            house = list(od)[0]
+            house_number = list(house)[0]
+            print(house)
+            max_output = self.houses[house_number].max_output
+            needed_capacity = current_capacity + max_output
 
-                # Check if max capacity not yet reached
-                if possible_capacity <= max_capacity:
-                    # Check distance from house to battery and add to total distances
-                    distances_house = self.distances[house]
-                    distance = distances_house[battery]
-                    total_distance += distance
-                    # Add output to current capacity
-                    self.batteries[battery].currentCapacity += max_output
-                    house_to_battery = {'house': house, 'battery': battery, 'distance': distance, 'max_output_house': max_output, 'current_capacity_battery': self.batteries[battery].currentCapacity}
-                    connections.append(house_to_battery)
-                    break
+            if needed_capacity <= max_capacity:
+                distances_house = self.distances[house_number]
+                distance = distances_house[battery]
+                total_distance += distance
+
+                self.batteries[battery].currentCapacity += max_output
+                house_to_battery = {'house': house, 'battery': battery,\
+                    'distance': distance, 'max_output_house': max_output, \
+                        'current_capacity_battery': self.batteries[battery].currentCapacity}
+                connections.append(house_to_battery)
+                print(house_to_battery)
+                print("TEST", od[0], od[1])
+                od.pop(0)
+                print("TEST2", od[0], od[1])
+                counter += 1
+
+
+
+            # print(od)
+
+
+
+
+        # # Iterate over all houses and get max output
+        # for i in range(150):
+        #     house = i + 1
+        #     max_output = self.houses[house].max_output
+        #         # Iterates over the batteries
+        #     for battery in self.batteries:
+        #         max_capacity = self.batteries[battery].capacity
+        #         current_capacity = self.batteries[battery].currentCapacity
+        #         needed_capacity = current_capacity + max_output
+        #             # Sorts the dict on closest distance to the battery
+        #             # Sorteert the dict op kortste afstand naar de batterij dit op het moment wordt behandel
+        #             #sorted(self.distances.items(), key=lambda x: x[1][battery], reverse=False)
+
+
+        #     print(od)
+        #     print(counter)
+                #Currently prints dict where house 5 is the main house multiple times
+
 
         # Calculate total costs
         price_grid = 9
@@ -144,7 +176,7 @@ class SmartGrid():
         total_costs = costs_batteries + costs_grid
 
         # Write results to csv file
-        with open('results_random_algorithm_1.csv', 'w') as csvFile:
+        with open('results_greedy_algorithm_1.csv', 'w') as csvFile:
             fields = ['house', 'battery', 'distance', 'max_output_house', 'current_capacity_battery']
             writer = csv.DictWriter(csvFile, fieldnames=fields)
             writer.writeheader()

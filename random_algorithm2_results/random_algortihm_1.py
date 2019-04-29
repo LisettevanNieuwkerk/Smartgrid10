@@ -106,27 +106,26 @@ class SmartGrid():
 
 
     def calculate_costs(self):
-        """
-        Calculates the costs of the distances
-        """
         # Set total distance Grid to 0 and create empty list with connections of houses to batteries
         total_distance = 0
         connections = []
 
+        counter = 0
         # Iterate over all houses and get max output
         for i in range(150):
             house = i + 1
             max_output = self.houses[house].max_output
+
 
             while True:
                 # Pick random battery
                 battery = random.randint(1,5)
                 max_capacity = self.batteries[battery].capacity
                 current_capacity = self.batteries[battery].currentCapacity
-                possible_capacity = current_capacity + max_output
+                needed_capacity = current_capacity + max_output
 
                 # Check if max capacity not yet reached
-                if possible_capacity <= max_capacity:
+                if needed_capacity <= max_capacity:
                     # Check distance from house to battery and add to total distances
                     distances_house = self.distances[house]
                     distance = distances_house[battery]
@@ -135,8 +134,32 @@ class SmartGrid():
                     self.batteries[battery].currentCapacity += max_output
                     house_to_battery = {'house': house, 'battery': battery, 'distance': distance, 'max_output_house': max_output, 'current_capacity_battery': self.batteries[battery].currentCapacity}
                     connections.append(house_to_battery)
+                    print(house_to_battery)
+                    counter += 1
                     break
 
+                else:
+                    for i in self.batteries:
+                        battery = i
+                        max_capacity = self.batteries[battery].capacity
+                        current_capacity = self.batteries[battery].currentCapacity
+                        needed_capacity = current_capacity + max_output
+
+                        if needed_capacity <= max_capacity:
+                            distances_house = self.distances[house]
+                            distance = distances_house[battery]
+                            total_distance += distance
+                            # Add output to current capacity
+                            self.batteries[battery].currentCapacity += max_output
+                            house_to_battery = {'house': house, 'battery': battery, 'distance': distance, 'max_output_house': max_output, 'current_capacity_battery': self.batteries[battery].currentCapacity}
+                            connections.append(house_to_battery)
+                            print(house_to_battery)
+                            counter += 1
+                            break
+                    break
+
+        print(counter)
+        print(od)
         # Calculate total costs
         price_grid = 9
         costs_grid = price_grid * total_distance

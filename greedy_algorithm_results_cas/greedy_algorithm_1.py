@@ -88,12 +88,12 @@ class SmartGrid():
 
         x_distance = 0
         y_distance = 0
-        distances = {}
+        distances = []
 
         # Iterate over every house
         for house in self.houses:
             # Put dict of house in dict of distances
-            distances[house] = {}
+            distances.append([])
             # Itirate over every battery
             for battery in self.batteries:
                 # Calculate manhattan distance from house to battery
@@ -101,7 +101,7 @@ class SmartGrid():
                 y_distance = abs(self.houses[house].ypos - self.batteries[battery].ypos)
                 manhattan_distance = x_distance + y_distance
                 # Set battery as key in list of house and add distance
-                distances[house][battery] = manhattan_distance
+                distances[house-1].append(manhattan_distance)
 
         # Return dict with all distances
         return distances
@@ -185,7 +185,17 @@ class SmartGrid():
             writer = csv.writer(csvFile, delimiter=',')
             writer.writerow(['total distance: ' + str(total_distance), 'costs grid:' + str(costs_grid), 'costs batteries:' + str(costs_batteries), 'total costs:' + str(total_costs), ''])
 
+    def bound(self):
+        #for i in self.distances:
+        maxim = 0
+        minim = 0
+        for i in range(150):
+            maxim += (max(self.distances[i]))
+            minim += (min(self.distances[i]))
+
+        print("MIN:", minim)
+        print("MAX:", maxim)
 
 if __name__ == "__main__":
     smartgrid = SmartGrid(3)
-    smartgrid.calculate_costs()
+    smartgrid.bound()

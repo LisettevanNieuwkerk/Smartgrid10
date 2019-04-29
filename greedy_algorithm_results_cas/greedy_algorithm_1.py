@@ -162,7 +162,8 @@ class SmartGrid():
                         #print(house_to_battery)
                         od.pop(0)
                         counter += 1
-                        
+            print(current_capacity)
+
         print(counter)
         print(od)
             # print(od)
@@ -207,5 +208,5 @@ class SmartGrid():
 
 
 if __name__ == "__main__":
-    smartgrid = SmartGrid(1)
+    smartgrid = SmartGrid(3)
     smartgrid.calculate_costs()

@@ -1,0 +1,7 @@
+house,battery,distance,max_output_house,current_capacity_battery
+146,1,3,49.16852893,49.16852893
+85,2,1,59.68412189,59.68412189
+65,3,5,59.63813712,59.63813712
+73,4,5,31.97506792,31.97506792
+48,5,6,29.93133051,29.93133051
+total distance: 20,costs grid:180,costs batteries:25000,total costs:25180,

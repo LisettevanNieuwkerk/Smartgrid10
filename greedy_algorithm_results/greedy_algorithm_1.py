@@ -47,7 +47,6 @@ class SmartGrid():
 
         return houses
 
-
     def load_batteries(self, filename):
         """
         Load batteries from filename.

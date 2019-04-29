@@ -159,6 +159,7 @@ class SmartGrid():
                     break
 
         print(counter)
+        print(od)
         # Calculate total costs
         price_grid = 9
         costs_grid = price_grid * total_distance

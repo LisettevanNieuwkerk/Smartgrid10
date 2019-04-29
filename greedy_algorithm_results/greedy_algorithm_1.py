@@ -47,7 +47,6 @@ class SmartGrid():
 
         return houses
 
-
     def load_batteries(self, filename):
         """
         Load batteries from filename.
@@ -115,7 +114,7 @@ class SmartGrid():
         counter = 0
         
 
-
+        # for house in self.houses
         for i in range(5):
             battery = i + 1
             max_capacity = self.batteries[battery].capacity
@@ -131,12 +130,12 @@ class SmartGrid():
                 needed_capacity = current_capacity + max_output
                 
                 if needed_capacity <= max_capacity:
-                    distances_house = self.distances[house]
+                    distances_house = self.distances[house_number]
                     distance = distances_house[battery]
                     total_distance += distance
 
                     self.batteries[battery].currentCapacity += max_output
-                    house_to_battery = {'house': house, 'battery': battery,\
+                    house_to_battery = {'house': house_number, 'battery': battery,\
                         'distance': distance, 'max_output_house': max_output, \
                             'current_capacity_battery': self.batteries[battery].currentCapacity}
                     connections.append(house_to_battery)

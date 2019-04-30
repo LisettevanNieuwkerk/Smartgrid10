@@ -110,19 +110,18 @@ class SmartGrid():
         first_attempt = True
 
         # Run multiple times
-        for j in range(5):
+        for j in range(1000000):
             # Set total distance Grid to 0 and create empty list with connections of houses to batteries
             total_distance = 0
             connections = []
 
             # Empty capacity
-            for battery in self.batteries:   
-                self.batteries[battery].currentCapacity = 0 
+            for battery in self.batteries:
+                self.batteries[battery].currentCapacity = 0
 
             # Iterate over all houses and get max output
             for i in range(150):
                 house = i + 1
-                print(house)
                 max_output = self.houses[house].max_output
                 picked_batteries = []
 
@@ -152,10 +151,7 @@ class SmartGrid():
 
                         # Check if al 5 batteries tried
                         if (len(picked_batteries) == 5):
-                            break      
-
-            print(house_to_battery)
-            print(total_distance)
+                            break
 
             # Only save results when all houses connected
             if house_to_battery['house'] == 150:
@@ -163,9 +159,10 @@ class SmartGrid():
                     highest_score = total_distance
                     first_attempt = False
                 else:
-                    if total_distance > highest_score:
+                    if total_distance < highest_score:
                         highest_score = total_distance
-                print(highest_score)       
+
+        print(highest_score)
 
         return [highest_score, connections]
 
@@ -180,7 +177,7 @@ class SmartGrid():
 
             writer = csv.writer(csvFile, delimiter=',')
             writer.writerow(['total distance: ' + str(total_distance), 'costs grid:' + str(costs_grid), 'costs batteries:' + str(costs_batteries), 'total costs:' + str(total_costs), ''])
- 
+
 
 if __name__ == "__main__":
     smartgrid = SmartGrid(1)
@@ -200,11 +197,3 @@ if __name__ == "__main__":
     smartgrid.write_to_csv(connections, total_distance, costs_grid, costs_batteries, total_costs)
 
     # Convert csv to json for visualisation
-
-
-
-
-
-
-
-

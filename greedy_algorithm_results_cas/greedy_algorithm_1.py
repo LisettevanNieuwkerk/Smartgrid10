@@ -116,7 +116,8 @@ class SmartGrid():
         od = self.distances.items()
 
         for i in range(150):
-            battery = (i%5) + 1
+
+            battery = 1
             max_capacity = self.batteries[battery].capacity
             current_capacity = self.batteries[battery].currentCapacity
             od = sorted(od, key=lambda x: x[1][battery], reverse=False)

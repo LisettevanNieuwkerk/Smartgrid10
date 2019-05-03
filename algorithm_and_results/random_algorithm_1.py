@@ -75,24 +75,17 @@ class SmartGrid():
 
     def distance(self):
         """
-        Create a dictionaty with distances from all houses to all batteries.
+        Create a list with distances from all houses to all batteries.
         """
-        # Print dictionary of bateries
-        #for i in self.batteries:
-        #    print(self.batteries[i])
-
-        # Print dictionary of houses
-        #for i in self.houses:
-        #    print(self.houses[i])
 
         x_distance = 0
         y_distance = 0
-        distances = {}
+        distances = []
 
         # Iterate over every house
         for house in self.houses:
             # Put dict of house in dict of distances
-            distances[house] = {}
+            possibilities = []
             # Itirate over every battery
             for battery in self.batteries:
                 # Calculate manhattan distance from house to battery
@@ -100,15 +93,28 @@ class SmartGrid():
                 y_distance = abs(self.houses[house].ypos - self.batteries[battery].ypos)
                 manhattan_distance = x_distance + y_distance
                 # Set battery as key in list of house and add distance
-                distances[house][battery] = manhattan_distance
+                possibilities.append(manhattan_distance)
+            distances.append(possibilities)
 
         # Return dict with all distances
         return distances
+
+    def bound(self):
+        #for i in self.distances:
+        maxim = 0
+        minim = 0
+        for i in range(150):
+            maxim += (max(self.distances[i]))
+            minim += (min(self.distances[i]))
+
+        print("MIN:", minim)
+        print("MAX:", maxim)
 
 
     def connect_house_to_battery(self):
         highest_score = 0
         first_attempt = True
+        best_connections = None
 
         # Run multiple times
         for j in range(1000000):
@@ -129,6 +135,7 @@ class SmartGrid():
                 while True:
                     # Pick random battery
                     battery = random.randint(1,5)
+                    index_battery = battery - 1
 
                     # Check if already chosen and add to picked list
                     if battery not in picked_batteries:
@@ -141,8 +148,8 @@ class SmartGrid():
                         # Check if max capacity not yet reached
                         if possible_capacity <= max_capacity:
                             # Check distance from house to battery and add to total distances
-                            distances_house = self.distances[house]
-                            distance = distances_house[battery]
+                            distances_house = self.distances[i]
+                            distance = distances_house[index_battery]
                             total_distance += distance
                             # Add output to current capacity
                             self.batteries[battery].currentCapacity += max_output
@@ -152,18 +159,20 @@ class SmartGrid():
 
                         # Check if al 5 batteries tried
                         if (len(picked_batteries) == 5):
-                            break            
+                            break
 
             # Only save results when all houses connected
             if len(connections) == 150:
                 if first_attempt == True:
                     highest_score = total_distance
+                    best_connections = connections
                     first_attempt = False
                 else:
                     if total_distance < highest_score:
                         highest_score = total_distance
+                        best_connections = connections
 
-        return [highest_score, connections]
+        return [highest_score, best_connections]
 
 
     def write_to_csv(self, connections, total_distance, costs_grid, costs_batteries, total_costs):
@@ -179,7 +188,11 @@ class SmartGrid():
 
 
 if __name__ == "__main__":
+    # Load data
     smartgrid = SmartGrid(1)
+
+    # Calculate bounds
+    smartgrid.bound()
 
     # Get connections from batteries to houses and total distance of cables
     distance_connections = smartgrid.connect_house_to_battery()
@@ -194,5 +207,3 @@ if __name__ == "__main__":
 
     # Write results to csv
     smartgrid.write_to_csv(connections, total_distance, costs_grid, costs_batteries, total_costs)
-
-    # Convert csv to json for visualisation

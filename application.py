@@ -223,7 +223,7 @@ class SmartGrid():
 
 if __name__ == "__main__":
     # Load data
-    smartgrid = SmartGrid(3)
+    smartgrid = SmartGrid(1)
 
     # Calculate bounds
     smartgrid.bound()

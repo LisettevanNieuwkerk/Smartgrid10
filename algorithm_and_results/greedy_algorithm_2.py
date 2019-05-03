@@ -172,33 +172,6 @@ class SmartGrid():
         # Check for missing houses
         missing_houses = [value for value in range(1, 150) if value not in attached_houses]
         print(missing_houses)
-        #112 mist
-        #smallest_space = 0
-        #most_space = None
-
-        '''capacity_needed = self.batteries[1].capacity - self.houses[missing_house].max_output
-
-        j = 148
-        for i in range (149):
-            connections[1]
-            bat1 = connections[j].battery
-            curcap1 = self.batteries[bat1].currentCapacity
-            mop1 = connections[j].max_output
-            h = 147
-
-            for i in range (148):
-                bat2 = connections[h].battery
-                curcap2 = self.batteries[bat2].currentCapacity
-                mop2 = connections[h].max_output
-
-                if (mop1 - mop2) >= space_needed:
-                    print(mop1, mop2)
-
-                h = h - 1
-
-            j = j - 1'''
-
-        # switch 1 house from battery 5 to another, house must b
 
         return [total_distance, connections]
 

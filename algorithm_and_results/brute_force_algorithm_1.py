@@ -140,8 +140,8 @@ class SmartGrid():
                     capacity_reached = True
                     break
 
-            #print(f"Current capacity batteries: {self.batteries[1].currentCapacity, self.batteries[2].currentCapacity, self.batteries[3].currentCapacity, self.batteries[4].currentCapacity, self.batteries[5].currentCapacity}")
-            #print(f"Capacity of a battery reached: { capacity_reached }")
+            print(f"Current capacity batteries: {self.batteries[1].currentCapacity, self.batteries[2].currentCapacity, self.batteries[3].currentCapacity, self.batteries[4].currentCapacity, self.batteries[5].currentCapacity}")
+            print(f"Capacity of a battery reached: { capacity_reached }")
 
             # Check if batteries not full
             if capacity_reached == False:
@@ -172,5 +172,5 @@ class SmartGrid():
             writer.writerow(['Shortest of all:' + str(shortest), 'Index: ' +  str(shortest_index)])
 
 if __name__ == "__main__":
-    smartgrid = SmartGrid(1)
+    smartgrid = SmartGrid(2)
     smartgrid.calculate_costs()

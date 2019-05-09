@@ -77,13 +77,6 @@ class SmartGrid():
         """
         Create a dictionaty with distances from all houses to all batteries.
         """
-        # Print dictionary of bateries
-        #for i in self.batteries:
-        #    print(self.batteries[i])
-
-        # Print dictionary of houses
-        #for i in self.houses:
-        #    print(self.houses[i])
 
         x_distance = 0
         y_distance = 0
@@ -113,7 +106,7 @@ class SmartGrid():
         total_distance = 0
         house = 0
         capacity_reached = False
-        shortest_index = None 
+        shortest_index = None
 
         #A = self.distances[0]
         #B = self.distances[1]
@@ -124,7 +117,7 @@ class SmartGrid():
         #for distance in product(A, B, C):
             # List of distances of houses
             #print(f"Distances houses to a battery: { list(distance) }")
-           
+
             # Index of batteries list
             #index = tuple(row.index(elem) for row, elem in zip((self.distances), distance))
             index = tuple(row.index(elem) for row, elem in zip((self.distances), distance))
@@ -133,8 +126,8 @@ class SmartGrid():
 
             # Add capacity to batteries
             # Set capacity all batteries to 0
-            for battery in self.batteries:   
-                self.batteries[battery].currentCapacity = 0 
+            for battery in self.batteries:
+                self.batteries[battery].currentCapacity = 0
 
             house = 0
             for i in list_index:
@@ -142,16 +135,16 @@ class SmartGrid():
                 if self.batteries[i+1].currentCapacity <= self.batteries[i+1].capacity:
                     self.batteries[i+1].currentCapacity += self.houses[house+1].max_output
                     house += 1
-                # If battery full; break loop    
+                # If battery full; break loop
                 else:
                     capacity_reached = True
                     break
-           
-            #print(f"Current capacity batteries: {self.batteries[1].currentCapacity, self.batteries[2].currentCapacity, self.batteries[3].currentCapacity, self.batteries[4].currentCapacity, self.batteries[5].currentCapacity}")      
-            #print(f"Capacity of a battery reached: { capacity_reached }") 
 
-            # Check if batteries not full   
-            if capacity_reached == False:    
+            print(f"Current capacity batteries: {self.batteries[1].currentCapacity, self.batteries[2].currentCapacity, self.batteries[3].currentCapacity, self.batteries[4].currentCapacity, self.batteries[5].currentCapacity}")
+            print(f"Capacity of a battery reached: { capacity_reached }")
+
+            # Check if batteries not full
+            if capacity_reached == False:
                 # Calculate total distance
                 total_distance = sum(distance)
                 #print(f"Total distance: {total_distance}")
@@ -159,25 +152,25 @@ class SmartGrid():
                 if first == True:
                     shortest = total_distance
                     first = False
-                # If not first value, check if total distance smaller than shortest    
-                elif first == False:   
+                # If not first value, check if total distance smaller than shortest
+                elif first == False:
                     if total_distance < shortest:
                         shortest = total_distance
                         shortest_index = list_index
                         print(f"Shortest index: {shortest_index}")
-                        print(f"Shortest: {shortest}")         
+                        print(f"Shortest: {shortest}")
 
         print(f"Shortest of all: {shortest}, index: {shortest_index}")
 
         i = 1
         with open('results_brute_force_algorithm_1.csv', 'w') as csvFile:
-            writer = csv.writer(csvFile, delimiter=',')  
+            writer = csv.writer(csvFile, delimiter=',')
             writer.writerow(['House', 'Battery', 'Distances'])
             for row in shortest_index:
                 writer.writerow([i, (row + 1), self.distances[i - 1][row]])
                 i += 1
-            writer.writerow(['Shortest of all:' + str(shortest), 'Index: ' +  str(shortest_index)])          
+            writer.writerow(['Shortest of all:' + str(shortest), 'Index: ' +  str(shortest_index)])
 
 if __name__ == "__main__":
-    smartgrid = SmartGrid(1)
+    smartgrid = SmartGrid(2)
     smartgrid.calculate_costs()

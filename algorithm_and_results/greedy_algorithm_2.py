@@ -86,28 +86,17 @@ class SmartGrid():
 
         # Iterate over every house
         for house in self.houses:
-<<<<<<< HEAD:application.py
-            # Put dict of house in dict of distances
-            possibilites = []
-            # Itirate over every battery
-=======
             # Create list of possible distances to batteries
             possibilities = []
             # Iterate over every battery
->>>>>>> f4c0887b9ffb6bf6199ea7db7b8f516e87d87d0d:algorithm_and_results/greedy_algorithm_2.py
             for battery in self.batteries:
                 # Calculate manhattan distance from house to battery
                 x_distance = abs(self.houses[house].xpos - self.batteries[battery].xpos)
                 y_distance = abs(self.houses[house].ypos - self.batteries[battery].ypos)
                 manhattan_distance = x_distance + y_distance
                 # Set battery as key in list of house and add distance
-<<<<<<< HEAD:application.py
-                possibilites.append(manhattan_distance)
-            distances.append(possibilites)    
-=======
                 possibilities.append(manhattan_distance)
             distances.append(possibilities)
->>>>>>> f4c0887b9ffb6bf6199ea7db7b8f516e87d87d0d:algorithm_and_results/greedy_algorithm_2.py
 
         # Return list with all distances
         return distances
@@ -221,8 +210,6 @@ class SmartGrid():
 
         return [total_distance, connections]   
 
-<<<<<<< HEAD:application.py
-=======
     def bound(self):
         """Get min and max bound"""
         #Get hightest and lowest distance for every house to battery
@@ -301,18 +288,12 @@ class SmartGrid():
 
 
         return [total_distance, connections]
->>>>>>> f4c0887b9ffb6bf6199ea7db7b8f516e87d87d0d:algorithm_and_results/greedy_algorithm_2.py
 
 
     def write_to_csv(self, connections, total_distance, costs_grid, costs_batteries, total_costs):
         # Write results to csv file
-<<<<<<< HEAD:application.py
-        with open('results_greedy_algorithm_1.csv', 'w') as csvFile:
-            fields = ['house', 'battery', 'distance', 'max_output_house', 'current_capacity_battery']
-=======
         with open('results_greedy_algorithm_2_results_grid3.csv', 'w') as csvFile:
             fields = ['house', 'battery', 'distance', 'max_output_house', 'current_capacity_battery', 'total_distance']
->>>>>>> f4c0887b9ffb6bf6199ea7db7b8f516e87d87d0d:algorithm_and_results/greedy_algorithm_2.py
             writer = csv.DictWriter(csvFile, fieldnames=fields)
             writer.writeheader()
             writer.writerows(connections)
@@ -331,13 +312,8 @@ if __name__ == "__main__":
 
     # Get connections from batteries to houses and total distance of cables
     distance_connections = smartgrid.greedy()
-<<<<<<< HEAD:application.py
-    #distance_connections = smartgrid.hillclimber(distance_connections)
-    
-=======
 
     #distance_connections = smartgrid.hillclimber(distance_connections)
->>>>>>> f4c0887b9ffb6bf6199ea7db7b8f516e87d87d0d:algorithm_and_results/greedy_algorithm_2.py
     total_distance = distance_connections[0]
     connections = distance_connections[1]
 
@@ -349,10 +325,4 @@ if __name__ == "__main__":
     total_costs = costs_batteries + costs_grid
 
     # Write results to csv
-<<<<<<< HEAD:application.py
-    #smartgrid.write_to_csv(connections, total_distance, costs_grid, costs_batteries, total_costs)
-
-    # Convert csv to json for visualisation
-=======
     smartgrid.write_to_csv(connections, total_distance, costs_grid, costs_batteries, total_costs)
->>>>>>> f4c0887b9ffb6bf6199ea7db7b8f516e87d87d0d:algorithm_and_results/greedy_algorithm_2.py

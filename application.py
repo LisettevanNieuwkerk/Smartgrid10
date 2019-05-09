@@ -87,12 +87,12 @@ class SmartGrid():
 
         x_distance = 0
         y_distance = 0
-        distances = {}
+        distances = []
 
         # Iterate over every house
         for house in self.houses:
             # Put dict of house in dict of distances
-            distances[house] = {}
+            possibilites = []
             # Itirate over every battery
             for battery in self.batteries:
                 # Calculate manhattan distance from house to battery
@@ -100,75 +100,126 @@ class SmartGrid():
                 y_distance = abs(self.houses[house].ypos - self.batteries[battery].ypos)
                 manhattan_distance = x_distance + y_distance
                 # Set battery as key in list of house and add distance
-                distances[house][battery] = manhattan_distance
+                possibilites.append(manhattan_distance)
+            distances.append(possibilites)    
 
         # Return dict with all distances
         return distances
 
+    def bound(self):
+        #for i in self.distances:
+        maxim = 0
+        minim = 0
+        for i in range(150):
+            maxim += (max(self.distances[i]))
+            minim += (min(self.distances[i]))
 
-    def connect_house_to_battery(self):
-        highest_score = 0
-        first_attempt = True
+        print("MIN:", minim)
+        print("MAX:", maxim)    
 
-        # Run multiple times
-        for j in range(1000000):
-            # Set total distance Grid to 0 and create empty list with connections of houses to batteries
-            total_distance = 0
-            connections = []
 
-            # Empty capacity
-            for battery in self.batteries:
-                self.batteries[battery].currentCapacity = 0
+    def greedy(self):
+        '''Greedy'''
+         # Set total distance Grid to 0 and create empty list with connections of houses to batteries
+        total_distance = 0
+        connections = []
 
-            # Iterate over all houses and get max output
-            for i in range(150):
-                house = i + 1
-                max_output = self.houses[house].max_output
-                picked_batteries = []
+        counter = 0
+        od = enumerate(self.distances)
 
-                while True:
-                    # Pick random battery
-                    battery = random.randint(1,5)
+        count = 1
+        sort = []
+        sorted_index = []
+        sorted_list = []
 
-                    # Check if already chosen and add to picked list
-                    if battery not in picked_batteries:
-                        picked_batteries.append(battery)
+        # Itirate over every house and distances
+        for house in self.distances:
+            # Sort distances and get sorted index
+            sort = sorted(house)
+            sorted_index = sorted(range(len(house)), key=lambda k: house[k])
 
-                        max_capacity = self.batteries[battery].capacity
-                        current_capacity = self.batteries[battery ].currentCapacity
-                        possible_capacity = current_capacity + max_output
+            # Iterate over every sorted distance and add battery + house
+            battery = 0
+            for distance in sort:
+                index = sorted_index[battery]
+                sorted_list.append([distance, (index + 1), count])
+                battery += 1 
 
-                        # Check if max capacity not yet reached
-                        if possible_capacity <= max_capacity:
-                            # Check distance from house to battery and add to total distances
-                            distances_house = self.distances[house]
-                            distance = distances_house[battery]
-                            total_distance += distance
-                            # Add output to current capacity
-                            self.batteries[battery].currentCapacity += max_output
-                            house_to_battery = {'house': house, 'battery': battery, 'distance': distance, 'max_output_house': max_output, 'current_capacity_battery': self.batteries[battery].currentCapacity}
-                            connections.append(house_to_battery)
-                            break
+            count += 1    
 
-                        # Check if al 5 batteries tried
-                        if (len(picked_batteries) == 5):
-                            break            
+        sorted_list = sorted(sorted_list)
 
-            # Only save results when all houses connected
-            if len(connections) == 150:
-                if first_attempt == True:
-                    highest_score = total_distance
-                    first_attempt = False
-                else:
-                    if total_distance < highest_score:
-                        highest_score = total_distance
+        total_distance = 0
+        attached_houses = []
+        missing_house = 0
+        # Iterate over sorted list
+        for i in sorted_list:
+            # Check if house already attached to a battery
+            if i[2] not in attached_houses:
+                # Get output house
+                house = i[2]
+                output = self.houses[house].max_output
+                # Check if cap battery not yet reached
+                battery = i[1]
+                if (self.batteries[battery].currentCapacity + output) <= self.batteries[battery].capacity:
+                    # Add to cap, total distance and attached houses
+                    self.batteries[battery].currentCapacity += output
+                    distance = i[0]
+                    total_distance += distance
+                    attached_houses.append(house)
+                    house_to_battery = {'house': house, 'battery': battery,
+                    'distance': distance, 'max_output_house': output, 
+                        'current_capacity_battery': self.batteries[battery].currentCapacity, 'total_distance': total_distance}
+                    connections.append(house_to_battery)
+                else:    
+                    missing_house = house
+        print(house)
+        print(total_distance)
+        print(connections)
 
-        return [highest_score, connections]
+    
+        print(self.distances[111])
+        #112 mist   
+        smallest_space = 0    
+        most_space = None
+
+        capacity_needed = self.batteries[1].capacity - self.houses[missing_house].max_output
+
+        j = 148
+        for i in range (149):
+            connections[1]
+            bat1 = connections[j].battery
+            curcap1 = self.batteries[bat1].currentCapacity
+            mop1 = connections[j].max_output
+            h = 147
+            
+            for i in range (148):
+                bat2 = connections[h].battery
+                curcap2 = self.batteries[bat2].currentCapacity
+                mop2 = connections[h].max_output
+                
+                if (mop1 - mop2) >= space_needed:
+                    print(mop1, mop2) 
+                
+                h = h - 1   
+            
+            j = j - 1
+        
+        # switch 1 house from battery 5 to another, house must b
+
+        return [total_distance, connections] 
+
+
+    def hillclimber(self, distance_connections):  
+         
+
+        return [total_distance, connections]   
+
 
 
     def write_to_csv(self, connections, total_distance, costs_grid, costs_batteries, total_costs):
         # Write results to csv file
-        with open('results_random_algorithm_1.csv', 'w') as csvFile:
+        with open('results_greedy_algorithm_1.csv', 'w') as csvFile:
             fields = ['house', 'battery', 'distance', 'max_output_house', 'current_capacity_battery']
             writer = csv.DictWriter(csvFile, fieldnames=fields)
             writer.writeheader()
@@ -178,11 +229,14 @@ class SmartGrid():
             writer.writerow(['total distance: ' + str(total_distance), 'costs grid:' + str(costs_grid), 'costs batteries:' + str(costs_batteries), 'total costs:' + str(total_costs), ''])
 
 
+
 if __name__ == "__main__":
     smartgrid = SmartGrid(1)
 
     # Get connections from batteries to houses and total distance of cables
-    distance_connections = smartgrid.connect_house_to_battery()
+    distance_connections = smartgrid.greedy()
+    #distance_connections = smartgrid.hillclimber(distance_connections)
+    
     total_distance = distance_connections[0]
     connections = distance_connections[1]
 
@@ -193,6 +247,6 @@ if __name__ == "__main__":
     total_costs = costs_batteries + costs_grid
 
     # Write results to csv
-    smartgrid.write_to_csv(connections, total_distance, costs_grid, costs_batteries, total_costs)
+    #smartgrid.write_to_csv(connections, total_distance, costs_grid, costs_batteries, total_costs)
 
     # Convert csv to json for visualisation

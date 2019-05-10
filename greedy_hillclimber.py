@@ -165,8 +165,7 @@ class SmartGrid():
                     total_distance += distance
                     attached_houses.append(house)
                     house_to_battery = {'house': house, 'battery': battery,
-                    'distance': distance, 'max_output_house': max_output,
-                        'current_capacity_battery': self.batteries[battery].currentCapacity, 'total_distance': total_distance}
+                    'distance': distance, 'max_output_house': max_output}
                     connections.append(house_to_battery)
 
         # Check for missing houses
@@ -195,36 +194,83 @@ class SmartGrid():
             space_found = 0
             for connection1 in range(max):
                 last_connection2 = max - 1
-                print(f"1: {last_connection1}")
                 if connections[last_connection1]['battery'] == lowest_bat:
                     houseN1 = connections[last_connection1]['house']
                     max_output1 = connections[last_connection1]['max_output_house']
-                    print(houseN1, max_output1)
+                    battery1 = connections[last_connection1]['battery']
 
                     # Go over all connections that not with lowest_bat
                     for connection2 in range(max):
-
-                        print(f"2: {last_connection2}")
-                        if connections[last_connection2]['battery'] != lowest_bat:
+                        battery2 = connections[last_connection2]['battery']
+                        if battery2 != lowest_bat:
                             houseN2 = connections[last_connection2]['house']
                             max_output2 = connections[last_connection2]['max_output_house']
-                            print(houseN2, max_output2)
                             if max_output2 < max_output1:
-                                #Switch houses from battery
-                                space_found += (max_output1 - max_output2)
-                                print(space_found)
-                                break
+                                print(connections[last_connection1])
+                                print(connections[last_connection2])
+                                print(total_distance)
+
+                                # Check if max capacity not reached with switch
+                                new_cap1 = self.batteries[battery1].currentCapacity - max_output1 + max_output2
+                                new_cap2 = self.batteries[battery2].currentCapacity - max_output2 + max_output1
+                                if new_cap1 <= self.batteries[battery1].capacity or new_cap2 <= self.batteries[battery2].capacity:
+                                    # Switch batteries
+                                    # Adapt current capacity batteries
+                                    self.batteries[battery1].currentCapacity -= max_output1
+                                    self.batteries[battery2].currentCapacity -= max_output2
+
+                                    self.batteries[battery1].currentCapacity += max_output2
+                                    self.batteries[battery2].currentCapacity += max_output1
+
+                                    # Adapt total distance
+                                    distance1 = connections[last_connection1]['distance']
+                                    distance2 = connections[last_connection2]['distance']
+
+                                    total_distance -= (distance1 + distance2)
+
+                                    new_distance1 = self.distances[houseN1 - 1][battery2 - 1]
+                                    new_distance2 = self.distances[houseN2 - 1][battery1 - 1]
+
+                                    total_distance += (new_distance1 + new_distance2)
+
+                                    #Adapt connections
+                                    connections[last_connection1]['battery'] = battery2
+                                    connections[last_connection1]['distance'] = new_distance1
+                                    connections[last_connection2]['battery'] = battery1
+                                    connections[last_connection2]['distance'] = new_distance2
+
+                                    #Calculate space found
+                                    space_found += (max_output1 - max_output2)
+                                    print(f"spacefound:{space_found}")
+
+                                    print(connections[last_connection1])
+                                    print(connections[last_connection2])
+                                    print(total_distance)
+
+                                    break
 
                         last_connection2 -= 1
 
                     # Check if enough space found for last house
                     if space_found >= space_needed:
-                        print(space_found, space_needed)
-                        break
+                        if (space_found + self.batteries[lowest_bat].currentCapacity) <= self.batteries[lowest_bat].capacity:
+                            print(space_found, space_needed)
+                            break
 
                 last_connection1 -= 1
 
             #Place missing house
+            missing_distance = self.distances[house -1][lowest_bat - 1]
+            missing_ouput = self.houses[house].max_output
+            self.batteries[lowest_bat].currentCapacity += missing_ouput
+            total_distance += missing_distance
+            connections.append({'house': house, 'battery': lowest_bat,
+                    'distance': missing_distance, 'max_output_house': missing_ouput}) 
+
+        print(len(connections))
+        print(connections)      
+        for battery in self.batteries:
+            print(self.batteries[battery].currentCapacity)      
 
 
         return [total_distance, connections]
@@ -238,8 +284,8 @@ class SmartGrid():
 
     def write_to_csv(self, connections, total_distance, costs_grid, costs_batteries, total_costs):
         # Write results to csv file
-        with open('results_greedy_algorithm_2_results_grid3.csv', 'w') as csvFile:
-            fields = ['house', 'battery', 'distance', 'max_output_house', 'current_capacity_battery', 'total_distance']
+        with open('results_greedy_algorithm_2_results_grid2.csv', 'w') as csvFile:
+            fields = ['house', 'battery', 'distance', 'max_output_house']
             writer = csv.DictWriter(csvFile, fieldnames=fields)
             writer.writeheader()
             writer.writerows(connections)
@@ -250,7 +296,7 @@ class SmartGrid():
 
 if __name__ == "__main__":
     # Load data
-    smartgrid = SmartGrid(3)
+    smartgrid = SmartGrid(2)
 
     # Calculate bounds
     smartgrid.bound()

@@ -63,9 +63,11 @@ class SmartGrid():
                 line = line.replace('[', '').replace(']', '').replace(',', '').replace('\t\t', ' ').replace('\t', ' ').replace('\n', '')
                 line = line.split(' ')
                 # Set values for battery
-                xpos = int(line[0])
-                ypos = int(line[1])
+                xpos = random.randint(1,50)
+                ypos = random.randint(1,50)
                 capacity = float(line[2])
+
+                print(id, xpos, ypos)
                 # Create battery object and put in dict with id as key
                 battery = Battery(id, xpos, ypos, capacity)
                 batteries[id] = battery
@@ -117,7 +119,7 @@ class SmartGrid():
         best_connections = None
 
         # Run multiple times
-        for j in range(10000):
+        for j in range(2000):
             # Set total distance Grid to 0 and create empty list with connections of houses to batteries
             total_distance = 0
             connections = []
@@ -192,8 +194,7 @@ class SmartGrid():
 
 if __name__ == "__main__":
     # Load data
-    smartgrid = SmartGrid(1)
-
+    smartgrid = SmartGrid(2)
 
 
     # Calculate bounds
@@ -203,6 +204,7 @@ if __name__ == "__main__":
     distance_connections = smartgrid.connect_house_to_battery()
     total_distance = distance_connections[0]
     connections = distance_connections[1]
+    
 
     # Calculate total costs
     price_grid = 9

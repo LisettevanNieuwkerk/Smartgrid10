@@ -47,7 +47,7 @@ class SmartGrid():
         return houses
 
 
-    def load_batteries(self, filename):
+    def load_batteries(self):
         """
         Load batteries from filename.
         Return a dictionairt of 'id': Battery objects.
@@ -58,14 +58,15 @@ class SmartGrid():
         with open(filename, "r") as infile:
             next(infile)
             id = 1
-            for line in infile:
+            for line in range(5):
                 # Filter chars out of line
-                line = line.replace('[', '').replace(']', '').replace(',', '').replace('\t\t', ' ').replace('\t', ' ').replace('\n', '')
-                line = line.split(' ')
+                capacity = 1
                 # Set values for battery
-                xpos = int(line[0])
-                ypos = int(line[1])
+                xpos = random.randint(1,50)
+                ypos = random.randint(1,50)
                 capacity = float(line[2])
+
+                print(id, xpos, ypos)
                 # Create battery object and put in dict with id as key
                 battery = Battery(id, xpos, ypos, capacity)
                 batteries[id] = battery
@@ -177,7 +178,7 @@ class SmartGrid():
 
     def write_to_csv(self, connections, total_distance, costs_grid, costs_batteries, total_costs):
         # Write results to csv file
-        with open('results_random_algorithm_1.csv', 'w') as csvFile:
+        with open('results_battery_placer.csv', 'w') as csvFile:
             fields = ['house', 'battery', 'distance', 'max_output_house', \
                  'current_capacity_battery']
             writer = csv.DictWriter(csvFile, fieldnames=fields)

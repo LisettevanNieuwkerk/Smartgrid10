@@ -170,7 +170,16 @@ class SmartGrid():
 
         # Check for missing houses
         missing_houses = [value for value in range(1, 150) if value not in attached_houses]
-        print(missing_houses)
+        
+
+        return [total_distance, connections, missing_houses]
+
+
+    def hillclimber_houses(self, results):
+        total_distance = results[0]
+        connections = results[1]
+        missing_houses = results[2]
+
         max = 150 - len(missing_houses)
 
         # Find spot for every missing house
@@ -187,7 +196,6 @@ class SmartGrid():
             # Calculate free space needed in lowest battery to place missing house
             missing_output = self.houses[house].max_output
             space_needed = (lowest_cap + missing_output) - self.batteries[lowest_bat].capacity
-            print(f"space needed {space_needed}")
 
             # Iterate over all connections and find connections with lowest_bat
             last_connection1 = max - 1
@@ -206,9 +214,6 @@ class SmartGrid():
                             houseN2 = connections[last_connection2]['house']
                             max_output2 = connections[last_connection2]['max_output_house']
                             if max_output2 < max_output1:
-                                print(connections[last_connection1])
-                                print(connections[last_connection2])
-                                print(total_distance)
 
                                 # Check if max capacity not reached with switch
                                 new_cap1 = self.batteries[battery1].currentCapacity - max_output1 + max_output2
@@ -241,11 +246,6 @@ class SmartGrid():
 
                                     #Calculate space found
                                     space_found += (max_output1 - max_output2)
-                                    print(f"spacefound:{space_found}")
-
-                                    print(connections[last_connection1])
-                                    print(connections[last_connection2])
-                                    print(total_distance)
 
                                     break
 
@@ -254,7 +254,6 @@ class SmartGrid():
                     # Check if enough space found for last house
                     if space_found >= space_needed:
                         if (space_found + self.batteries[lowest_bat].currentCapacity) <= self.batteries[lowest_bat].capacity:
-                            print(space_found, space_needed)
                             break
 
                 last_connection1 -= 1
@@ -267,17 +266,74 @@ class SmartGrid():
             connections.append({'house': house, 'battery': lowest_bat,
                     'distance': missing_distance, 'max_output_house': missing_ouput}) 
 
-        print(len(connections))
-        print(connections)      
-        for battery in self.batteries:
-            print(self.batteries[battery].currentCapacity)      
-
-
         return [total_distance, connections]
 
+    def hillclimber_distance(self, results):
+        total_distance = results[0]
+        connections = results[1]
 
-    def hillclimber(self, distance_connections):
+        for i in range (10):
+            # Iterate over all houses and check if possible to connect to closer battery
+            max = len(connections) 
+            last_connection1 = max - 1 
 
+            for connection1 in range(max):
+                last_connection2 = max - 1 
+                houseN1 = connections[last_connection1]['house']
+                max_output1 = connections[last_connection1]['max_output_house']
+                battery1 = connections[last_connection1]['battery']
+                distance1 = connections[last_connection1]['distance']
+                # Check for connections
+                possible_battery = 1
+                for distance in self.distances[houseN1 - 1]: 
+                    if distance < distance1:
+                        # Go over all houses connected to battery that belongs to smaller distance
+                        for connection2 in range(max):
+                            battery2 = connections[last_connection2]['battery']
+                            if battery2 == possible_battery:
+                                distance2 = connections[last_connection2]['distance']
+                                houseN2 = connections[last_connection2]['house']
+                                max_output2 = connections[last_connection2]['max_output_house']
+
+                                # Check if switch would cause improvement
+                                new_distance1 = distance
+                                new_distance2 = self.distances[houseN2 - 1][battery1 - 1]
+                                if (new_distance1 + new_distance2) < (distance1 + distance2): 
+                                    # Check if max capacity not reached with switch
+                                    new_cap1 = self.batteries[battery1].currentCapacity - max_output1 + max_output2
+                                    new_cap2 = self.batteries[battery2].currentCapacity - max_output2 + max_output1
+                                    if new_cap1 <= self.batteries[battery1].capacity or new_cap2 <= self.batteries[battery2].capacity:
+                                        # Switch batteries
+                                        # Adapt current capacity batteries
+                                        self.batteries[battery1].currentCapacity -= max_output1
+                                        self.batteries[battery2].currentCapacity -= max_output2
+
+                                        self.batteries[battery1].currentCapacity += max_output2
+                                        self.batteries[battery2].currentCapacity += max_output1
+
+                                        # Adapt total distance
+                                        distance1 = connections[last_connection1]['distance']
+                                        distance2 = connections[last_connection2]['distance']
+
+                                        total_distance -= (distance1 + distance2)
+
+                                        new_distance1 = self.distances[houseN1 - 1][battery2 - 1]
+                                        new_distance2 = self.distances[houseN2 - 1][battery1 - 1]
+
+                                        total_distance += (new_distance1 + new_distance2)
+
+                                        #Adapt connections
+                                        connections[last_connection1]['battery'] = battery2
+                                        connections[last_connection1]['distance'] = new_distance1
+                                        connections[last_connection2]['battery'] = battery1
+                                        connections[last_connection2]['distance'] = new_distance2
+
+                    possible_battery += 1        
+                    last_connection2 -= 1
+                last_connection1 -= 1    
+
+            print(len(connections))
+            print(total_distance)
 
         return [total_distance, connections]
 
@@ -296,17 +352,19 @@ class SmartGrid():
 
 if __name__ == "__main__":
     # Load data
-    smartgrid = SmartGrid(2)
+    smartgrid = SmartGrid(3)
 
     # Calculate bounds
     smartgrid.bound()
 
     # Get connections from batteries to houses and total distance of cables
-    distance_connections = smartgrid.greedy()
+    results = smartgrid.greedy()
+    results = smartgrid.hillclimber_houses(results)
+    results = smartgrid.hillclimber_distance(results)
 
     #distance_connections = smartgrid.hillclimber(distance_connections)
-    total_distance = distance_connections[0]
-    connections = distance_connections[1]
+    total_distance = results[0]
+    connections = results[1]
 
 
     # Calculate total costs
@@ -316,4 +374,4 @@ if __name__ == "__main__":
     total_costs = costs_batteries + costs_grid
 
     # Write results to csv
-    smartgrid.write_to_csv(connections, total_distance, costs_grid, costs_batteries, total_costs)
+    #smartgrid.write_to_csv(connections, total_distance, costs_grid, costs_batteries, total_costs)

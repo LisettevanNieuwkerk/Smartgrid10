@@ -47,7 +47,7 @@ class SmartGrid():
         return houses
 
 
-    def load_batteries(self, filename):
+    def load_batteries(self):
         """
         Load batteries from filename.
         Return a dictionairt of 'id': Battery objects.
@@ -58,10 +58,9 @@ class SmartGrid():
         with open(filename, "r") as infile:
             next(infile)
             id = 1
-            for line in infile:
+            for line in range(5):
                 # Filter chars out of line
-                line = line.replace('[', '').replace(']', '').replace(',', '').replace('\t\t', ' ').replace('\t', ' ').replace('\n', '')
-                line = line.split(' ')
+                capacity = 1
                 # Set values for battery
                 xpos = random.randint(1,50)
                 ypos = random.randint(1,50)
@@ -119,7 +118,7 @@ class SmartGrid():
         best_connections = None
 
         # Run multiple times
-        for j in range(1000):
+        for j in range(10000):
             # Set total distance Grid to 0 and create empty list with connections of houses to batteries
             total_distance = 0
             connections = []

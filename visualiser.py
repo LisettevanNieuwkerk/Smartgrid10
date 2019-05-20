@@ -6,6 +6,12 @@ import csv
 import pandas as pd
 import matplotlib.pyplot as plt
 
+import os, sys
+directory = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(os.path.join(directory, "code"))
+sys.path.append(os.path.join(directory, "code", "classes"))
+sys.path.append(os.path.join(directory, "code", "algorithms"))
+
 def load_houses(cor_file):
     """
     Load csv data into pandas
@@ -30,7 +36,7 @@ def cor_bat(cor_bat):
 
     # Cleans data
     battery = battery[['pos', 'cap']]
-    for battery 
+    # for battery 
 
     return battery
 
@@ -118,7 +124,6 @@ def plot_line(runs, distance):
     plots a histogram of the insterted data
     """
     # Forms the histogram
-    #plt.plot(runs, distance, 'k', runs, distance, 'go')
     plt.plot(runs, distance)
 
     # Adds the title and axis names
@@ -163,7 +168,7 @@ if __name__ == '__main__':
     data = load_results('results_random_distance.csv')
     runs = data['Run']
     total_distance = data['Total Distance']
-    # plot_line(runs, total_distance)
+    plot_line(runs, total_distance)
     house = load_houses('wijk1_huizen.csv')
     result = load_results2('random_randomhouses.csv') 
     battery = cor_bat('wijk1_batterijen.txt')

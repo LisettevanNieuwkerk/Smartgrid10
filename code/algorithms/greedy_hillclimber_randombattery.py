@@ -340,15 +340,38 @@ class SmartGrid():
 
         return [total_distance, connections]
 
-    def move_bat(results):
+    def move_bat(self, results):
         """
         Moves the batteries a single space to see if the results improve
         """
         # Moves one space and see if results get better
-        for batteries in total_distance = results[0]
+        total_distance = results[0]
         connections = results[1]
-        x_pos = self.batteries
 
+        # for battery in self.batterties:
+        #     add 1 to x pos
+        #     see if total_distance are less
+        #         if less than break 
+
+        #     else substract 1 from x pos
+        #     see if conncections are less
+        #         if less than break 
+
+        #     else add 1 to y pos
+        #     see if connections are less
+        #         if less than break
+
+        #     else substract 1 from y pos
+        #     see if connections are less
+        #         if less than break
+
+        for i in range (100):
+            random_bat = self.batteries[random.randint(1, 5)]
+            random_choice = random.randint(1, 4)
+            if random_choice is 1:
+                random_bat.x_position
+            
+            
 
 
     def write_to_csv(self, connections, total_distance, costs_grid, costs_batteries, total_costs):

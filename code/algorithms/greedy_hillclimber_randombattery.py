@@ -340,6 +340,16 @@ class SmartGrid():
 
         return [total_distance, connections]
 
+    def move_bat(results):
+        """
+        Moves the batteries a single space to see if the results improve
+        """
+        # Moves one space and see if results get better
+        for batteries in total_distance = results[0]
+        connections = results[1]
+        x_pos = self.batteries
+
+
 
     def write_to_csv(self, connections, total_distance, costs_grid, costs_batteries, total_costs):
         # Write results to csv file

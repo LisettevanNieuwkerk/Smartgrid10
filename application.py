@@ -11,7 +11,6 @@ from battery import Battery
 from brute_force import brute_force
 from random_algorithm import random_solution
 
-
 import sys
 import csv
 import random

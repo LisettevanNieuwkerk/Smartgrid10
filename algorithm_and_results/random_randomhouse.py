@@ -1,5 +1,5 @@
-from house import House
-from battery import Battery
+from data_sctructures/house import House
+from data_sctructures/battery import Battery
 import sys
 import csv
 import random

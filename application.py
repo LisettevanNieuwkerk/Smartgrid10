@@ -10,7 +10,10 @@ from house import House
 from battery import Battery
 from brute_force import brute_force
 from random_algorithm import random_solution
-
+from greedy_hillclimber import greedy
+from greedy_hillclimber import add_missing_houses
+from greedy_hillclimber import hillclimber
+from simulated_annealing import simulated_annealing
 
 import sys
 import csv
@@ -130,37 +133,47 @@ class SmartGrid():
         print("Maximum bound:", maxim)
 
 
-    def write_to_csv(self, algorithm, neighbourhood, connections, total_distance, costs_grid, costs_batteries, total_costs):
+    def write_to_csv(self, position_batteries, algorithm, neighbourhood, connections, total_distance, costs_grid, costs_batteries, total_costs):
         """
         Write results to a csv fil
         """
         # Write connections, total distance and costs to a csv file
-        with open(f'{algorithm}_grid{neighbourhood}.csv', 'w') as csvFile:
+        with open(f'results/{position_batteries}/{algorithm}_grid{neighbourhood}.csv', 'w', newline='') as csvFile:
             fields = ['house', 'battery', 'distance', 'max_output_house']
             writer = csv.DictWriter(csvFile, fieldnames=fields)
             writer.writeheader()
             writer.writerows(connections)
 
             writer = csv.writer(csvFile, delimiter=',')
-            writer.writerow(['total distance: ' + str(total_distance), 'costs grid:' + str(costs_grid), 'costs batteries:' + str(costs_batteries), 'total costs:' + str(total_costs), ''])
+            writer.writerow(['total distance: ' + str(total_distance), 'costs grid:' + str(costs_grid), 'costs batteries:' + str(costs_batteries), 'total costs:' + str(total_costs)])
 
 
 if __name__ == "__main__":
-    # Load data
-    neighbourhood = 1
-    smartgrid = SmartGrid(neighbourhood)
+    # Ask user to choose a neighborhood
+
+    neighbourhood = 3
+    fixed = None
 
     # Calculate bounds
     smartgrid.bound()
 
-    # Ask user which algorithm to use
+    # Ask user for fixed or moveable batteries
     print(f"Hello! Welcome at the application of team Smartgrid10\n\
         How would you like to try to solve the unsolvable problem of the smartgrid?\n\
         With fixed or moveable batteries?")
     while True:
         answer_1 = str(input("Type A for fixed batteries and B for moveable\n"))
-        if answer_1 == 'A' or answer_1 == 'B':
+        if answer_1 == 'A':
+            position_batteries = "Fixed_batteries"
+            fixed = True
             break
+        if answer_1 == 'B':
+            position_batteries = "Moveable_batteries"
+            fixed = False
+            break
+    
+    # Load data
+    smartgrid = SmartGrid(neighbourhood)
     
     if answer_1 == 'A':
         print(f"Which algoritm would you like to use?\n\
@@ -172,22 +185,39 @@ if __name__ == "__main__":
     while True:
         answer_2 = str(input())
         if answer_2 == 'A': 
-            distance_connections = brute_force(smartgrid)
+            results = brute_force(smartgrid)
             algorithm = "brute_force"
             break
         if answer_2 == 'B': 
-            distance_connections = random_solution(smartgrid)
+            results = random_solution(smartgrid)
             algorithm = "random"
             break    
         if answer_2 == 'C': 
-            distance_connections = random_solution(smartgrid)
-            break 
+            results = greedy(smartgrid)
+            results = add_missing_houses(smartgrid, results)
+            results = hillclimber(smartgrid, results)
+            algorithm = "greedy_hillclimber"
+            break
         if answer_2 == 'D': 
-            distance_connections = random_solution(smartgrid)
+            results = random_solution(smartgrid)
+            results = simulated_annealing(smartgrid, results)
+            algorithm = "simulated_annealing"
             break 
 
-    total_distance = distance_connections[0]
-    connections = distance_connections[1]
+    total_distance = results[0]
+    connections = results[1]
+
+    # test
+    '''houses_list = []
+    print(len(connections))
+    print(total_distance)  
+    for battery in smartgrid.batteries:
+        print(smartgrid.batteries[battery].currentCapacity)   
+    for connection in connections:    
+        houses_list.append(connection['house'])  
+    
+    missing_houses = [value for value in range(1, 150) if value not in houses_list]   
+    print(missing_houses)'''
 
     print(f"Total distance: {total_distance}")
 
@@ -199,4 +229,4 @@ if __name__ == "__main__":
     print(f"Total costs: {total_costs}")
 
     # Write results to csv
-    smartgrid.write_to_csv(algorithm, neighbourhood, connections, total_distance, costs_grid, costs_batteries, total_costs)
+    smartgrid.write_to_csv(position_batteries, algorithm, neighbourhood, connections, total_distance, costs_grid, costs_batteries, total_costs)

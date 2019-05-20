@@ -26,15 +26,14 @@ class SmartGrid():
     solve the unsolvable problem of the Smart Grid.
     """
 
-    def __init__(self, neighbourhood_name):
+    def __init__(self, neighbourhood_name, fixed):
         """
         Create houses and batteries for the problem.
         """
         self.houses = self.load_houses(f"data/wijk{neighbourhood_name}_huizen.csv")
-        self.batteries = self.load_batteries(f"data/wijk{neighbourhood_name}_batterijen.txt")
+        self.batteries = self.load_batteries(f"data/wijk{neighbourhood_name}_batterijen.txt", fixed)
         self.distances = self.distance()
-
-
+    
     def load_houses(self, filename):
         """
         Load houses from filename.
@@ -63,7 +62,7 @@ class SmartGrid():
         return houses
 
 
-    def load_batteries(self, filename):
+    def load_batteries(self, filename, fixed):
         """
         Load batteries from filename.
         Return a dictionairt of 'id': Battery objects.
@@ -79,8 +78,13 @@ class SmartGrid():
                 line = line.replace('[', '').replace(']', '').replace(',', '').replace('\t\t', ' ').replace('\t', ' ').replace('\n', '')
                 line = line.split(' ')
                 # Set values for battery
-                x_position = int(line[0])
-                y_position = int(line[1])
+                if fixed == True:
+                    x_position = int(line[0])
+                    y_position = int(line[1])
+                elif fixed == False:
+                    x_position = random.randint(1,50)
+                    y_position = random.randint(1,50)
+                
                 capacity = float(line[2])
                 # Create battery object and put in dict with id as key
                 battery = Battery(id, x_position, y_position, capacity)
@@ -150,55 +154,59 @@ class SmartGrid():
 
 if __name__ == "__main__":
     # Ask user to choose a neighborhood
-
-    neighbourhood = 3
-    fixed = None
-
-    # Calculate bounds
-    smartgrid.bound()
+    print(f"Hello! Welcome at the application of team Smartgrid10\n\
+    Choose a neighborhood for the smartgrid problem\n")
+    
+    while True:
+        neighbourhood = int(input("Type 1, 2 or 3\n"))
+        if neighbourhood == 1 or neighbourhood == 2 or neighbourhood == 3:
+            break    
 
     # Ask user for fixed or moveable batteries
-    print(f"Hello! Welcome at the application of team Smartgrid10\n\
-        How would you like to try to solve the unsolvable problem of the smartgrid?\n\
-        With fixed or moveable batteries?")
+    fixed = None
+    print(f"Should the neighbourhood have fixed or moveable batteries?")
+    
     while True:
-        answer_1 = str(input("Type A for fixed batteries and B for moveable\n"))
-        if answer_1 == 'A':
+        answer = str(input("Type A for fixed batteries and B for moveable batteries\n"))
+        if answer == 'A':
             position_batteries = "Fixed_batteries"
             fixed = True
             break
-        if answer_1 == 'B':
+        if answer == 'B':
             position_batteries = "Moveable_batteries"
             fixed = False
             break
     
     # Load data
-    smartgrid = SmartGrid(neighbourhood)
-    
-    if answer_1 == 'A':
-        print(f"Which algoritm would you like to use?\n\
-            Type A for a brute force algorithm\n\
-            Type B for a random algorithm that will run 10.000 times and saves the best result\n\
-            Type C for a greedy algorithm followed by a hillclimber\n\
-            Type D for a simulated annealing algorithm on a random solution")
+    smartgrid = SmartGrid(neighbourhood, fixed)
+
+    # Calculate bounds
+    smartgrid.bound()
+
+    # Ask user for algorithm
+    print(f"Which algoritm would you like to use?\n\
+        Type A for a brute force algorithm\n\
+        Type B for a random algorithm that will run 10.000 times and saves the best result\n\
+        Type C for a greedy algorithm followed by a hillclimber\n\
+        Type D for a simulated annealing algorithm on a random solution")
 
     while True:
-        answer_2 = str(input())
-        if answer_2 == 'A': 
+        answer = str(input())
+        if answer == 'A': 
             results = brute_force(smartgrid)
             algorithm = "brute_force"
             break
-        if answer_2 == 'B': 
+        if answer == 'B': 
             results = random_solution(smartgrid)
             algorithm = "random"
             break    
-        if answer_2 == 'C': 
+        if answer == 'C': 
             results = greedy(smartgrid)
             results = add_missing_houses(smartgrid, results)
             results = hillclimber(smartgrid, results)
             algorithm = "greedy_hillclimber"
             break
-        if answer_2 == 'D': 
+        if answer == 'D': 
             results = random_solution(smartgrid)
             results = simulated_annealing(smartgrid, results)
             algorithm = "simulated_annealing"
@@ -212,7 +220,7 @@ if __name__ == "__main__":
     print(len(connections))
     print(total_distance)  
     for battery in smartgrid.batteries:
-        print(smartgrid.batteries[battery].currentCapacity)   
+        print(smartgrid.batteries[battery])   
     for connection in connections:    
         houses_list.append(connection['house'])  
     
@@ -229,4 +237,4 @@ if __name__ == "__main__":
     print(f"Total costs: {total_costs}")
 
     # Write results to csv
-    smartgrid.write_to_csv(position_batteries, algorithm, neighbourhood, connections, total_distance, costs_grid, costs_batteries, total_costs)
+    #smartgrid.write_to_csv(position_batteries, algorithm, neighbourhood, connections, total_distance, costs_grid, costs_batteries, total_costs)

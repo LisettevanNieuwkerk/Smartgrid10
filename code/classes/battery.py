@@ -14,4 +14,4 @@ class Battery(object):
         self.currentCapacity = 0
 
     def __str__(self):
-        return f"BatteryId {self.id} (xpos: {self.xpos}, ypos: {self.ypos}, capcity: {self.capacity})"
+        return f"BatteryId {self.id} (xpos: {self.xpos}, ypos: {self.ypos}, capcity: {self.capacity}, current_capacity: {self.currentCapacity})"

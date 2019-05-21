@@ -154,7 +154,7 @@ class SmartGrid():
 
 if __name__ == "__main__":
     # Ask user to choose a neighborhood
-    print(f"Hello! Welcome at the application of team Smartgrid10\n\
+    '''print(f"Hello! Welcome at the application of team Smartgrid10\n\
     Choose a neighborhood for the smartgrid problem\n")
     
     while True:
@@ -175,16 +175,16 @@ if __name__ == "__main__":
         if answer == 'B':
             position_batteries = "Moveable_batteries"
             fixed = False
-            break
+            break'''
     
     # Load data
-    smartgrid = SmartGrid(neighbourhood, fixed)
+    smartgrid = SmartGrid(1, True)
 
     # Calculate bounds
-    smartgrid.bound()
+    #smartgrid.bound()
 
     # Ask user for algorithm
-    print(f"Which algoritm would you like to use?\n\
+    '''print(f"Which algoritm would you like to use?\n\
         Type A for a brute force algorithm\n\
         Type B for a random algorithm that will run 10.000 times and saves the best result\n\
         Type C for a greedy algorithm followed by a hillclimber\n\
@@ -210,13 +210,15 @@ if __name__ == "__main__":
             results = random_solution(smartgrid)
             results = simulated_annealing(smartgrid, results)
             algorithm = "simulated_annealing"
-            break 
+            break '''
 
+    results = random_solution(smartgrid)
+    results = simulated_annealing(smartgrid, results)
     total_distance = results[0]
     connections = results[1]
 
     # test
-    '''houses_list = []
+    houses_list = []
     print(len(connections))
     print(total_distance)  
     for battery in smartgrid.batteries:
@@ -225,7 +227,7 @@ if __name__ == "__main__":
         houses_list.append(connection['house'])  
     
     missing_houses = [value for value in range(1, 150) if value not in houses_list]   
-    print(missing_houses)'''
+    print(missing_houses)
 
     print(f"Total distance: {total_distance}")
 
@@ -234,7 +236,7 @@ if __name__ == "__main__":
     costs_grid = price_grid * total_distance
     costs_batteries = 5 * 5000
     total_costs = costs_batteries + costs_grid
-    print(f"Total costs: {total_costs}")
+    #print(f"Total costs: {total_costs}")
 
     # Write results to csv
     #smartgrid.write_to_csv(position_batteries, algorithm, neighbourhood, connections, total_distance, costs_grid, costs_batteries, total_costs)

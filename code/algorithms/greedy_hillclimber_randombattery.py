@@ -340,15 +340,89 @@ class SmartGrid():
 
         return [total_distance, connections]
 
-    def move_bat(results):
+    def move_bat(self, results):
         """
         Moves the batteries a single space to see if the results improve
         """
         # Moves one space and see if results get better
-        for batteries in total_distance = results[0]
+        total_distance = results[0]
         connections = results[1]
-        x_pos = self.batteries
 
+        # Selects a random battery and choice
+        for i in range (100):
+            random_bat = random.randint(1, 5)
+            random_choice = random.randint(1, 4)
+            
+            # Adds 1 to the x position of the battery
+            if random_choice is 1:
+                # X pos of the battery + 1
+                self.batteries[random_bat].x_position = self.batteries[random_bat].x_position + 1
+                for house in connections:
+                    if house.battery is random_bat:
+                        x_distance = abs(self.houses[house].xpos - self.batteries[random_bat].x_position)
+                        y_distance = abs(self.houses[house].ypos - self.batteries[random_bat].y_position)
+                        manhattan_distance = x_distance + y_distance
+                        total_distance_2 += manhattan_distance
+                    else:
+                        total_distance_2 += house.distance
+                if total_distance_2 => total_distance:
+                    return total_distance_2
+                else:
+                    break
+            
+            # Deducts 1 to the x position of the battery
+            if random_choice is 2:
+                # X pos of the battery - 1
+                self.batteries[random_bat].x_position = self.batteries[random_bat].x_position - 1
+                for house in connections:
+                    if house.battery is random_bat:
+                        x_distance = abs(self.houses[house].xpos - self.batteries[random_bat].x_position)
+                        y_distance = abs(self.houses[house].ypos - self.batteries[random_bat].y_position)
+                        manhattan_distance = x_distance + y_distance
+                        total_distance_2 += manhattan_distance
+                    else:
+                        total_distance_2 += house.distance
+                if total_distance_2 => total_distance:
+                    return total_distance_2
+                else:
+                    break
+
+            # Adds 1 to the y position of the battery    
+            if random_choice is 3:
+                # Y pos of the battery + 1
+                self.batteries[random_bat].y_position = self.batteries[random_bat].y_position + 1
+                for house in connections:
+                    if house.battery is random_bat:
+                        x_distance = abs(self.houses[house].xpos - self.batteries[random_bat].x_position)
+                        y_distance = abs(self.houses[house].ypos - self.batteries[random_bat].y_position)
+                        manhattan_distance = x_distance + y_distance
+                        total_distance_2 += manhattan_distance
+                    else:
+                        total_distance_2 += house.distance
+                if total_distance_2 => total_distance:
+                    return total_distance_2
+                else:
+                    break
+
+            # Deducts 1 to the y position of the battery    
+            if random_choice is 4:
+                # Y pos of the battery - 1
+                self.batteries[random_bat].y_position = self.batteries[random_bat].y_position - 1
+                for house in connections:
+                    if house.battery is random_bat:
+                        x_distance = abs(self.houses[house].xpos - self.batteries[random_bat].x_position)
+                        y_distance = abs(self.houses[house].ypos - self.batteries[random_bat].y_position)
+                        manhattan_distance = x_distance + y_distance
+                        total_distance_2 += manhattan_distance
+                    else:
+                        total_distance_2 += house.distance
+                if total_distance_2 => total_distance:
+                    return total_distance_2
+                else:
+                    break
+
+
+            
 
 
     def write_to_csv(self, connections, total_distance, costs_grid, costs_batteries, total_costs):

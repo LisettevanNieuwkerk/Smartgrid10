@@ -16,7 +16,7 @@ from greedy_hillclimber import hillclimber
 from simulated_annealing import simulated_annealing
 
 import sys
-import csv
+import csv 
 import random
 from contextlib import closing
 

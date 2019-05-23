@@ -14,16 +14,12 @@ def simulated_annealing (self, results):
     T = 2.0
     T_min = 0.00001
     alpha = 0.8
-<<<<<<< HEAD
     j = 0
-=======
-    distances_total = dict()
-
->>>>>>> ea98bb54877b29c9f710f4e57bfbb9c87b40ceb7
     #While temperature is not zero
     while T > T_min:
         i = 1
-        while i <= 1000:
+        while i <= 100:
+            print('afstand', total_distance)
             new_distance = None
             # Find neighbouring solution
             while new_distance == None:
@@ -59,14 +55,8 @@ def simulated_annealing (self, results):
             delta = total_distance - new_distance
             r = random.random()
             if delta >= 0 or (math.exp(delta / T)) > r:
-                if new_distance > total_distance:
-                    print('HOI', new_distance, total_distance)
                 total_distance = new_distance
-<<<<<<< HEAD
 
-=======
-               
->>>>>>> ea98bb54877b29c9f710f4e57bfbb9c87b40ceb7
                 # Switch batteries
                 # Adapt current capacity batteries
                 self.batteries[battery1].currentCapacity -= max_output1
@@ -82,20 +72,12 @@ def simulated_annealing (self, results):
             # print(total_distance)
             if best_result >= total_distance:
                 best_result = total_distance
-<<<<<<< HEAD
                 best_connections = connections
-
+            # print(total_distance)
             i += 1
             j += 1
         T *= alpha
 
     print(f"Eind: {total_distance}")
     print("J-UNIT", j)
-=======
-                best_connections = connections    
-                distances_total[i] = total_distance
-            i += 1    
-        T *= alpha           
-        vis.dict_to_csv(distances_total)
->>>>>>> ea98bb54877b29c9f710f4e57bfbb9c87b40ceb7
     return [total_distance, connections]

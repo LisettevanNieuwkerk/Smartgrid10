@@ -24,7 +24,7 @@ class SmartGrid():
         Create houses and batteries for the problem.
         """
         self.houses = self.load_houses(f"data/wijk{neighbourhood_name}_huizen.csv")
-        self.batteries = self.load_batteries(f"data/wijk{neighbourhood_name}_batterijen.txt", fixed)
+        self.batteries = self.load_batteries(f"data/wijk{neighbourhood_name}_batterijen_lowestbound.txt", fixed)
         self.distances = self.distance()
         self.coordinates = []
 
@@ -43,11 +43,25 @@ class SmartGrid():
         cluster.fit(batterie_locations)
         positions = cluster.cluster_centers_
         positions = np.around(np.abs(positions)).astype(int)
-
+        print(positions)
         # print(positions)
         # print(batterie_locations)
         # print(positions)
+        # test = locatiechecker()
+
         return positions
+
+    def locatiechecker(self):
+        davidmok_leg = True
+        print(davidmok_leg)
+        for house in self.houses:
+            for batterij in self.batteries:
+                if (self.houses[house].xpos == self.batteries[batterij].xpos and self.houses[house].ypos == self.batteries[batterij].ypos):
+                    davidmok_leg = False
+                    print("BATJE:", batterij, "OSSO:", house)
+
+        print(davidmok_leg)
+        return davidmok_leg
 
     def load_batteries_differentbatts(self, filename):
         """
@@ -90,7 +104,7 @@ class SmartGrid():
 
         return batteries
 
-    def load_batteries_kmeans(self, filename, fixed):
+    def load_batteries1(self, filename, fixed):
         """
         Load batteries from filename.
         Return a dictionairt of 'id': Battery objects.
@@ -181,7 +195,6 @@ class SmartGrid():
                 id += 1
 
         return batteries
-
 
     def distance(self):
         """

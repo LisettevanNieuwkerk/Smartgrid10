@@ -80,17 +80,14 @@ if __name__ == "__main__":
             break '''
 
     # RUNT smartgrid en pakt laagste bound etc
-<<<<<<< HEAD
-    bound = 10
-    for i in range(100):
-=======
-    bound = 100000
-    for i in range(10):
->>>>>>> ea98bb54877b29c9f710f4e57bfbb9c87b40ceb7
-        smartgrid = SmartGrid(2, True)
+    bound = 10000
+    for i in range(1):
+        smartgrid = SmartGrid(1, True)
+        checker = smartgrid.locatiechecker()
+        print(checker)
         boundje = smartgrid.bound()
         results = greedy(smartgrid)
-        results = random_solution(smartgrid)
+        results = add_missing_houses(smartgrid, results)
         results = simulated_annealing(smartgrid, results)
 
         if bound > boundje:
@@ -102,18 +99,20 @@ if __name__ == "__main__":
                 xypos.append(smartgrid.batteries[battery].ypos)
                 best_positions.append(xypos)
 
+
     # print(best_positions)
-    # print(best_positions)
+    #print(best_positions)
+
     print("GRIDJE3 - bound:", bound)
 
-    total_distance = results[0]
-    connections = results[1]
-
-    #Visualiser
+    # total_distance = results[0]
+    # connections = results[1]
+    #
+    # #Visualiser
     # data = vis.load_results_runs('results_random_distance.csv')
     # vis.plot_line(data)
-    data = vis.load_results_runs('results_random_distance.csv')
-    vis.plot_line(data)
+    # data = vis.load_results_runs('simuutje.csv')
+    # vis.plot_line(data)
 
     # test
     '''houses_list = []
@@ -127,7 +126,7 @@ if __name__ == "__main__":
     missing_houses = [value for value in range(1, 150) if value not in houses_list]
     print(missing_houses)'''
 
-    print(f"Total distance: {total_distance}")
+    # print(f"Total distance: {total_distance}")
 
     # # Calculate total costs
     # price_grid = 9
@@ -137,4 +136,4 @@ if __name__ == "__main__":
     # #print(f"Total costs: {total_costs}")
 
     # Write results to csv
-    smartgrid.write_to_csv(position_batteries, algorithm, neighbourhood, connections, total_distance, costs_grid, costs_batteries, total_costs)
+    # smartgrid.write_to_csv(position_batteries, algorithm, neighbourhood, connections, total_distance, costs_grid, costs_batteries, total_costs)

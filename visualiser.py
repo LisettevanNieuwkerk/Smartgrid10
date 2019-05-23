@@ -90,7 +90,6 @@ def show_grid(house, result, battery):
 
     plt.show()
 
-
 def load_results_runs(filename):
     """
     Inputs a csv data into panda
@@ -105,31 +104,53 @@ def load_results_runs(filename):
 
     return data
 
-def plot_scatter(runs, costs):
+def load_results_bounds(filename):
+    """
+    Inputs a csv data into panda
+    """
+    # Load the necessary columns from the csv into panda
+    data = pd.read_csv(filename)
+    
+    # Cleans the data
+    data = data[['Minimum', 'Total_distance']]
+    data['Minimum'] = pd.to_numeric(data['Minimum'])
+    data['Total_distance'] = pd.to_numeric(data['Total_distance'])
+    print(data)
+    return data
+
+def plot_scatter(data):
     """
     Plots a scatterplot of the inserted data
     """
+    minimum = data[data.columns[0]]
+    distance = data[data.columns[1]]
+    
+    # print(minimum)
     # Forms the scatterplot
-    plt.scatter(runs, costs)
+    plt.scatter(minimum, distance)
 
     # Adds a title and axis names
-    plt.title('Distance change in runs', fontweight='bold')
-    plt.xlabel('Run')
-    plt.ylabel('Distance')
-    plt.ylim(2000, 6000)
+    plt.title('Minimum vs Total distance', fontweight='bold', fontsize='large')
+    plt.xlabel('Minimun Bound', fontsize='large')
+    plt.gca().invert_xaxis()
+    plt.ylabel('Total Distance', fontsize='large')
     plt.grid(True)
     
     # Actually shows the scatterplot
     plt.show()
 
-def plot_line(runs, distance):
+def plot_line(data):
     """
     plots a histogram of the insterted data
     """
+    runs = data[data.columns[0]]
+    distance = data[data.columns[1]]
+
     # Forms the histogram
     plt.plot(runs, distance)
     
     # Adds the title and axis names
+    # TO DO: Add axis names based on column header
     plt.title('Distance change in runs', fontweight='bold')
     plt.xlabel('Run')
     plt.ylabel('Distance')
@@ -143,7 +164,6 @@ def plot_line(runs, distance):
 
     # Actually shows the histogram
     plt.show()
-
 
 def dict_to_csv(total_distance):
     """

@@ -85,11 +85,12 @@ if __name__ == "__main__":
     total_distance = results[0]
     connections = results[1]
 
-    #Visualiser
-    data = vis.load_results_runs('results_random_distance.csv')
-    runs = data['Run']
-    total_distance = data['Total Distance']
-    vis.plot_line(runs, total_distance)
+    #Visualiser 
+    # data = vis.load_results_runs('results_random_distance.csv')
+    # vis.plot_line(data)
+    bounds = vis.load_results_bounds('bounds_test.csv')
+    vis.plot_scatter(bounds)
+
 
 
     # test

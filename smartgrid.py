@@ -26,8 +26,9 @@ class SmartGrid():
         self.houses = self.load_houses(f"data/wijk{neighbourhood_name}_huizen.csv")
         self.batteries = self.load_batteries(f"data/wijk{neighbourhood_name}_batterijen.txt", fixed)
         self.distances = self.distance()
+        self.coordinates = []
 
-    def kmeans_function(self, filename):
+    def kmeans_function(self):
 
         batterie_locations = []
 
@@ -35,18 +36,20 @@ class SmartGrid():
             house_location = []
             house_location.append(self.houses[house].xpos)
             house_location.append(self.houses[house].ypos)
-            batterie_locations.append(house_location)\
+            batterie_locations.append(house_location)
 
-        x = randint(1,100)
+        x = random.randint(1,10000)
         cluster = KMeans(n_clusters=5, random_state=x)
         cluster.fit(batterie_locations)
         positions = cluster.cluster_centers_
         positions = np.around(np.abs(positions)).astype(int)
 
+        # print(positions)
         # print(batterie_locations)
-        print(positions)
+        # print(positions)
+        return positions
 
-    def load_batteries_final(self, filename):
+    def load_batteries_differentbatts(self, filename):
         """
         Load batteries from filename.
         Return a dictionairt of 'id': Battery objects.
@@ -76,7 +79,7 @@ class SmartGrid():
                 capacity = battery_type[x][1]
                 price = battery_type[x][2]
                 # Create battery object and put in dict with id as key
-                battery = Battery(id, x_position, y_position, capacity, price)
+                battery = Battery(id, x_position, y_position, capacity)
                 batteries[id] = battery
                 id += 1
                 used_capacity += int(battery_type[x][2])
@@ -84,6 +87,39 @@ class SmartGrid():
                 # print(used_capacity)
                 if used_capacity >= 7700:
                     break
+
+        return batteries
+
+    def load_batteries_kmeans(self, filename, fixed):
+        """
+        Load batteries from filename.
+        Return a dictionairt of 'id': Battery objects.
+        """
+        # First we parse all the data we need to create the houses with.
+        # All parsed lines of data are saved to houses_data.
+        batteries = {}
+
+        self.coordinates = self.kmeans_function()
+        # print("TEST!!", self.coordinates)
+
+        with open(filename, "r") as infile:
+            next(infile)
+            id = 1
+            for line in infile:
+                # Filter chars out of line
+                line = line.replace('[', '').replace(']', '').replace(',', '').replace('\t\t', ' ').replace('\t', ' ').replace('\n', '')
+                line = line.split(' ')
+                # Set values for battery
+                x_position = self.coordinates[id-1][0]
+                y_position = self.coordinates[id-1][1]
+                capacity = float(line[2])
+                price = 0
+                # Create battery object and put in dict with id as key
+                battery = Battery(id, x_position, y_position, capacity)
+                batteries[id] = battery
+                id += 1
+                # print(battery)
+
 
         return batteries
 
@@ -131,12 +167,12 @@ class SmartGrid():
                 line = line.replace('[', '').replace(']', '').replace(',', '').replace('\t\t', ' ').replace('\t', ' ').replace('\n', '')
                 line = line.split(' ')
                 # Set values for battery
-                if fixed == True:
-                    x_position = int(line[0])
-                    y_position = int(line[1])
-                elif fixed == False:
-                    x_position = random.randint(1,50)
-                    y_position = random.randint(1,50)
+                # if fixed == True:
+                x_position = int(line[0])
+                y_position = int(line[1])
+                # elif fixed == False:
+                #     x_position = random.randint(1,50)
+                #     y_position = random.randint(1,50)
 
                 capacity = float(line[2])
                 # Create battery object and put in dict with id as key
@@ -186,9 +222,12 @@ class SmartGrid():
             maxim += (max(self.distances[i]))
             minim += (min(self.distances[i]))
 
-        print("Minimum bound:", minim)
-        print("Maximum bound:", maxim)
 
+
+        # print("Minimum bound:", minim)
+        # print("Maximum bound:", maxim)
+
+        return minim
 
     def write_to_csv(self, position_batteries, algorithm, neighbourhood, connections, total_distance, costs_grid, costs_batteries, total_costs):
         """

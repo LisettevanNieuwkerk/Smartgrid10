@@ -45,7 +45,7 @@ if __name__ == "__main__":
             break'''
 
     # Load data
-    smartgrid = SmartGrid(1, True)
+
 
     # Calculate bounds
     #smartgrid.bound()
@@ -79,9 +79,34 @@ if __name__ == "__main__":
             algorithm = "simulated_annealing"
             break '''
 
+<<<<<<< HEAD
+    # RUNT smartgrid en pakt laagste bound etc
+    bound = 100000
+    for i in range(10000):
+    smartgrid = SmartGrid(2, True)
+    bound = smartgrid.bound()
+    results = greedy(smartgrid)
+    results = random_solution(smartgrid)
+    results = simulated_annealing(smartgrid, results)
+
+        if bound > boundje:
+            bound = boundje
+            best_positions = []
+            for battery in smartgrid.batteries:
+                xypos = []
+                xypos.append(smartgrid.batteries[battery].xpos)
+                xypos.append(smartgrid.batteries[battery].ypos)
+                best_positions.append(xypos)
+
+    # print(best_positions)
+    # print(best_positions)
+    print("GRIDJE3 - bound:", bound)
+
+=======
     results = greedy(smartgrid)
     results = add_missing_houses(smartgrid, results)
     results = hillclimber(smartgrid, results)
+>>>>>>> 532235a802f46dffb6f4090deca68f21a468e4f7
     total_distance = results[0]
     connections = results[1]
 
@@ -104,12 +129,12 @@ if __name__ == "__main__":
 
     print(f"Total distance: {total_distance}")
 
-    # Calculate total costs
-    price_grid = 9
-    costs_grid = price_grid * total_distance
-    costs_batteries = 5 * 5000
-    total_costs = costs_batteries + costs_grid
-    #print(f"Total costs: {total_costs}")
+    # # Calculate total costs
+    # price_grid = 9
+    # costs_grid = price_grid * total_distance
+    # costs_batteries = 5 * 5000
+    # total_costs = costs_batteries + costs_grid
+    # #print(f"Total costs: {total_costs}")
 
     # Write results to csv
-    #smartgrid.write_to_csv(position_batteries, algorithm, neighbourhood, connections, total_distance, costs_grid, costs_batteries, total_costs)
+    smartgrid.write_to_csv(position_batteries, algorithm, neighbourhood, connections, total_distance, costs_grid, costs_batteries, total_costs)

@@ -1,0 +1,3 @@
+Powerstar  450  900
+Immerse-II  900  1350
+Immerse-III  1800   1800

@@ -4,12 +4,15 @@ directory = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(directory, "code"))
 sys.path.append(os.path.join(directory, "code", "classes"))
 
+from sklearn.cluster import KMeans
 from house import House
 from battery import Battery
+from contextlib import closing
 import sys
 import csv
 import random
-from contextlib import closing
+import numpy as np
+
 
 class SmartGrid():
     """
@@ -24,6 +27,65 @@ class SmartGrid():
         self.houses = self.load_houses(f"data/wijk{neighbourhood_name}_huizen.csv")
         self.batteries = self.load_batteries(f"data/wijk{neighbourhood_name}_batterijen.txt", fixed)
         self.distances = self.distance()
+
+    def kmeans_function(self, filename):
+
+        coordinates = []
+
+        for house in self.houses:
+            coordinate_house = []
+            coordinate_house.append(self.houses[house].xpos)
+            coordinate_house.append(self.houses[house].ypos)
+            coordinates.append(coordinate_house)\
+
+        cluster = KMeans(n_clusters=5, random_state=2)
+        cluster.fit(coordinates)
+        positions = cluster.cluster_centers_
+        positions = np.around(np.abs(positions)).astype(int)
+
+        # print(coordinates)
+        print(positions)
+
+    def load_batteries_final(self, filename):
+        """
+        Load batteries from filename.
+        Return a dictionairt of 'id': Battery objects.
+        """
+        # First we parse all the data we need to create the houses with.
+        # All parsed lines of data are saved to houses_data.
+        batteries = {}
+        used_capacity = 0
+
+
+        with open(filename, "r") as infile:
+            battery_type = infile.readlines()
+            # print(types[1], types[2], types[3])
+
+            for i in range(3):
+                battery_type[i] = battery_type[i].replace('[', '').replace(']', '').replace(',', '').replace('\t\t', ' ').replace('\t', ' ').replace('\n', '')
+                battery_type[i] = battery_type[i].split('  ')
+                # print(battery_type)
+
+            id = 1
+            while True:
+                x = random.randint(1,3)
+                x = x - 1
+                # Set values for battery
+                x_position = random.randint(1,50)
+                y_position = random.randint(1,50)
+                capacity = battery_type[x][1]
+                price = battery_type[x][2]
+                # Create battery object and put in dict with id as key
+                battery = Battery(id, x_position, y_position, capacity, price)
+                batteries[id] = battery
+                id += 1
+                used_capacity += int(battery_type[x][2])
+                print(battery)
+                # print(used_capacity)
+                if used_capacity >= 7700:
+                    break
+
+        return batteries
 
     def load_houses(self, filename):
         """

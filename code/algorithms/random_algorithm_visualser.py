@@ -6,6 +6,13 @@ import csv
 import random
 from contextlib import closing
 
+directory = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(os.path.join(directory, "code"))
+sys.path.append(os.path.join(directory, "code", "classes"))
+sys.path.append(os.path.join(directory, "code", "algorithms"))
+sys.path.append(os.path.join(directory, "results", "Fixed_batteries"))
+sys.path.append(os.path.join(directory, "data"))
+
 class SmartGrid():
     """
     This is the main Grid class. It contains all necessary attributes and methods to

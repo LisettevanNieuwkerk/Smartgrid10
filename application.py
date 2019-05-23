@@ -13,6 +13,8 @@ from greedy_hillclimber import add_missing_houses
 from greedy_hillclimber import hillclimber
 from simulated_annealing import simulated_annealing
 from smartgrid import SmartGrid
+import visualiser as vis
+
 
 
 if __name__ == "__main__":
@@ -77,9 +79,18 @@ if __name__ == "__main__":
             algorithm = "simulated_annealing"
             break '''
 
-    results = random_solution(smartgrid)
+    results = greedy(smartgrid)
+    results = add_missing_houses(smartgrid, results)
+    results = hillclimber(smartgrid, results)
     total_distance = results[0]
     connections = results[1]
+
+    #Visualiser
+    data = vis.load_results_runs('results_random_distance.csv')
+    runs = data['Run']
+    total_distance = data['Total Distance']
+    vis.plot_line(runs, total_distance)
+
 
     # test
     '''houses_list = []

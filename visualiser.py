@@ -103,13 +103,6 @@ def load_results_runs(filename):
     data['Run'] = pd.to_numeric(data['Run'])
     data['Total Distance'] = pd.to_numeric(data['Total Distance'])
 
-
-    # data = data[['Run', 'Total Distance', 'Costs Grid', 'Costs Batteries', 'Total Costs']]
-    # data['Runs'] = pd.to_numeric(data['Run'])
-    # data['Total Distance'] = pd.to_numeric(data['Total Distance'])
-    # data['Costs Grid'] = pd.to_numeric(data['Costs Grid'])
-    # data['Costs Batteries'] = pd.to_numeric(data['Costs Batteries'])
-    # data['Total Costs'] = pd.to_numeric(data['Total Costs'])
     return data
 
 def plot_scatter(runs, costs):
@@ -135,34 +128,26 @@ def plot_line(runs, distance):
     """
     # Forms the histogram
     plt.plot(runs, distance)
-
+    
     # Adds the title and axis names
     plt.title('Distance change in runs', fontweight='bold')
     plt.xlabel('Run')
     plt.ylabel('Distance')
     plt.xlim(0, len(runs))
-    plt.ylim(min(distance), max(distance))
+    plt.ylim((min(distance) - 10), max(distance))
     plt.grid(True)
+
+    plt.hlines(y=(min(distance)), xmin=0, xmax=(max(runs)), color='r')
+
+    # TO DO: Show Tick as minimum
 
     # Actually shows the histogram
     plt.show()
 
-# def write_to_csv(self, total_distance, costs_grid, costs_batteries, total_costs):
-#     """
-#     Appends result to an existing csv file
-#     """
-#     with open('results_random.csv', 'a') as infile:
-#         fields = ['Total Distance', 'Costs Grid', 'Costs Batteries', 'Total Costs']
-#         writer = csv.DictWriter(infile, fieldnames=fields)
-#         writer.writeheader()
-# 
-#         writer = csv.writer(infile, delimiter=',') 
-#         input = [str(total_distance), str(costs_grid), str(costs_batteries), str(total_costs)]
-#         writer.writerow(input)
 
-def dict_to_csv(self, total_distance):
+def dict_to_csv(total_distance):
     """
-    Appends result to an existing csv file
+    Appends result to an csv file
     """
     with open('results_random_distance.csv', 'w', newline='') as infile:
         fields = ['Run', 'Total Distance']

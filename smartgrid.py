@@ -30,20 +30,25 @@ class SmartGrid():
 
     def kmeans_function(self):
 
-        batterie_locations = []
+        battery_locations = []
 
         for house in self.houses:
             house_location = []
             house_location.append(self.houses[house].xpos)
             house_location.append(self.houses[house].ypos)
-            batterie_locations.append(house_location)
+            battery_locations.append(house_location)
 
         x = random.randint(1,10000)
         cluster = KMeans(n_clusters=5, random_state=x)
-        cluster.fit(batterie_locations)
+        cluster.fit(battery_locations)
         positions = cluster.cluster_centers_
         positions = np.around(np.abs(positions)).astype(int)
         print(positions)
+<<<<<<< HEAD
+=======
+        check = self.checker(positions)
+        print(check)
+>>>>>>> 305525663ff36e919524120db4823e2d4ff2556f
         # print(positions)
         # print(batterie_locations)
         # print(positions)
@@ -104,7 +109,11 @@ class SmartGrid():
 
         return batteries
 
+<<<<<<< HEAD
     def load_batteries1(self, filename, fixed):
+=======
+    def load_batteries(self, filename, fixed):
+>>>>>>> 305525663ff36e919524120db4823e2d4ff2556f
         """
         Load batteries from filename.
         Return a dictionairt of 'id': Battery objects.
@@ -114,7 +123,6 @@ class SmartGrid():
         batteries = {}
 
         self.coordinates = self.kmeans_function()
-        # print("TEST!!", self.coordinates)
 
         with open(filename, "r") as infile:
             next(infile)
@@ -134,9 +142,8 @@ class SmartGrid():
                 id += 1
                 # print(battery)
 
-
         return batteries
-
+                
     def load_houses(self, filename):
         """
         Load houses from filename.
@@ -165,7 +172,7 @@ class SmartGrid():
         return houses
 
 
-    def load_batteries(self, filename, fixed):
+    def load_batteries1(self, filename, fixed):
         """
         Load batteries from filename.
         Return a dictionairt of 'id': Battery objects.
@@ -234,8 +241,6 @@ class SmartGrid():
         for i in range(150):
             maxim += (max(self.distances[i]))
             minim += (min(self.distances[i]))
-
-
 
         # print("Minimum bound:", minim)
         # print("Maximum bound:", maxim)

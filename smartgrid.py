@@ -7,7 +7,6 @@ sys.path.append(os.path.join(directory, "code", "classes"))
 from sklearn.cluster import KMeans
 from house import House
 from battery import Battery
-from contextlib import closing
 import sys
 import csv
 import random
@@ -30,20 +29,21 @@ class SmartGrid():
 
     def kmeans_function(self, filename):
 
-        coordinates = []
+        batterie_locations = []
 
         for house in self.houses:
-            coordinate_house = []
-            coordinate_house.append(self.houses[house].xpos)
-            coordinate_house.append(self.houses[house].ypos)
-            coordinates.append(coordinate_house)\
+            house_location = []
+            house_location.append(self.houses[house].xpos)
+            house_location.append(self.houses[house].ypos)
+            batterie_locations.append(house_location)\
 
-        cluster = KMeans(n_clusters=5, random_state=2)
-        cluster.fit(coordinates)
+        x = randint(1,100)
+        cluster = KMeans(n_clusters=5, random_state=x)
+        cluster.fit(batterie_locations)
         positions = cluster.cluster_centers_
         positions = np.around(np.abs(positions)).astype(int)
 
-        # print(coordinates)
+        # print(batterie_locations)
         print(positions)
 
     def load_batteries_final(self, filename):

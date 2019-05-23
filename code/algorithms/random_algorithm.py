@@ -4,6 +4,8 @@ def random_solution(self):
     highest_score = 0
     first_attempt = True
     best_connections = None
+    distances_total = dict()
+    key = 1
 
     # Run multiple times
     for j in range(1000):
@@ -52,6 +54,11 @@ def random_solution(self):
 
         # Only save results when all houses connected
         if len(connections) == 150:
+            
+            # Adds the distance to a dict with the number of succesful run as its key
+            distances_total[key] = total_distance
+            key += 1
+
             if first_attempt == True:
                 highest_score = total_distance
                 best_connections = connections
@@ -60,7 +67,7 @@ def random_solution(self):
                 if total_distance < highest_score:
                     highest_score = total_distance
                     best_connections = connections
-
+        vis.dict_to_csv(distances_total)
     return [highest_score, best_connections]
 
 

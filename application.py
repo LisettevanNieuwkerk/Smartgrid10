@@ -88,9 +88,6 @@ if __name__ == "__main__":
     #Visualiser 
     # data = vis.load_results_runs('results_random_distance.csv')
     # vis.plot_line(data)
-    bounds = vis.load_results_bounds('bounds_test.csv')
-    vis.plot_scatter(bounds)
-
 
 
     # test

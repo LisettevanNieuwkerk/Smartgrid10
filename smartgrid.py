@@ -30,20 +30,20 @@ class SmartGrid():
 
     def kmeans_function(self):
 
-        batterie_locations = []
+        battery_locations = []
 
         for house in self.houses:
             house_location = []
             house_location.append(self.houses[house].xpos)
             house_location.append(self.houses[house].ypos)
-            batterie_locations.append(house_location)
+            battery_locations.append(house_location)
 
         x = random.randint(1,10000)
         cluster = KMeans(n_clusters=5, random_state=x)
-        cluster.fit(batterie_locations)
+        cluster.fit(battery_locations)
         positions = cluster.cluster_centers_
         positions = np.around(np.abs(positions)).astype(int)
-
+        positions.checker()
         # print(positions)
         # print(batterie_locations)
         # print(positions)
@@ -100,7 +100,6 @@ class SmartGrid():
         batteries = {}
 
         self.coordinates = self.kmeans_function()
-        # print("TEST!!", self.coordinates)
 
         with open(filename, "r") as infile:
             next(infile)
@@ -120,8 +119,27 @@ class SmartGrid():
                 id += 1
                 # print(battery)
 
-
         return batteries
+
+    def checker(self, positions):
+        davidmok_leg=True
+        print("davidmok_leg2222")
+        cor_houses = list()
+        cor_house = list()
+        for house in self.houses:
+            x = self.houses[house].xpos
+            y = self.houses[house].ypos
+            cor_house.append(x, y)
+            cor_houses.append(cor_house)
+        
+        for i in positions:
+            for j in cor_houses:
+                if i == j:
+                    davidmok_leg = False
+            print("davidmok_leg")
+        return davidmok_leg
+                    
+
 
     def load_houses(self, filename):
         """
@@ -221,8 +239,6 @@ class SmartGrid():
         for i in range(150):
             maxim += (max(self.distances[i]))
             minim += (min(self.distances[i]))
-
-
 
         # print("Minimum bound:", minim)
         # print("Maximum bound:", maxim)

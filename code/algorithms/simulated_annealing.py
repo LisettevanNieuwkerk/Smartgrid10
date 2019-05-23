@@ -4,6 +4,9 @@ import random
 import visualiser as vis
 
 def simulated_annealing (self, results):
+    """
+    This is the algorith for simulated annealing
+    """
     total_distance = results[0]
     connections = results[1]
     print(f"Start: {total_distance}")
@@ -11,9 +14,10 @@ def simulated_annealing (self, results):
     best_result = total_distance
     best_connections = connections
 
-    T = 2.0
+    # Cool Schema values
+    T = 3.0
     T_min = 0.00001
-    alpha = 0.8
+    alpha = 0.9
     j = 0
     distances_total = dict()
     key = 1
@@ -21,7 +25,7 @@ def simulated_annealing (self, results):
     #While temperature is not zero
     while T > T_min:
         i = 1
-        while i <= 1000:
+        while i <= 10:
             
             # Adds the distance to a dict with the number of succesful run as its key
             distances_total[key] = total_distance
@@ -62,8 +66,6 @@ def simulated_annealing (self, results):
             delta = total_distance - new_distance
             r = random.random()
             if delta >= 0 or (math.exp(delta / T)) > r:
-                if new_distance > total_distance:
-                    print('HOI', new_distance, total_distance)
                 total_distance = new_distance
                 # Switch batteries
                 # Adapt current capacity batteries
@@ -81,12 +83,14 @@ def simulated_annealing (self, results):
             if best_result >= total_distance:
                 best_result = total_distance
                 best_connections = connections
-
+                
             i += 1
             j += 1
         T *= alpha
 
+    # Saves the dict to a csv
     vis.dict_to_csv(distances_total)
+    
     print(f"Eind: {total_distance}")
     print("J-UNIT", j)
     return [total_distance, connections]

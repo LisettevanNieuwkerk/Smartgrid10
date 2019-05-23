@@ -1,6 +1,15 @@
+"""
+A Random algorithm is performed.
+"""
+
 import random
+import visualiser as vis
+
 
 def random_solution(self):
+    """
+    Random algorithm
+    """
     highest_score = 0
     first_attempt = True
     best_connections = None
@@ -68,7 +77,10 @@ def random_solution(self):
                 if total_distance < highest_score:
                     highest_score = total_distance
                     best_connections = connections
+        
+        # Saves the dict to a csv  
         vis.dict_to_csv(distances_total)
+
     return [highest_score, best_connections]
 
 

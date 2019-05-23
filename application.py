@@ -96,7 +96,7 @@ if __name__ == "__main__":
                 xypos.append(smartgrid.batteries[battery].xpos)
                 xypos.append(smartgrid.batteries[battery].ypos)
                 best_positions.append(xypos)
-                
+
     print("GRIDJE3 - bound:", bound)
 
     total_distance = results[0]
@@ -130,4 +130,4 @@ if __name__ == "__main__":
     # #print(f"Total costs: {total_costs}")
 
     # Write results to csv
-    smartgrid.write_to_csv(position_batteries, algorithm, neighbourhood, connections, total_distance, costs_grid, costs_batteries, total_costs)
+    # smartgrid.write_to_csv(position_batteries, algorithm, neighbourhood, connections, total_distance, costs_grid, costs_batteries, total_costs)

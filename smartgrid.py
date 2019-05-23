@@ -43,7 +43,9 @@ class SmartGrid():
         cluster.fit(battery_locations)
         positions = cluster.cluster_centers_
         positions = np.around(np.abs(positions)).astype(int)
-        positions.checker()
+        print(positions)
+        check = self.checker(positions)
+        print(check)
         # print(positions)
         # print(batterie_locations)
         # print(positions)
@@ -90,7 +92,7 @@ class SmartGrid():
 
         return batteries
 
-    def load_batteries_kmeans(self, filename, fixed):
+    def load_batteries(self, filename, fixed):
         """
         Load batteries from filename.
         Return a dictionairt of 'id': Battery objects.
@@ -120,27 +122,7 @@ class SmartGrid():
                 # print(battery)
 
         return batteries
-
-    def checker(self, positions):
-        davidmok_leg=True
-        print("davidmok_leg2222")
-        cor_houses = list()
-        cor_house = list()
-        for house in self.houses:
-            x = self.houses[house].xpos
-            y = self.houses[house].ypos
-            cor_house.append(x, y)
-            cor_houses.append(cor_house)
-        
-        for i in positions:
-            for j in cor_houses:
-                if i == j:
-                    davidmok_leg = False
-            print("davidmok_leg")
-        return davidmok_leg
-                    
-
-
+                
     def load_houses(self, filename):
         """
         Load houses from filename.
@@ -169,7 +151,7 @@ class SmartGrid():
         return houses
 
 
-    def load_batteries(self, filename, fixed):
+    def load_batteries1(self, filename, fixed):
         """
         Load batteries from filename.
         Return a dictionairt of 'id': Battery objects.

@@ -5,10 +5,6 @@ import sys
 import csv
 import random
 from contextlib import closing
-<<<<<<< HEAD
-
-=======
->>>>>>> 3206cf8f8e79ef7a78047d44deeff248db068565
 
 class SmartGrid():
     """
@@ -48,17 +44,10 @@ class SmartGrid():
                 # Add house to dict with id as key
                 houses[id] = house
                 id += 1
-<<<<<<< HEAD
-    
-        return houses
-    
-    
-=======
 
         return houses
 
 
->>>>>>> 3206cf8f8e79ef7a78047d44deeff248db068565
     def load_batteries(self, filename):
         """
         Load batteries from filename.
@@ -82,11 +71,6 @@ class SmartGrid():
                 battery = Battery(id, xpos, ypos, capacity)
                 batteries[id] = battery
                 id += 1
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> 3206cf8f8e79ef7a78047d44deeff248db068565
         return batteries
 
     def distance(self):

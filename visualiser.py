@@ -5,12 +5,16 @@ This script visualizes the data obtained from the algorithms
 import csv
 import pandas as pd
 import matplotlib.pyplot as plt
+from house import House
+from battery import Battery
 
 import os, sys
 directory = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(directory, "code"))
 sys.path.append(os.path.join(directory, "code", "classes"))
 sys.path.append(os.path.join(directory, "code", "algorithms"))
+sys.path.append(os.path.join(directory, "results", "Fixed_batteries"))
+sys.path.append(os.path.join(directory, "data"))
 
 def load_houses(cor_file):
     """
@@ -24,23 +28,31 @@ def load_houses(cor_file):
     house['x'] = pd.to_numeric(house['x'])
     house['y'] = pd.to_numeric(house['y'])
     house['max. output'] = pd.to_numeric(house['max. output'])
-
+    
+    # house = 
+    # house = pd.DataFrame.from_dict(cor_file, orient='index')
+    
+    
+    print(house)
     return house
 
-def cor_bat(cor_bat):
+def cor_bat(battery):
     """
     Loads the battery coordinates
     """
     # Load the necessary txt data into panda
-    battery = pd.read_csv(cor_bat, delimiter= '\s+')
-
+    battery = pd.read_csv(cor_bat, sep= '\s+', header=['x_pos', 'y_pos', 'cap'])
+    # battery = battery[['pos', 'cap']]
+    print(battery)
+    # print(battery['pos']).str.replace(']','').values.tolist())
     # Cleans data
-    battery = battery[['pos', 'cap']]
-    # for battery 
-
+  
+    battery = pd.DataFrame(battery['pos'].str.replace(']','').values.tolist(), columns=['x_pos', 'y_pos'])
+    
+    print(battery)
     return battery
 
-def load_results2(results_file):
+def load_results(results_file):
     """
     Loads csv data into pandas
     """
@@ -48,14 +60,14 @@ def load_results2(results_file):
     result = pd.read_csv(results_file)
 
     #Cleans the data
-    result = result[['house', 'battery', 'distance', 'max_output_house', 'current_capacity_battery']]
+    result = result[['house', 'battery', 'distance', 'max_output_house']]
     
     # Drops the last line which states the totals
     result = result.drop(result.index[150])
     result['house'] = pd.to_numeric(result['house'])
     result['battery'] = pd.to_numeric(result['battery'])
     result['distance'] = pd.to_numeric(result['distance'])
-    
+
     return result
 
 def show_grid(house, result, battery):
@@ -74,14 +86,12 @@ def show_grid(house, result, battery):
 
     # Adds a title and axis names
     plt.title('Position from the houses', fontweight='bold')
-    # plt.xlim(0, 50)
-    # plt.ylim(0, 50)
     plt.grid(True, linewidth = 1)
 
     plt.show()
 
 
-def load_results(filename):
+def load_results_runs(filename):
     """
     Inputs a csv data into panda
     """
@@ -165,12 +175,12 @@ def dict_to_csv(self, total_distance):
             writer.writerow([key, value])
 
 if __name__ == '__main__':
-    data = load_results('results_random_distance.csv')
+    data = load_results_runs('results_random_distance.csv')
     runs = data['Run']
     total_distance = data['Total Distance']
     plot_line(runs, total_distance)
-    house = load_houses('wijk1_huizen.csv')
-    result = load_results2('random_randomhouses.csv') 
-    battery = cor_bat('wijk1_batterijen.txt')
-    show_grid(house, result, battery)
+    # house = load_houses('data/wijk1_huizen.csv')
+    # result = load_results('results/Fixed_batteries/random_grid1.csv') 
+    # battery = cor_bat('data/wijk1_batterijen.txt')
+    # show_grid(house, result, battery)
 

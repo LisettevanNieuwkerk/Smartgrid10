@@ -9,6 +9,7 @@ def random_solution(self):
 
     # Run multiple times
     for j in range(1000):
+        
         # Set total distance Grid to 0 and create empty list with connections of houses to batteries
         total_distance = 0
         connections = []

@@ -80,8 +80,13 @@ if __name__ == "__main__":
             break '''
 
     # RUNT smartgrid en pakt laagste bound etc
+<<<<<<< HEAD
     bound = 10
     for i in range(100):
+=======
+    bound = 100000
+    for i in range(10):
+>>>>>>> ea98bb54877b29c9f710f4e57bfbb9c87b40ceb7
         smartgrid = SmartGrid(2, True)
         boundje = smartgrid.bound()
         results = greedy(smartgrid)
@@ -107,10 +112,8 @@ if __name__ == "__main__":
     #Visualiser
     # data = vis.load_results_runs('results_random_distance.csv')
     # vis.plot_line(data)
-    bounds = vis.load_results_bounds('bounds_test.csv')
-    vis.plot_scatter(bounds)
-
-
+    data = vis.load_results_runs('results_random_distance.csv')
+    vis.plot_line(data)
 
     # test
     '''houses_list = []

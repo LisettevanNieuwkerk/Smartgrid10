@@ -79,15 +79,14 @@ if __name__ == "__main__":
             algorithm = "simulated_annealing"
             break '''
 
-<<<<<<< HEAD
     # RUNT smartgrid en pakt laagste bound etc
     bound = 100000
-    for i in range(10000):
-    smartgrid = SmartGrid(2, True)
-    bound = smartgrid.bound()
-    results = greedy(smartgrid)
-    results = random_solution(smartgrid)
-    results = simulated_annealing(smartgrid, results)
+    for i in range(10):
+        smartgrid = SmartGrid(2, True)
+        boundje = smartgrid.bound()
+        results = greedy(smartgrid)
+        results = random_solution(smartgrid)
+        results = simulated_annealing(smartgrid, results)
 
         if bound > boundje:
             bound = boundje
@@ -102,18 +101,14 @@ if __name__ == "__main__":
     # print(best_positions)
     print("GRIDJE3 - bound:", bound)
 
-=======
-    results = greedy(smartgrid)
-    results = add_missing_houses(smartgrid, results)
-    results = hillclimber(smartgrid, results)
->>>>>>> 532235a802f46dffb6f4090deca68f21a468e4f7
     total_distance = results[0]
     connections = results[1]
 
     #Visualiser 
     # data = vis.load_results_runs('results_random_distance.csv')
     # vis.plot_line(data)
-
+    data = vis.load_results_runs('results_random_distance.csv')
+    vis.plot_line(data)
 
     # test
     '''houses_list = []

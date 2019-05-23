@@ -1,6 +1,7 @@
 import math
 import decimal
 import random
+import visualiser as vis
 
 def simulated_annealing (self, results):
     total_distance = results[0]
@@ -13,7 +14,8 @@ def simulated_annealing (self, results):
     T = 2.0
     T_min = 0.00001
     alpha = 0.8
-    
+    distances_total = dict()
+
     #While temperature is not zero
     while T > T_min:
         i = 1
@@ -54,7 +56,7 @@ def simulated_annealing (self, results):
             r = random.random()
             if delta >= 0 or (math.exp(delta / T)) > r:
                 total_distance = new_distance
-                
+               
                 # Switch batteries
                 # Adapt current capacity batteries
                 self.batteries[battery1].currentCapacity -= max_output1
@@ -71,9 +73,9 @@ def simulated_annealing (self, results):
             if best_result >= total_distance:
                 best_result = total_distance
                 best_connections = connections    
-
+                distances_total[i] = total_distance
             i += 1    
         T *= alpha           
-
+        vis.dict_to_csv(distances_total)
     return [total_distance, connections]
 

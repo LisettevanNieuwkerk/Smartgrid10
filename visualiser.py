@@ -183,9 +183,13 @@ def dict_to_csv(total_distance):
         for key, value in input.items():
             writer.writerow([key, value])
 
-if __name__ == '__main__':
-    # house = load_houses('data/wijk1_huizen.csv')
-    # result = load_results('results/Fixed_batteries/random_grid1.csv') 
-    # battery = cor_bat('data/wijk1_batterijen.txt')
-    # show_grid(house, result, battery)
+# if __name__ == '__main__':
+#     data = load_results_runs('results_random_distance.csv')
+#     runs = data['Run']
+#     total_distance = data['Total Distance']
+#     plot_line(runs, total_distance)
+#     # house = load_houses('data/wijk1_huizen.csv')
+#     # result = load_results('results/Fixed_batteries/random_grid1.csv') 
+#     # battery = cor_bat('data/wijk1_batterijen.txt')
+#     # show_grid(house, result, battery)
 

@@ -80,8 +80,13 @@ if __name__ == "__main__":
             break '''
 
     # RUNT smartgrid en pakt laagste bound etc
+<<<<<<< HEAD
+    bound = 10
+    for i in range(100):
+=======
     bound = 100000
     for i in range(10):
+>>>>>>> ea98bb54877b29c9f710f4e57bfbb9c87b40ceb7
         smartgrid = SmartGrid(2, True)
         boundje = smartgrid.bound()
         results = greedy(smartgrid)
@@ -104,7 +109,7 @@ if __name__ == "__main__":
     total_distance = results[0]
     connections = results[1]
 
-    #Visualiser 
+    #Visualiser
     # data = vis.load_results_runs('results_random_distance.csv')
     # vis.plot_line(data)
     data = vis.load_results_runs('results_random_distance.csv')

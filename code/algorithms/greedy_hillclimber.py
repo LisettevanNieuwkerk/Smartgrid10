@@ -1,6 +1,8 @@
 '''A Greedy algorithm is performed, followed by a algorithm that adds the last missing houses to connections. 
 At last a hillclimber will be performed to improve the result'''
 
+import visualiser as vis
+
 def greedy(self):
     '''Greedy algorithm'''
     # Set initial calues
@@ -154,6 +156,10 @@ def add_missing_houses(self, results):
 def hillclimber(self, results):
     total_distance = results[0]
     connections = results[1]
+    
+    # Adds every run with value to a dict
+    distances_total = dict()
+    key = 1
 
     for i in range(10): 
         # Iterate over all houses and check if possible to connect to closer battery
@@ -185,7 +191,7 @@ def hillclimber(self, results):
                             # Check if switch would cause improvement
                             new_distance1 = distance
                             new_distance2 = self.distances[houseN2 - 1][battery1 - 1]
-                            if (new_distance1 + new_distance2) < (distance1 + distance2):
+                            if (new_distance1 + new_distance2) <= (distance1 + distance2):
                                 # Check if max capacity not reached with switch
                                 new_cap1 = self.batteries[battery1].currentCapacity - max_output1 + max_output2
                                 new_cap2 = self.batteries[battery2].currentCapacity - max_output2 + max_output1
@@ -201,6 +207,10 @@ def hillclimber(self, results):
                                     # Adapt total distance
                                     total_distance -= (distance1 + distance2)
                                     total_distance += (new_distance1 + new_distance2)
+                                    
+                                    # Adds every distance to a dict with the run number as id
+                                    distances_total[key] = total_distance
+                                    key += 1
 
                                     #Adapt connections
                                     connections[last_connection1]['battery'] = battery2
@@ -215,7 +225,7 @@ def hillclimber(self, results):
                         break                    
                 possible_battery += 1        
             last_connection1 -= 1    
-
+        vis.dict_to_csv(distances_total)
     return [total_distance, connections]
 
 

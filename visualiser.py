@@ -90,7 +90,6 @@ def show_grid(house, result, battery):
 
     plt.show()
 
-
 def load_results_runs(filename):
     """
     Inputs a csv data into panda
@@ -103,66 +102,72 @@ def load_results_runs(filename):
     data['Run'] = pd.to_numeric(data['Run'])
     data['Total Distance'] = pd.to_numeric(data['Total Distance'])
 
-
-    # data = data[['Run', 'Total Distance', 'Costs Grid', 'Costs Batteries', 'Total Costs']]
-    # data['Runs'] = pd.to_numeric(data['Run'])
-    # data['Total Distance'] = pd.to_numeric(data['Total Distance'])
-    # data['Costs Grid'] = pd.to_numeric(data['Costs Grid'])
-    # data['Costs Batteries'] = pd.to_numeric(data['Costs Batteries'])
-    # data['Total Costs'] = pd.to_numeric(data['Total Costs'])
     return data
 
-def plot_scatter(runs, costs):
+def load_results_bounds(filename):
+    """
+    Inputs a csv data into panda
+    """
+    # Load the necessary columns from the csv into panda
+    data = pd.read_csv(filename)
+    
+    # Cleans the data
+    data = data[['Minimum', 'Total_distance']]
+    data['Minimum'] = pd.to_numeric(data['Minimum'])
+    data['Total_distance'] = pd.to_numeric(data['Total_distance'])
+    print(data)
+    return data
+
+def plot_scatter(data):
     """
     Plots a scatterplot of the inserted data
     """
+    minimum = data[data.columns[0]]
+    distance = data[data.columns[1]]
+    
+    # print(minimum)
     # Forms the scatterplot
-    plt.scatter(runs, costs)
+    plt.scatter(minimum, distance)
 
     # Adds a title and axis names
-    plt.title('Distance change in runs', fontweight='bold')
-    plt.xlabel('Run')
-    plt.ylabel('Distance')
-    plt.ylim(2000, 6000)
+    plt.title('Minimum vs Total distance', fontweight='bold', fontsize='large')
+    plt.xlabel('Minimun Bound', fontsize='large')
+    plt.gca().invert_xaxis()
+    plt.ylabel('Total Distance', fontsize='large')
     plt.grid(True)
     
     # Actually shows the scatterplot
     plt.show()
 
-def plot_line(runs, distance):
+def plot_line(data):
     """
     plots a histogram of the insterted data
     """
+    runs = data[data.columns[0]]
+    distance = data[data.columns[1]]
+
     # Forms the histogram
     plt.plot(runs, distance)
-
+    
     # Adds the title and axis names
+    # TO DO: Add axis names based on column header
     plt.title('Distance change in runs', fontweight='bold')
     plt.xlabel('Run')
     plt.ylabel('Distance')
     plt.xlim(0, len(runs))
-    plt.ylim(min(distance), max(distance))
+    plt.ylim((min(distance) - 10), max(distance))
     plt.grid(True)
+
+    plt.hlines(y=(min(distance)), xmin=0, xmax=(max(runs)), color='r')
+
+    # TO DO: Show Tick as minimum
 
     # Actually shows the histogram
     plt.show()
 
-# def write_to_csv(self, total_distance, costs_grid, costs_batteries, total_costs):
-#     """
-#     Appends result to an existing csv file
-#     """
-#     with open('results_random.csv', 'a') as infile:
-#         fields = ['Total Distance', 'Costs Grid', 'Costs Batteries', 'Total Costs']
-#         writer = csv.DictWriter(infile, fieldnames=fields)
-#         writer.writeheader()
-# 
-#         writer = csv.writer(infile, delimiter=',') 
-#         input = [str(total_distance), str(costs_grid), str(costs_batteries), str(total_costs)]
-#         writer.writerow(input)
-
-def dict_to_csv(self, total_distance):
+def dict_to_csv(total_distance):
     """
-    Appends result to an existing csv file
+    Appends result to an csv file
     """
     with open('results_random_distance.csv', 'w', newline='') as infile:
         fields = ['Run', 'Total Distance']

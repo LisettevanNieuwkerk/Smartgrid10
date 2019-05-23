@@ -13,6 +13,8 @@ from greedy_hillclimber import add_missing_houses
 from greedy_hillclimber import hillclimber
 from simulated_annealing import simulated_annealing
 from smartgrid import SmartGrid
+import visualiser as vis
+
 
 
 if __name__ == "__main__":
@@ -77,6 +79,7 @@ if __name__ == "__main__":
             algorithm = "simulated_annealing"
             break '''
 
+<<<<<<< HEAD
     # RUNT smartgrid en pakt laagste bound etc
     bound = 100000
     for i in range(10000):
@@ -99,8 +102,21 @@ if __name__ == "__main__":
     # print(best_positions)
     print("GRIDJE3 - bound:", bound)
 
+=======
+    results = greedy(smartgrid)
+    results = add_missing_houses(smartgrid, results)
+    results = hillclimber(smartgrid, results)
+>>>>>>> 532235a802f46dffb6f4090deca68f21a468e4f7
     total_distance = results[0]
     connections = results[1]
+
+    #Visualiser 
+    # data = vis.load_results_runs('results_random_distance.csv')
+    # vis.plot_line(data)
+    bounds = vis.load_results_bounds('bounds_test.csv')
+    vis.plot_scatter(bounds)
+
+
 
     # test
     '''houses_list = []

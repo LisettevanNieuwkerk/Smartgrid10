@@ -143,15 +143,26 @@ def plot_scatter(data):
     bounds = vis.load_results_bounds('bounds_test.csv')
     vis.plot_scatter(bounds)
 
-def plot_line(data):
+def plot_line(data, data1, data2):
     """
     plots a histogram of the insterted data
     """
     runs = data[data.columns[0]]
     distance = data[data.columns[1]]
 
+    runs1 = data1[data1.columns[0]]
+    distance1 = data1[data1.columns[1]]
+
+    runs2 = data2[data2.columns[0]]
+    distance2 = data2[data2.columns[1]]
+
+
     # Forms the histogram
-    plt.plot(runs, distance)
+    plt.plot(runs, distance, label="Wijk 1")
+    plt.plot(runs1, distance1, color = 'orange', label="Wijk 2")
+    plt.plot(runs2, distance2, color = 'red', label="Wijk 3")
+    plt.legend(loc='center right')
+
 
     # Adds the title and axis names
     # TO DO: Add axis names based on column header
@@ -159,8 +170,9 @@ def plot_line(data):
     # plt.title('Total Runs and Distance - All houses connected', fontweight='bold')
     plt.xlabel('Iterations')
     plt.ylabel('Total Distance')
-    plt.xlim(0, len(runs))
-    plt.ylim((min(distance) - 10), max(distance))
+    # plt.xlim(0, len(runs))
+    # plt.ylim((min(distance) - 10), max(distance))
+    
     plt.grid(True)
 
     # plt.hlines(y=(min(distance)), xmin=0, xmax=(max(runs)), color='r')
@@ -174,7 +186,7 @@ def dict_to_csv(total_distance):
     """
     Appends result to an csv file
     """
-    with open('results_GH3_distance.csv', 'w', newline='') as infile:
+    with open('results_GH2_distance.csv', 'w', newline='') as infile:
         fields = ['Run', 'Total Distance']
         writer = csv.DictWriter(infile, fieldnames=fields)
         writer.writeheader()

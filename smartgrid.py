@@ -24,7 +24,7 @@ class SmartGrid():
         Create houses and batteries for the problem.
         """
         self.houses = self.load_houses(f"data/wijk{neighbourhood_name}_huizen.csv")
-        self.batteries = self.load_batteries(f"data/wijk{neighbourhood_name}_batterijen_lowestbound.txt", fixed)
+        self.batteries = self.load_batteries(f"data/wijk{neighbourhood_name}_batterijen.txt", fixed)
         self.distances = self.distance()
         self.coordinates = []
 

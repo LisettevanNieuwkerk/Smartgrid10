@@ -79,9 +79,25 @@ if __name__ == "__main__":
             algorithm = "simulated_annealing"
             break '''
 
+    
+    # Random
+    # smartgrid = SmartGrid(1, True)
+    # results = random_solution(smartgrid)
+    # algorithm = "random"
+
+    # # Greedy-Hillclimber
+    # smartgrid = SmartGrid(1, True)
+    # results = greedy(smartgrid)
+    # results = add_missing_houses(smartgrid, results)
+    # results = hillclimber(smartgrid, results)
+    # algorithm = "greedy_hillclimber"
+
     smartgrid = SmartGrid(1, True)
     results = random_solution(smartgrid)
-    algorithm = "random"
+    results = simulated_annealing(smartgrid, results)
+    algorithm = "simulated_annealing"
+
+
     # Visualiser
     data = vis.load_results_runs('results_random_distance.csv')
     vis.plot_line(data)

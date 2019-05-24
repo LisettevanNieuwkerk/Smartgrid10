@@ -16,6 +16,7 @@ De meeste Python scripts staan in de folder Code. De smartgrid.py file en de app
 
 ----------------------------------------------------------------------------------
 <b>Test (Testing)</b>
+
 Om de code te draaien voer je in de terminal het volgende in:
 
 python3 application.py
@@ -30,4 +31,5 @@ Lisette van Nieuwkerk, David Mokken & Casper Lammers
 
 Dankwoord (Acknowledgments):
 Het wereldwijde web
+
 Okke & Quinten & Daan 

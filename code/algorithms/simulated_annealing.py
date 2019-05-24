@@ -88,6 +88,6 @@ def simulated_annealing (self, results):
         T *= alpha
 
     # Saves the dict to a csv
-    vis.dict_to_csv(distances_total)
+    #vis.dict_to_csv(distances_total)
 
     return [total_distance, connections]

@@ -126,11 +126,7 @@ if __name__ == "__main__":
     data = vis.load_results_runs(f'results/visualisatie/results_{algorithm}_distance.csv')
     vis.plot_line(data, algorithm)
 
-    # Plots a comparison for the different neighbourhoods
-    # data = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
-    # data1 = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
-    # data2 = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
-    # vis.plot_comparison(data, data1, data2, algorithm)
+
 
     total_distance = results[0]
     connections = results[1]

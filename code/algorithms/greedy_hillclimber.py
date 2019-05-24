@@ -67,6 +67,10 @@ def greedy(self):
 
 
 def add_missing_houses(self, results):
+    """
+    Add missing houses to list of connection
+    """
+    # Set values
     total_distance = results[0]
     connections = results[1]
     missing_houses = results[2]
@@ -158,7 +162,12 @@ def add_missing_houses(self, results):
 
     return [total_distance, connections]
 
-def hillclimber(self, results):
+
+def hillclimber_determined(self, results):
+    """
+    Deterministic hillclimber to improve result on greedy
+    """
+
     total_distance = results[0]
     connections = results[1]
 
@@ -233,8 +242,8 @@ def hillclimber(self, results):
                         break
                 possible_battery += 1
             last_connection1 -= 1
-        # vis.dict_to_csv(distances_total)
-        print(total_distance)
+
         # Saves the dict to a csv
         vis.dict_to_csv(distances_total)
+
     return [total_distance, connections]

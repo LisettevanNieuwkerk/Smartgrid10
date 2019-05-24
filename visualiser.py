@@ -150,43 +150,76 @@ def plot_line(data, data1, data2):
     runs = data[data.columns[0]]
     distance = data[data.columns[1]]
 
+    # Forms the histogram
+    plt.plot(runs, distance)
+    plt.legend(loc='top right')
+
+    # Adds the title and axis names
+    # TO DO: Add axis names based on column header/ Seperate title for different Algorithm
+    plt.title('Simulated Annealing Algorithm', fontweight='bold')
+    plt.xlabel('Iterations')
+    plt.ylabel('Total Distance')
+    plt.xlim(0, len(runs))
+    plt.ylim((min(distance) - 10), max(distance))
+    
+    # Shows Grid
+    plt.grid(True)
+
+    # plt.hlines(y=(min(distance)), xmin=0, xmax=(max(runs)), color='r')
+
+    # TO DO: Show Tick as minimum
+    # Actually shows the histogram
+    plt.show()
+
+def plot_comparison(data, data1, data2):
+    """
+    Plots a comparison of the seperate neighbourhoods
+    """
+    # Loads the different datasets
+    runs = data[data.columns[0]]
+    distance = data[data.columns[1]]
+
     runs1 = data1[data1.columns[0]]
     distance1 = data1[data1.columns[1]]
 
     runs2 = data2[data2.columns[0]]
     distance2 = data2[data2.columns[1]]
 
-
     # Forms the histogram
     plt.plot(runs, distance, label="Wijk 1")
     plt.plot(runs1, distance1, color = 'orange', label="Wijk 2")
     plt.plot(runs2, distance2, color = 'red', label="Wijk 3")
-    plt.legend(loc='center right')
+    plt.legend(loc='top right')
 
+    # Plots the legend
+    plt.legend(loc='top right')
 
     # Adds the title and axis names
-    # TO DO: Add axis names based on column header
-    plt.title('Greedy Hillclimber Algorithm', fontweight='bold')
-    # plt.title('Total Runs and Distance - All houses connected', fontweight='bold')
+    plt.title('Simulated Annealing Algorithm', fontweight='bold')
     plt.xlabel('Iterations')
     plt.ylabel('Total Distance')
-    # plt.xlim(0, len(runs))
-    # plt.ylim((min(distance) - 10), max(distance))
-    
-    plt.grid(True)
-
-    # plt.hlines(y=(min(distance)), xmin=0, xmax=(max(runs)), color='r')
-
-    # TO DO: Show Tick as minimum
 
     # Actually shows the histogram
     plt.show()
+
+def plot_comparison_GHR(data, data1):
+    # Loads the different datasets
+    runs = data[data.columns[0]]
+    distance = data[data.columns[1]]
+
+    runs1 = data1[data1.columns[0]]
+    distance1 = data1[data1.columns[1]]
+
+     # Forms the histogram
+    plt.plot(runs, distance, label="Random")
+    plt.plot(runs1, distance1, color = 'orange', label="Greedy-Hillclimber")
+
 
 def dict_to_csv(total_distance):
     """
     Appends result to an csv file
     """
-    with open('results_GH2_distance.csv', 'w', newline='') as infile:
+    with open('results_SA1_distance.csv', 'w', newline='') as infile:
         fields = ['Run', 'Total Distance']
         writer = csv.DictWriter(infile, fieldnames=fields)
         writer.writeheader()

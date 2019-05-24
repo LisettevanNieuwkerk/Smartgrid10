@@ -99,16 +99,19 @@ if __name__ == "__main__":
     # algorithm = "simulated_annealing"
 
 
-    # Visualiser
-    data = vis.load_results_runs('results_GH1_distance.csv')
-    print(data)
-    data1 = vis.load_results_runs('results_GH2_distance.csv')
-    print(data1)
-    data2 = vis.load_results_runs('results_GH3_distance.csv')
-    print(data2)
-    vis.plot_line(data, data1, data2)
-    # data = vis.load_results_runs('simuutje.csv')
+    # Visualiser --> TO DO: SEPERATE LOADER FOR DIFFERENT ALGORITHMS
+    
+    # Plots a linechart of a single neighbourhood
+    # data = vis.load_results_runs('results_SA1_distance.csv')
     # vis.plot_line(data)
+
+    # Plots a comparison for the different neighbourhoods
+    data = vis.load_results_runs('results_random_distance.csv')
+    data1 = vis.load_results_runs('results_GH1_distance.csv')
+    # data2 = vis.load_results_runs('results_SA3_distance.csv')
+    vis.plot_comparison(data, data1, data2)
+
+
 
     # # RUNT smartgrid en pakt laagste bound etc
     # bound = 10

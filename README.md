@@ -12,7 +12,11 @@ pip install -r requirements.txt
 ----------------------------------------------------------------------------------
 <b>Structuur (Structure)</b>
 
-De meeste Python scripts staan in de folder Code. De smartgrid.py file en de application.py staan in de hoofdmap. De application wordt gerund om alles te laten runnen en de smartgrid.py file dient als 'helperfile'. In de map Data zitten alle input waardes en in de map resultaten worden alle resultaten opgeslagen door de code.
+De meeste Python scripts staan in de folder Code. De smartgrid.py, visualize.py en de application.py staan in de hoofdmap. De application.py wordt gerund om alles te laten runnen en de smartgrid.py file dient als 'helperfile'. De visualize.py genereert de visualisaties. 
+
+In de map Data zitten alle input waardes.
+
+In de map resultaten worden alle resultaten automatisch opgeslagen door de code. In een submap worden de benodigde data voor de visualiaties opgeslagen.
 
 ----------------------------------------------------------------------------------
 <b>Test (Testing)</b>

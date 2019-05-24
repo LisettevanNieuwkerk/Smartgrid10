@@ -85,7 +85,7 @@ if __name__ == "__main__":
     # Ask user for algorithm
     print(f"\nWhich algoritm would you like to use?\n\
         Type A for a brute force algorithm\n\
-        Type B for a random algorithm that will run 1.000 times and saves the best result\n\
+        Type B for a random algorithm that will run 10.000 times and saves the best result\n\
         Type C for a greedy algorithm followed by a hillclimber\n\
         Type D for a hillclimber algorithm on a random solution\n\
         Type E or a simulated annealing algorithm on a random solution")

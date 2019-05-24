@@ -8,7 +8,7 @@ def hillclimber (self, results):
     """
     # initialize the values
     total_distance = results[0]
-    connections = results[1]]
+    connections = results[1]
     distances_total = dict()
     key = 1
 

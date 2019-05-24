@@ -1,12 +1,12 @@
 from itertools import product
 
 def brute_force(self):
-"""
-This is a brute force algorithm, created in the beginning of the project.
-It takes very long for it to generate an answer (but we've tested it on a smaller replicated grid & it worked! (unfortunately these results are lost atm)).
-We haven't used it in our further research,
-but we left in in the repository, as it was a part of our 'exploration' :)!
-"""
+    """
+    This is a brute force algorithm, created in the beginning of the project.
+    It takes very long for it to generate an answer (but we've tested it on a smaller replicated grid & it worked! (unfortunately these results are lost atm)).
+    We haven't used it in our further research,
+    but we left in in the repository, as it was a part of our 'exploration' :)!
+    """
 
     # Set total distance Grid to 0 and create empty list with connections of houses to batteries
     first = True
@@ -64,7 +64,7 @@ but we left in in the repository, as it was a part of our 'exploration' :)!
         connections.append(house_to_battery)
         i += 1
 
-    # Save the shortest generated distance as total distance    
+    # Save the shortest generated distance as total distance
     total_distance = shortest
 
     return [total_distance, connections]

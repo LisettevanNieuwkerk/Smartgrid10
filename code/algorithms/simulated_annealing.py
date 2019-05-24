@@ -15,9 +15,9 @@ def simulated_annealing (self, results):
     best_connections = connections
 
     # Cool Schema values
-    T = 3.0
+    T = 150.0
     T_min = 0.00001
-    alpha = 0.8
+    alpha = 0.9
     j = 0
     distances_total = dict()
     key = 1
@@ -25,7 +25,7 @@ def simulated_annealing (self, results):
     #While temperature is not zero
     while T > T_min:
         i = 1
-        while i <= 10:
+        while i <= 1000:
 
             # Adds the distance to a dict with the number of succesful run as its key
             distances_total[key] = total_distance

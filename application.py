@@ -83,7 +83,7 @@ if __name__ == "__main__":
 
 
     # Ask user for algorithm
-    print(f"Which algoritm would you like to use?\n\
+    print(f"\nWhich algoritm would you like to use?\n\
         Type A for a brute force algorithm\n\
         Type B for a random algorithm that will run 1.000 times and saves the best result\n\
         Type C for a greedy algorithm followed by a hillclimber\n\
@@ -126,7 +126,7 @@ if __name__ == "__main__":
     # Visualiser --> TO DO: SEPERATE LOADER FOR DIFFERENT ALGORITHMS
     # Plots a linechart of a single neighbourhood
 
-    algorithm = "Greedyhillclimber"
+    '''algorithm = "Greedyhillclimber"
     neighbourhood = "1"
     data = vis.load_results_runs('results_'+ algorithm + neighbourhood +'_distance.csv')
     # data = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
@@ -136,7 +136,7 @@ if __name__ == "__main__":
     data = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
     data1 = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
     data2 = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
-    vis.plot_comparison(data, data1, data2, algorithm)
+    vis.plot_comparison(data, data1, data2, algorithm)'''
 
 
     total_distance = results[0]

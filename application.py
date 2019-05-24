@@ -82,6 +82,11 @@ if __name__ == "__main__":
     smartgrid = SmartGrid(1, True)
     results = random_solution(smartgrid)
     algorithm = "random"
+    # Visualiser
+    data = vis.load_results_runs('results_random_distance.csv')
+    vis.plot_line(data)
+    # data = vis.load_results_runs('simuutje.csv')
+    # vis.plot_line(data)
 
     # # RUNT smartgrid en pakt laagste bound etc
     # bound = 10
@@ -103,14 +108,15 @@ if __name__ == "__main__":
 
     # print("GRIDJE3 - bound:", bound)
 
-    total_distance = results[0]
-    connections = results[1]
+    # print(best_positions)
+    #print(best_positions)
 
-    #Visualiser
-    # data = vis.load_results_runs('results_random_distance.csv')
-    # vis.plot_line(data)
-    data = vis.load_results_runs('results_random_distance.csv')
-    vis.plot_line(data)
+    # print("GRIDJE3 - bound:", bound)
+
+    # total_distance = results[0]
+    # connections = results[1]
+    #
+
 
     # test
     '''houses_list = []
@@ -124,7 +130,7 @@ if __name__ == "__main__":
     missing_houses = [value for value in range(1, 150) if value not in houses_list]
     print(missing_houses)'''
 
-    print(f"Total distance: {total_distance}")
+    # print(f"Total distance: {total_distance}")
 
     # # Calculate total costs
     # price_grid = 9

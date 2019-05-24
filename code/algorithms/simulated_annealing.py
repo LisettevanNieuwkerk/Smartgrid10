@@ -90,7 +90,7 @@ def simulated_annealing (self, results):
 
     # Saves the dict to a csv
     vis.dict_to_csv(distances_total)
-    
+
     print(f"Eind: {total_distance}")
     print("J-UNIT", j)
     return [total_distance, connections]

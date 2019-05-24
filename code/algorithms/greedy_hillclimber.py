@@ -61,7 +61,7 @@ def greedy(self):
 
     # Check for missing houses
     missing_houses = [value for value in range(1, 150) if value not in attached_houses]
-    
+
     return [total_distance, connections, missing_houses]
 
 
@@ -153,34 +153,37 @@ def add_missing_houses(self, results):
         self.batteries[lowest_bat].currentCapacity += missing_ouput
         total_distance += missing_distance
         connections.append({'house': house, 'battery': lowest_bat,
-                'distance': missing_distance, 'max_output_house': missing_ouput}) 
+                'distance': missing_distance, 'max_output_house': missing_ouput})
 
     return [total_distance, connections]
 
 def hillclimber(self, results):
     total_distance = results[0]
     connections = results[1]
-    
+
     # Adds every run with value to a dict
     distances_total = dict()
     key = 1
-
-    for i in range(10): 
+    chefke = 1
+    print(total_distance)
+    for i in range(4):
         # Iterate over all houses and check if possible to connect to closer battery
-        max = len(connections) 
-        last_connection1 = max - 1 
+        max = len(connections)
+        last_connection1 = max - 1
 
-        for connection1 in range(max): 
+        for connection1 in range(max):
             switched = False
             houseN1 = connections[last_connection1]['house']
             max_output1 = connections[last_connection1]['max_output_house']
             battery1 = connections[last_connection1]['battery']
             distance1 = connections[last_connection1]['distance']
+            # print(chefke, total_distance)
+            chefke += 1
 
             # Check for connections
             possible_battery = 1
-            for distance in self.distances[houseN1 - 1]: 
-                
+            for distance in self.distances[houseN1 - 1]:
+
                 if distance < distance1:
 
                     last_connection2 = max - 1
@@ -211,7 +214,7 @@ def hillclimber(self, results):
                                     # Adapt total distance
                                     total_distance -= (distance1 + distance2)
                                     total_distance += (new_distance1 + new_distance2)
-                                    
+
                                     # Adds every distance to a dict with the run number as id
                                     distances_total[key] = total_distance
                                     key += 1
@@ -232,6 +235,3 @@ def hillclimber(self, results):
         # Saves the dict to a csv
         vis.dict_to_csv(distances_total)
     return [total_distance, connections]
-
-
- 

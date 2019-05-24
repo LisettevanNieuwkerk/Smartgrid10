@@ -22,17 +22,17 @@ def load_houses(cor_file):
     """
     # Load the necessary columns from the csv into panda
     house = pd.read_csv(cor_file)
-    
+
     # Cleans the data --> need to change x_value to x
     house = house[['x', 'y', 'max. output']]
     house['x'] = pd.to_numeric(house['x'])
     house['y'] = pd.to_numeric(house['y'])
     house['max. output'] = pd.to_numeric(house['max. output'])
-    
-    # house = 
+
+    # house =
     # house = pd.DataFrame.from_dict(cor_file, orient='index')
-    
-    
+
+
     print(house)
     return house
 
@@ -46,9 +46,9 @@ def cor_bat(battery):
     print(battery)
     # print(battery['pos']).str.replace(']','').values.tolist())
     # Cleans data
-  
+
     battery = pd.DataFrame(battery['pos'].str.replace(']','').values.tolist(), columns=['x_pos', 'y_pos'])
-    
+
     print(battery)
     return battery
 
@@ -61,7 +61,7 @@ def load_results(results_file):
 
     #Cleans the data
     result = result[['house', 'battery', 'distance', 'max_output_house']]
-    
+
     # Drops the last line which states the totals
     result = result.drop(result.index[150])
     result['house'] = pd.to_numeric(result['house'])
@@ -110,7 +110,7 @@ def load_results_bounds(filename):
     """
     # Load the necessary columns from the csv into panda
     data = pd.read_csv(filename)
-    
+
     # Cleans the data
     data = data[['Minimum', 'Total_distance']]
     data['Minimum'] = pd.to_numeric(data['Minimum'])
@@ -124,7 +124,7 @@ def plot_scatter(data):
     """
     minimum = data[data.columns[0]]
     distance = data[data.columns[1]]
-    
+
     # print(minimum)
     # Forms the scatterplot
     plt.scatter(minimum, distance)
@@ -135,7 +135,7 @@ def plot_scatter(data):
     plt.gca().invert_xaxis()
     plt.ylabel('Total Distance', fontsize='large')
     plt.grid(True)
-    
+
     # Actually shows the scatterplot
     plt.show()
 
@@ -152,7 +152,7 @@ def plot_line(data):
 
     # Forms the histogram
     plt.plot(runs, distance)
-    
+
     # Adds the title and axis names
     # TO DO: Add axis names based on column header
     plt.title('Distance change in runs', fontweight='bold')
@@ -162,7 +162,7 @@ def plot_line(data):
     plt.ylim((min(distance) - 10), max(distance))
     plt.grid(True)
 
-    plt.hlines(y=(min(distance)), xmin=0, xmax=(max(runs)), color='r')
+    # plt.hlines(y=(min(distance)), xmin=0, xmax=(max(runs)), color='r')
 
     # TO DO: Show Tick as minimum
 
@@ -189,7 +189,6 @@ def dict_to_csv(total_distance):
 #     total_distance = data['Total Distance']
 #     plot_line(runs, total_distance)
 #     # house = load_houses('data/wijk1_huizen.csv')
-#     # result = load_results('results/Fixed_batteries/random_grid1.csv') 
+#     # result = load_results('results/Fixed_batteries/random_grid1.csv')
 #     # battery = cor_bat('data/wijk1_batterijen.txt')
 #     # show_grid(house, result, battery)
-

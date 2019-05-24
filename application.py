@@ -103,27 +103,60 @@ if __name__ == "__main__":
             algorithm = "simulated_annealing"
             break'''
 
-    ''''RUNT smartgrid en pakt laagste bound etc
-    bound = 10000
-    for i in range(1):
-        checker = smartgrid.locatiechecker()
-        print(checker)
-        boundje = smartgrid.bound()
-        results = greedy(smartgrid)
-        results = add_missing_houses(smartgrid, results)
-        results = simulated_annealing(smartgrid, results)
 
-        if bound > boundje:
-            bound = boundje
-            best_positions = []
-            for battery in smartgrid.batteries:
-                xypos = []
-                xypos.append(smartgrid.batteries[battery].xpos)
-                xypos.append(smartgrid.batteries[battery].ypos)
-                best_positions.append(xypos)'''
+    # # Random
+    # smartgrid = SmartGrid(1, True)
+    # results = random_solution(smartgrid)
+    # algorithm = "random"
+
+    # Greedy-Hillclimber
+    # smartgrid = SmartGrid(2, True)
+    # results = greedy(smartgrid)
+    # results = add_missing_houses(smartgrid, results)
+    # results = hillclimber(smartgrid, results)
+    # algorithm = "greedy_hillclimber"
+
+    # # SA
+    # smartgrid = SmartGrid(1, True)
+    # results = random_solution(smartgrid)
+    # results = simulated_annealing(smartgrid, results)
+    # algorithm = "simulated_annealing"
 
 
-    # print(best_positions)
+    # Visualiser --> TO DO: SEPERATE LOADER FOR DIFFERENT ALGORITHMS
+
+    # Plots a linechart of a single neighbourhood
+    # data = vis.load_results_runs('results_SA1_distance.csv')
+    # vis.plot_line(data)
+
+    # Plots a comparison for the different neighbourhoods
+    data = vis.load_results_runs('results_random_distance.csv')
+    data1 = vis.load_results_runs('results_GH1_distance.csv')
+    # data2 = vis.load_results_runs('results_SA3_distance.csv')
+    vis.plot_comparison(data, data1, data2)
+
+
+
+    # # RUNT smartgrid en pakt laagste bound etc
+    # bound = 10
+    # for i in range(1):
+    #     smartgrid = SmartGrid(2, True)
+    #     boundje = smartgrid.bound()
+    #     results = greedy(smartgrid)
+    #     results = random_solution(smartgrid)
+    #     results = simulated_annealing(smartgrid, results)
+
+    #     if bound > boundje:
+    #         bound = boundje
+    #         best_positions = []
+    #         for battery in smartgrid.batteries:
+    #             xypos = []
+    #             xypos.append(smartgrid.batteries[battery].xpos)
+    #             xypos.append(smartgrid.batteries[battery].ypos)
+    #             best_positions.append(xypos)
+
+    # print("GRIDJE3 - bound:", bound)
+
     #print(best_positions)
 
     #print("GRIDJE3 - bound:", bound)
@@ -131,11 +164,7 @@ if __name__ == "__main__":
     # total_distance = results[0]
     # connections = results[1]
     #
-    # #Visualiser
-    # data = vis.load_results_runs('results_random_distance.csv')
-    # vis.plot_line(data)
-    # data = vis.load_results_runs('simuutje.csv')
-    # vis.plot_line(data)
+
 
     # test
     '''houses_list = []

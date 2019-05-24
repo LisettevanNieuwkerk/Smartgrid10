@@ -79,25 +79,29 @@ if __name__ == "__main__":
             algorithm = "simulated_annealing"
             break '''
 
-    # RUNT smartgrid en pakt laagste bound etc
-    bound = 10
-    for i in range(1):
-        smartgrid = SmartGrid(2, True)
-        boundje = smartgrid.bound()
-        results = greedy(smartgrid)
-        results = random_solution(smartgrid)
-        results = simulated_annealing(smartgrid, results)
+    smartgrid = SmartGrid(1, True)
+    results = random_solution(smartgrid)
+    algorithm = "random"
 
-        if bound > boundje:
-            bound = boundje
-            best_positions = []
-            for battery in smartgrid.batteries:
-                xypos = []
-                xypos.append(smartgrid.batteries[battery].xpos)
-                xypos.append(smartgrid.batteries[battery].ypos)
-                best_positions.append(xypos)
+    # # RUNT smartgrid en pakt laagste bound etc
+    # bound = 10
+    # for i in range(1):
+    #     smartgrid = SmartGrid(2, True)
+    #     boundje = smartgrid.bound()
+    #     results = greedy(smartgrid)
+    #     results = random_solution(smartgrid)
+    #     results = simulated_annealing(smartgrid, results)
 
-    print("GRIDJE3 - bound:", bound)
+    #     if bound > boundje:
+    #         bound = boundje
+    #         best_positions = []
+    #         for battery in smartgrid.batteries:
+    #             xypos = []
+    #             xypos.append(smartgrid.batteries[battery].xpos)
+    #             xypos.append(smartgrid.batteries[battery].ypos)
+    #             best_positions.append(xypos)
+
+    # print("GRIDJE3 - bound:", bound)
 
     total_distance = results[0]
     connections = results[1]

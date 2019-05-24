@@ -25,7 +25,7 @@ Om de code te draaien voer je in de terminal het volgende in:
 
 python3 application.py
 
-Hierna zal een keuzemenu volgen waarin je de verschillende algoritmes kunt selecteren runnen.
+Hierna zal een keuzemenu volgen waarin je de verschillende algoritmes kunt selecteren en runnen.
 
 ----------------------------------------------------------------------------------
 <b>Side notes</b>

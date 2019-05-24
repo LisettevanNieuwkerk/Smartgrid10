@@ -143,7 +143,7 @@ def plot_scatter(data):
     bounds = vis.load_results_bounds('bounds_test.csv')
     vis.plot_scatter(bounds)
 
-def plot_line(data, data1, data2):
+def plot_line(data, algorithm):
     """
     plots a histogram of the insterted data
     """
@@ -156,7 +156,7 @@ def plot_line(data, data1, data2):
 
     # Adds the title and axis names
     # TO DO: Add axis names based on column header/ Seperate title for different Algorithm
-    plt.title('Simulated Annealing Algorithm', fontweight='bold')
+    plt.title(f"{algorithm}", fontweight='bold')
     plt.xlabel('Iterations')
     plt.ylabel('Total Distance')
     plt.xlim(0, len(runs))
@@ -171,7 +171,7 @@ def plot_line(data, data1, data2):
     # Actually shows the histogram
     plt.show()
 
-def plot_comparison(data, data1, data2):
+def plot_comparison(data, data1, data2, algorithm):
     """
     Plots a comparison of the seperate neighbourhoods
     """
@@ -195,7 +195,7 @@ def plot_comparison(data, data1, data2):
     plt.legend(loc='top right')
 
     # Adds the title and axis names
-    plt.title('Simulated Annealing Algorithm', fontweight='bold')
+    plt.title(f"{algorithm} Algorithm", fontweight='bold')
     plt.xlabel('Iterations')
     plt.ylabel('Total Distance')
 
@@ -215,11 +215,11 @@ def plot_comparison_GHR(data, data1):
     plt.plot(runs1, distance1, color = 'orange', label="Greedy-Hillclimber")
 
 
-def dict_to_csv(total_distance):
+def dict_to_csv(total_distance, algorithm, neighbourhood):
     """
     Appends result to an csv file
     """
-    with open('results_SA1_distance.csv', 'w', newline='') as infile:
+    with open('results_'+ algorithm + neighbourhood +'_distance.csv', 'w', newline='') as infile:
         fields = ['Run', 'Total Distance']
         writer = csv.DictWriter(infile, fieldnames=fields)
         writer.writeheader()

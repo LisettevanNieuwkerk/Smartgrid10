@@ -71,6 +71,7 @@ if __name__ == "__main__":
             break
 
     # Load data
+<<<<<<< HEAD
     smartgrid = SmartGrid(neighbourhood, fixed, pos, different)
 
     # Show user batteries
@@ -83,6 +84,15 @@ if __name__ == "__main__":
     # Calculate bounds
     minim, maxim = smartgrid.bound()
     print(f"\nMinimum bound neigbourhood: {minim}\n"f"Maximum bound neigbourhood: {maxim}")
+=======
+    # smartgrid = SmartGrid(1, False, "random", True)
+
+    # for battery in smartgrid.batteries:
+    #     print(smartgrid.batteries[battery])
+
+    # # Calculate bounds
+    # bounds = smartgrid.bound()
+>>>>>>> 26a8b997f9ad49a6595f7f2757dd57f54af076d0
 
     # Ask user for algorithm
     print(f"Which algoritm would you like to use?\n\
@@ -117,20 +127,53 @@ if __name__ == "__main__":
             results = random_solution(smartgrid, count)
             results = simulated_annealing(smartgrid, results)
             algorithm = "simulated_annealing"
+<<<<<<< HEAD
             break
+=======
+            break'''
+
+
+    # # Random
+    # smartgrid = SmartGrid(1, True)
+    # results = random_solution(smartgrid)
+    # algorithm = "random"
+
+    # Greedy-Hillclimber
+    smartgrid = SmartGrid(2, True)
+    results = greedy(smartgrid)
+    results = add_missing_houses(smartgrid, results)
+    results = hillclimber(smartgrid, results)
+    # algorithm = "greedy_hillclimber"
+
+    # # SA
+    # smartgrid = SmartGrid(1, True)
+    # results = random_solution(smartgrid)
+    # results = simulated_annealing(smartgrid, results)
+    # algorithm = "simulated_annealing"
+>>>>>>> 26a8b997f9ad49a6595f7f2757dd57f54af076d0
 
 
     # Visualiser --> TO DO: SEPERATE LOADER FOR DIFFERENT ALGORITHMS
-
     # Plots a linechart of a single neighbourhood
-    # data = vis.load_results_runs('results_SA1_distance.csv')
-    # vis.plot_line(data)
+
+    algorithm = "Greedyhillclimber"
+    neighbourhood = "1"
+    data = vis.load_results_runs('results_'+ algorithm + neighbourhood +'_distance.csv')
+    # data = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
+    vis.plot_line(data, algorithm)
 
     # Plots a comparison for the different neighbourhoods
+<<<<<<< HEAD
     '''data = vis.load_results_runs('results_random_distance.csv')
     data1 = vis.load_results_runs('results_GH1_distance.csv')
     # data2 = vis.load_results_runs('results_SA3_distance.csv')
     vis.plot_comparison(data, data1, data2)'''
+=======
+    data = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
+    data1 = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
+    data2 = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
+    vis.plot_comparison(data, data1, data2, algorithm)
+>>>>>>> 26a8b997f9ad49a6595f7f2757dd57f54af076d0
 
 
     total_distance = results[0]

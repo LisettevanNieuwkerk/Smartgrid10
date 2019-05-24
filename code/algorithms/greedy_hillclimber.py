@@ -1,5 +1,6 @@
+
 """
-A Greedy algorithm is performed, followed by a algorithm that adds the last missing houses to connections. 
+A Greedy algorithm is performed, followed by a algorithm that adds the last missing houses to connections.
 At last a hillclimber will be performed to improve the result
 """
 
@@ -177,7 +178,7 @@ def hillclimber(self, results):
             max_output1 = connections[last_connection1]['max_output_house']
             battery1 = connections[last_connection1]['battery']
             distance1 = connections[last_connection1]['distance']
-            
+
             # Adds every distance to a dict with the run number as id
             distances_total[key] = total_distance
             key += 1
@@ -229,9 +230,11 @@ def hillclimber(self, results):
                                     break
                         last_connection2 -= 1
                     if switched == True:
-                        break                    
-                possible_battery += 1        
-            last_connection1 -= 1    
+                        break
+                possible_battery += 1
+            last_connection1 -= 1
+        # vis.dict_to_csv(distances_total)
+        print(total_distance)
         # Saves the dict to a csv
         vis.dict_to_csv(distances_total)
     return [total_distance, connections]

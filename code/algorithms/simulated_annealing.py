@@ -17,7 +17,7 @@ def simulated_annealing (self, results):
     # Cool Schema values
     T = 3.0
     T_min = 0.00001
-    alpha = 0.9
+    alpha = 0.8
     j = 0
     distances_total = dict()
     key = 1
@@ -26,11 +26,10 @@ def simulated_annealing (self, results):
     while T > T_min:
         i = 1
         while i <= 10:
-            
+
             # Adds the distance to a dict with the number of succesful run as its key
             distances_total[key] = total_distance
             key += 1
-            
             new_distance = None
             # Find neighbouring solution
             while new_distance == None:
@@ -83,7 +82,7 @@ def simulated_annealing (self, results):
             if best_result >= total_distance:
                 best_result = total_distance
                 best_connections = connections
-                
+
             i += 1
             j += 1
         T *= alpha

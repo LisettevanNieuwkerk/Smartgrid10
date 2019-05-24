@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     # Ask user to choose a neighborhood
     '''print(f"Hello! Welcome at the application of team Smartgrid10\n\
-    Choose a neighborhood for the smartgrid problem\n")
+    Choose a neighbourhood for the smartgrid problem\n")
 
     while True:
         neighbourhood = int(input("Type 1, 2 or 3\n"))
@@ -31,6 +31,8 @@ if __name__ == "__main__":
 
     # Ask user for fixed or moveable batteries
     fixed = None
+    diffrent = None
+    algorithm = None
     print(f"Should the neighbourhood have fixed or moveable batteries?")
 
     while True:
@@ -42,13 +44,35 @@ if __name__ == "__main__":
         if answer == 'B':
             position_batteries = "Moveable_batteries"
             fixed = False
+            print(f"Do want one type of battery or different types?")
+            while True:
+                answer = str(input("Type A for one type and type B for different types\n"))
+                if answer == 'A':
+                    different = False
+                    break
+                if answer == 'B':
+                    different = True
+                    break
+
+            print(f"Do want random positions for the batteries or define their position with K-means clustering?")
+            while True:
+                answer = str(input("Type A for random positions and B for K-means clustering\n"))
+                if answer == 'A':
+                    algorithm = "random"
+                    break
+                if answer == 'B':
+                    algorithm = "cluster"
+                    break
             break'''
 
     # Load data
+    smartgrid = SmartGrid(1, False, "random", True)
 
+    for battery in smartgrid.batteries:
+        print(smartgrid.batteries[battery])
 
     # Calculate bounds
-    #smartgrid.bound()
+    bounds = smartgrid.bound()
 
     # Ask user for algorithm
     '''print(f"Which algoritm would you like to use?\n\
@@ -77,9 +101,9 @@ if __name__ == "__main__":
             results = random_solution(smartgrid)
             results = simulated_annealing(smartgrid, results)
             algorithm = "simulated_annealing"
-            break '''
+            break'''
 
-    
+
     # # Random
     # smartgrid = SmartGrid(1, True)
     # results = random_solution(smartgrid)
@@ -100,7 +124,7 @@ if __name__ == "__main__":
 
 
     # Visualiser --> TO DO: SEPERATE LOADER FOR DIFFERENT ALGORITHMS
-    
+
     # Plots a linechart of a single neighbourhood
     # data = vis.load_results_runs('results_SA1_distance.csv')
     # vis.plot_line(data)
@@ -133,10 +157,9 @@ if __name__ == "__main__":
 
     # print("GRIDJE3 - bound:", bound)
 
-    # print(best_positions)
     #print(best_positions)
 
-    # print("GRIDJE3 - bound:", bound)
+    #print("GRIDJE3 - bound:", bound)
 
     # total_distance = results[0]
     # connections = results[1]
@@ -155,7 +178,7 @@ if __name__ == "__main__":
     missing_houses = [value for value in range(1, 150) if value not in houses_list]
     print(missing_houses)'''
 
-    # print(f"Total distance: {total_distance}")
+    #print(f"Total distance: {total_distance}")
 
     # # Calculate total costs
     # price_grid = 9

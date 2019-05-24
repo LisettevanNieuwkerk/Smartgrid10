@@ -75,8 +75,8 @@ def random_solution(self, count):
                     highest_score = total_distance
                     best_connections = connections
 
-        # Saves the dict to a csv
-        algorithm = "random"
-        vis.dict_to_csv(distances_total, algorithm)
+    # Saves the dict to a csv
+    algorithm = "random"
+    vis.dict_to_csv(distances_total, algorithm)
 
     return [highest_score, best_connections]

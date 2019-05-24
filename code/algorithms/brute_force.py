@@ -1,6 +1,13 @@
 from itertools import product
 
 def brute_force(self):
+"""
+This is a brute force algorithm, created in the beginning of the project.
+It takes very long for it to generate an answer (but we've tested it on a smaller replicated grid & it worked! (unfortunately these results are lost atm)).
+We haven't used it in our further research,
+but we left in in the repository, as it was a part of our 'exploration' :)!
+"""
+
     # Set total distance Grid to 0 and create empty list with connections of houses to batteries
     first = True
     shortest = None
@@ -11,16 +18,12 @@ def brute_force(self):
 
     # Check possible battery/house combinations
     for distance in product(*self.distances):
-        # List of distances of houses
-        #print(f"Distances houses to a battery: { list(distance) }")
 
         # Index of batteries list
         index = tuple(row.index(elem) for row, elem in zip((self.distances), distance))
         list_index = list(index)
-        #print(f"Index of batteries: { list_index }")
 
-        # Add capacity to batteries
-        # Set capacity all batteries to 0
+        # Add capacity to batteries and set capacity to 0
         for battery in self.batteries:
             self.batteries[battery].currentCapacity = 0
 
@@ -30,30 +33,27 @@ def brute_force(self):
             if self.batteries[i+1].currentCapacity <= self.batteries[i+1].capacity:
                 self.batteries[i+1].currentCapacity += self.houses[house+1].max_output
                 house += 1
+
             # If battery full; break loop
             else:
                 capacity_reached = True
                 break
 
-        #print(f"Current capacity batteries: {self.batteries[1].currentCapacity, self.batteries[2].currentCapacity, self.batteries[3].currentCapacity, self.batteries[4].currentCapacity, self.batteries[5].currentCapacity}")
-        #print(f"Capacity of a battery reached: { capacity_reached }")
-
-        # Check if batteries not full
+        # Check if batteries are not full yet
         if capacity_reached == False:
             # Calculate total distance
             total_distance = sum(distance)
-            #print(f"Total distance: {total_distance}")
-            # Check if first value
+
+            # Check if it is the first value
             if first == True:
                 shortest = total_distance
                 first = False
-            # If not first value, check if total distance smaller than shortest
+
+            # If not first value, check if total distance smaller than shortest distance
             elif first == False:
                 if total_distance < shortest:
                     shortest = total_distance
                     shortest_index = list_index
-                   # print(f"Shortest index: {shortest_index}")
-                    #print(f"Shortest: {shortest}")
 
     # Write down connections of shortest index
     connections = []
@@ -63,9 +63,8 @@ def brute_force(self):
                     'distance': self.distances[i - 1][row], 'max_output_house': self.houses[i].max_output}
         connections.append(house_to_battery)
         i += 1
-        
+
+    # Save the shortest generated distance as total distance    
     total_distance = shortest
 
     return [total_distance, connections]
-
-

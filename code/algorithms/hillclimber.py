@@ -70,6 +70,7 @@ def hillclimber (self, results):
 
 
     # Saves the dict to a csv
-    vis.dict_to_csv(distances_total)
+    algorithm = "hillclimber"
+    vis.dict_to_csv(distances_total, algorithm)
 
     return [total_distance, connections]

@@ -162,13 +162,24 @@ def plot_line(data, algorithm):
 
     # Forms the histogram
     plt.plot(runs, distance)
-    plt.legend(loc='top right')
+    plt.legend(loc='upper right')
 
     # Adds the title and axis names
-    # TO DO: Add axis names based on column header/ Seperate title for different Algorithm
-    plt.title(f"{algorithm}", fontweight='bold')
-    plt.xlabel('Iterations')
-    plt.ylabel('Total Distance')
+    if algorithm == "random":
+        plt.title('Random Algorithm')
+        plt.xlabel('Runs')
+        plt.ylabel('Total Distance')
+
+    if algorithm == "greedy_hillclimber":
+        plt.title('Greedy Hillclimber Algorithm')
+        plt.xlabel('Iterations')
+        plt.ylabel('Total Distance')
+
+    if algorithm == "simulated_annealing":
+        plt.title('Simulated Annealing')
+        plt.xlabel('Iterations')
+        plt.ylabel('Total Distance')
+    
     plt.xlim(0, len(runs))
     plt.ylim((min(distance) - 10), max(distance))
 
@@ -196,10 +207,10 @@ def plot_comparison(data, data1, data2, algorithm):
     plt.plot(runs, distance, label="Wijk 1")
     plt.plot(runs1, distance1, color = 'orange', label="Wijk 2")
     plt.plot(runs2, distance2, color = 'red', label="Wijk 3")
-    plt.legend(loc='top right')
+    plt.legend(loc='upper right')
 
     # Plots the legend
-    plt.legend(loc='top right')
+    plt.legend(loc='upper right')
 
     # Adds the title and axis names
     plt.title(f"{algorithm} Algorithm", fontweight='bold')
@@ -209,11 +220,11 @@ def plot_comparison(data, data1, data2, algorithm):
     # Actually shows the histogram
     plt.show()
 
-def dict_to_csv(total_distance, algorithm, neighbourhood):
+def dict_to_csv(total_distance, algorithm):
     """
     Appends result to an csv file
     """
-    with open('results_' + algorithm + neighbourhood + '_distance.csv', 'w', newline='') as infile:
+    with open(f'results/visualisatie/results_{algorithm}_distance.csv', 'w', newline='') as infile:
         fields = ['Run', 'Total Distance']
         writer = csv.DictWriter(infile, fieldnames=fields)
         writer.writeheader()

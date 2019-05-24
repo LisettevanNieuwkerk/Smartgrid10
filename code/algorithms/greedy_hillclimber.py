@@ -241,6 +241,7 @@ def hillclimber_determined(self, results):
             last_connection1 -= 1
 
         # Saves the dict to a csv
-        vis.dict_to_csv(distances_total)
+        algorithm = "greedy_hillclimber"
+        vis.dict_to_csv(distances_total, algorithm)
 
     return [total_distance, connections]

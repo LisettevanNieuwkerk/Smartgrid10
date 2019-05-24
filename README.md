@@ -27,9 +27,11 @@ Hierna zal een keuzemenu volgen waarin je de verschillende algoritmes kunt selec
 <b>Side notes</b>
 
 Brute force:
+
 Het Brute force algorithm geeft, gezien de state space van ons probleem (+- 4,5^100), geen antwoord binnen afzienbare tijd. Deze hebben we in een enthousiaste beginfase gebouwd, maar verder niet meer gebruikt. 
 
 Stap D) van de opdracht:
+
 Bij stap D van de opdracht krijgen we te maken met nieuwe batterijen. Deze genereert alleen een Random set van batterijen met een capaciteit tot boven de 7500 (Output van alle huizen is voor elke wijk 7500 > dus mininmaal 7500 nodig). Op deze random gegenereerde set van batterijen kunnen wel alle algoritmes worden gerund, maar we hebben nog geen optimalisaties voor deze combinaties gemaakt.
 
 

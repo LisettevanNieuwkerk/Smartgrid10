@@ -124,16 +124,15 @@ if __name__ == "__main__":
 
 
     # Visualiser --> TO DO: SEPERATE LOADER FOR DIFFERENT ALGORITHMS
-
     # Plots a linechart of a single neighbourhood
-    # data = vis.load_results_runs('results_SA1_distance.csv')
-    # vis.plot_line(data)
+    data = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
+    vis.plot_line(data, algorithm)
 
     # Plots a comparison for the different neighbourhoods
-    data = vis.load_results_runs('results_random_distance.csv')
-    data1 = vis.load_results_runs('results_GH1_distance.csv')
-    # data2 = vis.load_results_runs('results_SA3_distance.csv')
-    vis.plot_comparison(data, data1, data2)
+    data = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
+    data1 = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
+    data2 = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
+    vis.plot_comparison(data, data1, data2, algorithm)
 
 
 

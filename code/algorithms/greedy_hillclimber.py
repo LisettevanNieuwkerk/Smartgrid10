@@ -233,8 +233,7 @@ def hillclimber(self, results):
                         break
                 possible_battery += 1
             last_connection1 -= 1
-        # vis.dict_to_csv(distances_total)
-        print(total_distance)
+
         # Saves the dict to a csv
         vis.dict_to_csv(distances_total)
     return [total_distance, connections]

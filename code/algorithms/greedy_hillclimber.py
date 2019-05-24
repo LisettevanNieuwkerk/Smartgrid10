@@ -1,16 +1,14 @@
-
 """
 A Greedy algorithm is performed, followed by a algorithm that adds the last missing houses to connections.
 At last a hillclimber will be performed to improve the result
 """
-
 import visualiser as vis
 
 def greedy(self):
     """
-    Greedy algorithm
+    Sort all the distances and append al the houses with lowest distances (house to battery) to that battery.
     """
-    # Set initial calues
+    # Set initial values
     house = 1
     sorted_distances = None
     sorted_index = None
@@ -67,10 +65,15 @@ def greedy(self):
 
 
 def add_missing_houses(self, results):
+    """
+    The above greedy algorithm doesn't connect al houses to the batteries (it is determined).
+    So this helper function creates addional space in batteriess by swapping houses, until
+    there is enough space for the remaining houses to fit in a battery.
+    """
+    # Assign all values
     total_distance = results[0]
     connections = results[1]
     missing_houses = results[2]
-
     max = 150 - len(missing_houses)
 
     # Find spot for every missing house
@@ -109,6 +112,7 @@ def add_missing_houses(self, results):
                             new_cap1 = self.batteries[battery1].currentCapacity - max_output1 + max_output2
                             new_cap2 = self.batteries[battery2].currentCapacity - max_output2 + max_output1
                             if new_cap1 <= self.batteries[battery1].capacity or new_cap2 <= self.batteries[battery2].capacity:
+
                                 # Switch batteries
                                 # Adapt current capacity batteries
                                 self.batteries[battery1].currentCapacity -= max_output1
@@ -120,9 +124,9 @@ def add_missing_houses(self, results):
                                 # Adapt total distance
                                 distance1 = connections[last_connection1]['distance']
                                 distance2 = connections[last_connection2]['distance']
-
                                 total_distance -= (distance1 + distance2)
 
+                                # Add new distances
                                 new_distance1 = self.distances[houseN1 - 1][battery2 - 1]
                                 new_distance2 = self.distances[houseN2 - 1][battery1 - 1]
 
@@ -159,6 +163,9 @@ def add_missing_houses(self, results):
     return [total_distance, connections]
 
 def hillclimber(self, results):
+    """
+
+    """
     total_distance = results[0]
     connections = results[1]
 
@@ -166,7 +173,6 @@ def hillclimber(self, results):
     distances_total = dict()
     key = 1
 
-    print(total_distance)
     for i in range(4):
         # Iterate over all houses and check if possible to connect to closer battery
         max = len(connections)
@@ -217,8 +223,6 @@ def hillclimber(self, results):
                                     # Adapt total distance
                                     total_distance -= (distance1 + distance2)
                                     total_distance += (new_distance1 + new_distance2)
-
-
 
                                     #Adapt connections
                                     connections[last_connection1]['battery'] = battery2

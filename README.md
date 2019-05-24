@@ -29,7 +29,9 @@ Hierna zal een keuzemenu volgen waarin je de verschillende algoritmes kunt selec
 Lisette van Nieuwkerk, David Mokken & Casper Lammers
 
 
-Dankwoord (Acknowledgments):
+
+----------------------------------------------------------------------------------
+<b> Dankwoord (Acknowledgments): </b>
 
 Het wereldwijde web
 

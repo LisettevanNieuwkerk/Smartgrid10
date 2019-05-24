@@ -180,6 +180,11 @@ def plot_line(data, algorithm):
         plt.xlabel('Iterations')
         plt.ylabel('Total Distance')
     
+    if algorithm == "hillclimber":
+        plt.title('Hillclimber on a random solution')
+        plt.xlabel('Iterations')
+        plt.ylabel('Total Distance')
+
     plt.xlim(0, len(runs))
     plt.ylim((min(distance) - 10), max(distance))
 

@@ -32,7 +32,7 @@ Het Brute force algorithm geeft, gezien de state space van ons probleem (+- 4,5^
 
 Stap D) van de opdracht:
 
-Bij stap D van de opdracht krijgen we te maken met nieuwe batterijen. Deze genereert alleen een Random set van batterijen met een capaciteit tot boven de 7500 (Output van alle huizen is voor elke wijk 7500 > dus mininmaal 7500 nodig). Op deze random gegenereerde set van batterijen kunnen wel alle algoritmes worden gerund, maar we hebben nog geen optimalisaties voor deze combinaties gemaakt.
+Bij stap D van de opdracht krijgen we te maken met nieuwe batterijen. Wanneer je deze functie selecteert, dan genereert deze alleen een Random set uit deze batterijen met in totaal een capaciteit tot boven de 7500 (Output van alle huizen is voor elke wijk 7500 > dus mininmaal 7500 capaciteit nodig). Op deze random gegenereerde set van batterijen kunnen wel alle algoritmes worden gerund, maar we hebben nog geen optimalisaties voor de combinaties van verschillende batterijen gemaakt.
 
 
 ----------------------------------------------------------------------------------

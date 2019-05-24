@@ -63,7 +63,7 @@ def brute_force(self):
         connections.append(house_to_battery)
         i += 1
 
-    # Save the shortest generated distance as total distance    
+    # Save the shortest generated distance as total distance
     total_distance = shortest
 
     return [total_distance, connections]

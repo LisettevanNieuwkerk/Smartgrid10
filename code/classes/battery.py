@@ -1,11 +1,11 @@
 class Battery(object):
     """
-    Representation of a house in SmartGrid
+    Representation of a battery in SmartGrid
     """
 
     def __init__(self, id, name, capacity, price):
         """
-        Initiazes a House
+        Initiazes a Battery
         """
         self.id = id
         self.name = name

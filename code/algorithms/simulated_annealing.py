@@ -7,14 +7,15 @@ def simulated_annealing (self, results):
     """
     This is the algorithm for simulated annealing
     """
+    # initialize all values
     total_distance = results[0]
     connections = results[1]
-    print(f"Start: {total_distance}")
+
 
     best_result = total_distance
     best_connections = connections
 
-    # Cool Schema values
+    # Cooling Schedual values (Linear)
     T = 150.0
     T_min = 0.00001
     alpha = 0.9
@@ -78,7 +79,8 @@ def simulated_annealing (self, results):
                 connections[connection1]['distance'] = new_distance1
                 connections[connection2]['battery'] = battery1
                 connections[connection2]['distance'] = new_distance2
-            # print(total_distance)
+
+            # Check if best result is better than total distance to check
             if best_result >= total_distance:
                 best_result = total_distance
                 best_connections = connections

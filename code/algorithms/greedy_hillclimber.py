@@ -164,7 +164,6 @@ def hillclimber(self, results):
     # Adds every run with value to a dict
     distances_total = dict()
     key = 1
-    chefke = 1
     print(total_distance)
     for i in range(4):
         # Iterate over all houses and check if possible to connect to closer battery

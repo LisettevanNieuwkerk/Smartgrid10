@@ -81,21 +81,22 @@ if __name__ == "__main__":
 
     
     # Random
-    # smartgrid = SmartGrid(1, True)
-    # results = random_solution(smartgrid)
-    # algorithm = "random"
+    smartgrid = SmartGrid(1, True)
+    results = random_solution(smartgrid)
+    algorithm = "random"
 
-    # # Greedy-Hillclimber
-    # smartgrid = SmartGrid(1, True)
+    # Greedy-Hillclimber
+    # smartgrid = SmartGrid(2, True)
     # results = greedy(smartgrid)
     # results = add_missing_houses(smartgrid, results)
     # results = hillclimber(smartgrid, results)
     # algorithm = "greedy_hillclimber"
 
-    smartgrid = SmartGrid(1, True)
-    results = random_solution(smartgrid)
-    results = simulated_annealing(smartgrid, results)
-    algorithm = "simulated_annealing"
+    # # SA
+    # smartgrid = SmartGrid(1, True)
+    # results = random_solution(smartgrid)
+    # results = simulated_annealing(smartgrid, results)
+    # algorithm = "simulated_annealing"
 
 
     # Visualiser

@@ -155,9 +155,10 @@ def plot_line(data):
 
     # Adds the title and axis names
     # TO DO: Add axis names based on column header
-    plt.title('Distance change in runs', fontweight='bold')
-    plt.xlabel('Run')
-    plt.ylabel('Distance')
+    plt.title('Random Algorithm', fontweight='bold')
+    # plt.title('Total Runs and Distance - All houses connected', fontweight='bold')
+    plt.xlabel('Runs')
+    plt.ylabel('Total Distance')
     plt.xlim(0, len(runs))
     plt.ylim((min(distance) - 10), max(distance))
     plt.grid(True)

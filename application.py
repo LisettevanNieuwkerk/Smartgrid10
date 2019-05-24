@@ -66,13 +66,13 @@ if __name__ == "__main__":
             break'''
 
     # Load data
-    smartgrid = SmartGrid(1, False, "random", True)
+    # smartgrid = SmartGrid(1, False, "random", True)
 
-    for battery in smartgrid.batteries:
-        print(smartgrid.batteries[battery])
+    # for battery in smartgrid.batteries:
+    #     print(smartgrid.batteries[battery])
 
-    # Calculate bounds
-    bounds = smartgrid.bound()
+    # # Calculate bounds
+    # bounds = smartgrid.bound()
 
     # Ask user for algorithm
     '''print(f"Which algoritm would you like to use?\n\
@@ -110,10 +110,10 @@ if __name__ == "__main__":
     # algorithm = "random"
 
     # Greedy-Hillclimber
-    # smartgrid = SmartGrid(2, True)
-    # results = greedy(smartgrid)
-    # results = add_missing_houses(smartgrid, results)
-    # results = hillclimber(smartgrid, results)
+    smartgrid = SmartGrid(2, True)
+    results = greedy(smartgrid)
+    results = add_missing_houses(smartgrid, results)
+    results = hillclimber(smartgrid, results)
     # algorithm = "greedy_hillclimber"
 
     # # SA
@@ -125,7 +125,11 @@ if __name__ == "__main__":
 
     # Visualiser --> TO DO: SEPERATE LOADER FOR DIFFERENT ALGORITHMS
     # Plots a linechart of a single neighbourhood
-    data = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
+
+    algorithm = "Greedyhillclimber"
+    neighbourhood = "1"
+    data = vis.load_results_runs('results_'+ algorithm + neighbourhood +'_distance.csv')
+    # data = vis.load_results_runs(f"results_{algorithm}{neighbourhood}_distance.csv")
     vis.plot_line(data, algorithm)
 
     # Plots a comparison for the different neighbourhoods

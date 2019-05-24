@@ -219,7 +219,7 @@ def dict_to_csv(total_distance, algorithm, neighbourhood):
     """
     Appends result to an csv file
     """
-    with open(f"results_{algorithm}{neighbourhood}_distance.csv", 'w', newline='') as infile:
+    with open('results_'+ algorithm + neighbourhood +'_distance.csv', 'w', newline='') as infile:
         fields = ['Run', 'Total Distance']
         writer = csv.DictWriter(infile, fieldnames=fields)
         writer.writeheader()

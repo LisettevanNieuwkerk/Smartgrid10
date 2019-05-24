@@ -25,7 +25,4 @@ Lisette van Nieuwkerk, David Mokken & Casper Lammers
 
 Dankwoord (Acknowledgments):
 Het wereldwijde web
-Marty_Mprog
-Daan_Heuristics
-Quin10
-Okkster
+Okke & Quinten

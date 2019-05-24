@@ -10,18 +10,16 @@ from brute_force import brute_force
 from random_algorithm import random_solution
 from greedy_hillclimber import greedy
 from greedy_hillclimber import add_missing_houses
-from greedy_hillclimber import hillclimber
+from greedy_hillclimber import hillclimber_determined
+from hillclimber import hillclimber
 from simulated_annealing import simulated_annealing
 from smartgrid import SmartGrid
 import visualiser as vis
 
 
-
 if __name__ == "__main__":
-
-
     # Ask user to choose a neighborhood
-    '''print(f"Hello! Welcome at the application of team Smartgrid10\n\
+    print(f"Hello! Welcome at the application of team Smartgrid10\n\
     Choose a neighbourhood for the smartgrid problem\n")
 
     while True:
@@ -30,13 +28,15 @@ if __name__ == "__main__":
             break
 
     # Ask user for fixed or moveable batteries
+    type = ''
     fixed = None
-    diffrent = None
+    pos = ''
+    different = False
     algorithm = None
-    print(f"Should the neighbourhood have fixed or moveable batteries?")
+    print(f"\nShould the neighbourhood have fixed or moveable batteries?")
 
     while True:
-        answer = str(input("Type A for fixed batteries and B for moveable batteries\n"))
+        answer = str(input("\nType A for fixed batteries and B for moveable batteries\n"))
         if answer == 'A':
             position_batteries = "Fixed_batteries"
             fixed = True
@@ -44,83 +44,83 @@ if __name__ == "__main__":
         if answer == 'B':
             position_batteries = "Moveable_batteries"
             fixed = False
-            print(f"Do want one type of battery or different types?")
+
+            # Ask user if they want different types of batteries and how to define their positions
+            print(f"\nDo you want one type of battery or different types?")
             while True:
                 answer = str(input("Type A for one type and type B for different types\n"))
                 if answer == 'A':
-                    different = False
+                    type = 'regular'
                     break
                 if answer == 'B':
                     different = True
+                    type = 'different'
                     break
-
-            print(f"Do want random positions for the batteries or define their position with K-means clustering?")
+            print(f"\nDo want random positions for the batteries or define their position with K-means clustering?")
             while True:
                 answer = str(input("Type A for random positions and B for K-means clustering\n"))
                 if answer == 'A':
-                    algorithm = "random"
+                    pos = "random_position"
                     break
                 if answer == 'B':
-                    algorithm = "cluster"
+                    pos = "cluster_position"
                     break
-            break'''
+            break
 
     # Load data
-    # smartgrid = SmartGrid(1, False, "random", True)
+    smartgrid = SmartGrid(neighbourhood, fixed, pos, different)
 
-    # for battery in smartgrid.batteries:
-    #     print(smartgrid.batteries[battery])
+    # Show user batteries
+    count = 0
+    print("\nThese are your batteries:")
+    for battery in smartgrid.batteries:
+        print(smartgrid.batteries[battery])
+        count += 1
 
-    # # Calculate bounds
-    # bounds = smartgrid.bound()
+    # Calculate bounds
+    minim, maxim = smartgrid.bound()
+    print(f"\nMinimum bound neigbourhood: {minim}\n"f"Maximum bound neigbourhood: {maxim}")
+
 
     # Ask user for algorithm
-    '''print(f"Which algoritm would you like to use?\n\
+    print(f"Which algoritm would you like to use?\n\
         Type A for a brute force algorithm\n\
-        Type B for a random algorithm that will run 10.000 times and saves the best result\n\
+        Type B for a random algorithm that will run 1.000 times and saves the best result\n\
         Type C for a greedy algorithm followed by a hillclimber\n\
-        Type D for a simulated annealing algorithm on a random solution")
+        Type D for a hillclimber algorithm on a random solution\n\
+        Type E or a simulated annealing algorithm on a random solution")
 
     while True:
         answer = str(input())
         if answer == 'A':
-            results = brute_force(smartgrid)
-            algorithm = "brute_force"
-            break
+            print("\nWARNING: This algorithm might take weeks to run.\nAre you sure you want to run a brute force algorithm?")
+            answer = str(input("Type Y or N\n"))
+            if answer == 'Y':
+                results = brute_force(smartgrid)
+                algorithm = "brute_force"
+                break
+            elif answer == 'N':
+                print("Choose B, C, D or E")
         if answer == 'B':
-            results = random_solution(smartgrid)
+            results = random_solution(smartgrid, count)
             algorithm = "random"
             break
         if answer == 'C':
             results = greedy(smartgrid)
             results = add_missing_houses(smartgrid, results)
-            results = hillclimber(smartgrid, results)
+            results = hillclimber_determined(smartgrid, results)
             algorithm = "greedy_hillclimber"
             break
         if answer == 'D':
-            results = random_solution(smartgrid)
+            results = random_solution(smartgrid, count)
+            results = hillclimber(smartgrid, results)
+            algorithm = "hillclimber"
+            break
+        if answer == 'E':
+            results = random_solution(smartgrid, count)
             results = simulated_annealing(smartgrid, results)
             algorithm = "simulated_annealing"
-            break'''
-
-
-    # # Random
-    # smartgrid = SmartGrid(1, True)
-    # results = random_solution(smartgrid)
-    # algorithm = "random"
-
-    # Greedy-Hillclimber
-    smartgrid = SmartGrid(2, True)
-    results = greedy(smartgrid)
-    results = add_missing_houses(smartgrid, results)
-    results = hillclimber(smartgrid, results)
-    # algorithm = "greedy_hillclimber"
-
-    # # SA
-    # smartgrid = SmartGrid(1, True)
-    # results = random_solution(smartgrid)
-    # results = simulated_annealing(smartgrid, results)
-    # algorithm = "simulated_annealing"
+            break
 
 
     # Visualiser --> TO DO: SEPERATE LOADER FOR DIFFERENT ALGORITHMS
@@ -139,56 +139,18 @@ if __name__ == "__main__":
     vis.plot_comparison(data, data1, data2, algorithm)
 
 
+    total_distance = results[0]
+    connections = results[1]
+    print(f"Total distance: {total_distance}")
 
-    # # RUNT smartgrid en pakt laagste bound etc
-    # bound = 10
-    # for i in range(1):
-    #     smartgrid = SmartGrid(2, True)
-    #     boundje = smartgrid.bound()
-    #     results = greedy(smartgrid)
-    #     results = random_solution(smartgrid)
-    #     results = simulated_annealing(smartgrid, results)
-
-    #     if bound > boundje:
-    #         bound = boundje
-    #         best_positions = []
-    #         for battery in smartgrid.batteries:
-    #             xypos = []
-    #             xypos.append(smartgrid.batteries[battery].xpos)
-    #             xypos.append(smartgrid.batteries[battery].ypos)
-    #             best_positions.append(xypos)
-
-    # print("GRIDJE3 - bound:", bound)
-
-    #print(best_positions)
-
-    #print("GRIDJE3 - bound:", bound)
-
-    # total_distance = results[0]
-    # connections = results[1]
-    #
-
-
-    # test
-    '''houses_list = []
-    print(len(connections))
-    print(total_distance)
+    # Calculate total costs
+    price_grid = 9
+    costs_grid = price_grid * total_distance
+    costs_batteries = 0
     for battery in smartgrid.batteries:
-        print(smartgrid.batteries[battery])
-    for connection in connections:
-        houses_list.append(connection['house'])
-
-    missing_houses = [value for value in range(1, 150) if value not in houses_list]
-    print(missing_houses)'''
-
-    #print(f"Total distance: {total_distance}")
-
-    # # Calculate total costs
-    # price_grid = 9
-    # costs_grid = price_grid * total_distance
-    # costs_batteries = 5 * 5000
-    # total_costs = costs_batteries + costs_grid
-    # #print(f"Total costs: {total_costs}")
+        costs_batteries += smartgrid.batteries[battery].price
+    total_costs = costs_batteries + costs_grid
+    print(f"Total costs: {total_costs}")
 
     # Write results to csv
-    # smartgrid.write_to_csv(position_batteries, algorithm, neighbourhood, connections, total_distance, costs_grid, costs_batteries, total_costs)
+    smartgrid.write_to_csv(position_batteries, type, pos, algorithm, neighbourhood, connections, total_distance, costs_grid, costs_batteries, total_costs)

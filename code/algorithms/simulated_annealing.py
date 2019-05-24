@@ -5,7 +5,7 @@ import visualiser as vis
 
 def simulated_annealing (self, results):
     """
-    This is the algorith for simulated annealing
+    This is the algorithm for simulated annealing
     """
     total_distance = results[0]
     connections = results[1]
@@ -90,6 +90,4 @@ def simulated_annealing (self, results):
     # Saves the dict to a csv
     vis.dict_to_csv(distances_total)
 
-    print(f"Eind: {total_distance}")
-    print("J-UNIT", j)
     return [total_distance, connections]

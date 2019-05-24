@@ -92,6 +92,7 @@ def show_grid(house, result, battery):
 
 def load_results_bounds(filename):
     """
+    Inputs a csv data into panda
     Inputs a csv data into panda. Used for the visualisation of the scatterplot
     in the presentation.
     """

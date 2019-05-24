@@ -4,17 +4,15 @@ import random
 
 def hillclimber (self, results):
     """
-    This is the algorith for simulated annealing
+    This is the algorithm used for a hillclimber on a random configuration
     """
+    # initialize the values
     total_distance = results[0]
-    connections = results[1]
-
-    print(f"start: {total_distance}")
-
+    connections = results[1]]
     distances_total = dict()
     key = 1
 
-    #
+    # Hillclimber with 10000 iterations
     for i in range(10000):
         # Adds the distance to a dict with the number of run as its key
         distances_total[key] = total_distance

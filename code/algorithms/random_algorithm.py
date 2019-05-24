@@ -1,15 +1,12 @@
-"""
-A Random algorithm is performed.
-"""
-
 import random
 import visualiser as vis
 
 
 def random_solution(self, count):
     """
-    Random algorithm
+    Random algorithm > assigns all houses to a random battery & tries other battery when the battery is already full.
     """
+    # initialize the values
     highest_score = 0
     first_attempt = True
     best_connections = None
@@ -17,7 +14,7 @@ def random_solution(self, count):
     key = 1
 
     # Run multiple times
-    for j in range(1000):
+    for j in range(10000):
 
         # Set total distance Grid to 0 and create empty list with connections of houses to batteries
         total_distance = 0

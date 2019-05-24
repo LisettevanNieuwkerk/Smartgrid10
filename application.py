@@ -80,17 +80,17 @@ if __name__ == "__main__":
             break '''
 
     
-    # Random
-    smartgrid = SmartGrid(1, True)
-    results = random_solution(smartgrid)
-    algorithm = "random"
+    # # Random
+    # smartgrid = SmartGrid(1, True)
+    # results = random_solution(smartgrid)
+    # algorithm = "random"
 
     # Greedy-Hillclimber
-    # smartgrid = SmartGrid(2, True)
-    # results = greedy(smartgrid)
-    # results = add_missing_houses(smartgrid, results)
-    # results = hillclimber(smartgrid, results)
-    # algorithm = "greedy_hillclimber"
+    smartgrid = SmartGrid(3, True)
+    results = greedy(smartgrid)
+    results = add_missing_houses(smartgrid, results)
+    results = hillclimber(smartgrid, results)
+    algorithm = "greedy_hillclimber"
 
     # # SA
     # smartgrid = SmartGrid(1, True)
@@ -100,7 +100,7 @@ if __name__ == "__main__":
 
 
     # Visualiser
-    data = vis.load_results_runs('results_random_distance.csv')
+    data = vis.load_results_runs('results_GH3_distance.csv')
     vis.plot_line(data)
     # data = vis.load_results_runs('simuutje.csv')
     # vis.plot_line(data)

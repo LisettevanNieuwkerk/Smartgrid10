@@ -155,9 +155,9 @@ def plot_line(data):
 
     # Adds the title and axis names
     # TO DO: Add axis names based on column header
-    plt.title('Random Algorithm', fontweight='bold')
+    plt.title('Greedy Hillclimber Algorithm', fontweight='bold')
     # plt.title('Total Runs and Distance - All houses connected', fontweight='bold')
-    plt.xlabel('Runs')
+    plt.xlabel('Iterations')
     plt.ylabel('Total Distance')
     plt.xlim(0, len(runs))
     plt.ylim((min(distance) - 10), max(distance))
@@ -174,7 +174,7 @@ def dict_to_csv(total_distance):
     """
     Appends result to an csv file
     """
-    with open('results_random_distance.csv', 'w', newline='') as infile:
+    with open('results_GH3_distance.csv', 'w', newline='') as infile:
         fields = ['Run', 'Total Distance']
         writer = csv.DictWriter(infile, fieldnames=fields)
         writer.writeheader()

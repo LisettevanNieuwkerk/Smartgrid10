@@ -8,7 +8,9 @@ import matplotlib.pyplot as plt
 from house import House
 from battery import Battery
 
-import os, sys
+import os
+import sys
+
 directory = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(directory, "code"))
 sys.path.append(os.path.join(directory, "code", "classes"))
@@ -186,7 +188,7 @@ def plot_line(data, algorithm):
         plt.ylabel('Total Distance')
 
     plt.xlim(0, len(runs))
-    plt.ylim((min(distance) - 10), max(distance))
+    plt.ylim((min(distance) - 10), (max(distance) + 10))
 
     # Shows Grid
     plt.grid(True)
@@ -229,6 +231,7 @@ def dict_to_csv(total_distance, algorithm):
     """
     Appends result to an csv file
     """
+
     with open(f'results/visualisatie/results_{algorithm}_distance.csv', 'w', newline='') as infile:
         fields = ['Run', 'Total Distance']
         writer = csv.DictWriter(infile, fieldnames=fields)

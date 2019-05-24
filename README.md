@@ -12,7 +12,7 @@ pip install -r requirements.txt
 ----------------------------------------------------------------------------------
 <b>Structuur (Structure)</b>
 
-De meeste Python scripts staan in de folder Code. In de map Data zitten alle input waardes en in de map resultaten worden alle resultaten opgeslagen door de code.
+De meeste Python scripts staan in de folder Code. De smartgrid.py file en de application.py staan in de hoofdmap. De application wordt gerund om alles te laten runnen en de smartgrid.py file dient als 'helperfile'. In de map Data zitten alle input waardes en in de map resultaten worden alle resultaten opgeslagen door de code.
 
 ----------------------------------------------------------------------------------
 <b>Test (Testing)</b>
@@ -24,6 +24,7 @@ Hierna zal een keuzemenu volgen waarin je de verschillende algoritmes kunt selec
 
 ----------------------------------------------------------------------------------
 <b> Auteurs (Authors)</b>
+
 Lisette van Nieuwkerk, David Mokken & Casper Lammers
 
 

@@ -90,23 +90,11 @@ def show_grid(house, result, battery):
 
     plt.show()
 
-def load_results_runs(filename):
-    """
-    Inputs a csv data into panda
-    """
-    # Load the necessary columns from the csv into panda
-    data = pd.read_csv(filename)
-
-    # Cleans the data
-    data = data[['Run', 'Total Distance']]
-    data['Run'] = pd.to_numeric(data['Run'])
-    data['Total Distance'] = pd.to_numeric(data['Total Distance'])
-
-    return data
-
 def load_results_bounds(filename):
     """
     Inputs a csv data into panda
+    Inputs a csv data into panda. Used for the visualisation of the scatterplot
+    in the presentation.
     """
     # Load the necessary columns from the csv into panda
     data = pd.read_csv(filename)
@@ -120,12 +108,12 @@ def load_results_bounds(filename):
 
 def plot_scatter(data):
     """
-    Plots a scatterplot of the inserted data
+    Plots a scatterplot of the inserted data. Used for the visualisation of the scatterplot
+    in the presentation.
     """
     minimum = data[data.columns[0]]
     distance = data[data.columns[1]]
 
-    # print(minimum)
     # Forms the scatterplot
     plt.scatter(minimum, distance)
 
@@ -139,9 +127,31 @@ def plot_scatter(data):
     # Actually shows the scatterplot
     plt.show()
 
-    # To use in main
-    bounds = vis.load_results_bounds('bounds_test.csv')
-    vis.plot_scatter(bounds)
+def plot_comparison_GHR(data, data1):
+    # Loads the different datasets
+    runs = data[data.columns[0]]
+    distance = data[data.columns[1]]
+
+    runs1 = data1[data1.columns[0]]
+    distance1 = data1[data1.columns[1]]
+
+     # Forms the histogram
+    plt.plot(runs, distance, label="Random")
+    plt.plot(runs1, distance1, color = 'orange', label="Greedy-Hillclimber")
+
+def load_results_runs(filename):
+    """
+    Inputs a csv data from the iterations or runs into panda
+    """
+    # Load the necessary columns from the csv into panda
+    data = pd.read_csv(filename)
+
+    # Cleans the data
+    data = data[['Run', 'Total Distance']]
+    data['Run'] = pd.to_numeric(data['Run'])
+    data['Total Distance'] = pd.to_numeric(data['Total Distance'])
+
+    return data    
 
 def plot_line(data, algorithm):
     """
@@ -165,9 +175,6 @@ def plot_line(data, algorithm):
     # Shows Grid
     plt.grid(True)
 
-    # plt.hlines(y=(min(distance)), xmin=0, xmax=(max(runs)), color='r')
-
-    # TO DO: Show Tick as minimum
     # Actually shows the histogram
     plt.show()
 
@@ -202,24 +209,11 @@ def plot_comparison(data, data1, data2, algorithm):
     # Actually shows the histogram
     plt.show()
 
-def plot_comparison_GHR(data, data1):
-    # Loads the different datasets
-    runs = data[data.columns[0]]
-    distance = data[data.columns[1]]
-
-    runs1 = data1[data1.columns[0]]
-    distance1 = data1[data1.columns[1]]
-
-     # Forms the histogram
-    plt.plot(runs, distance, label="Random")
-    plt.plot(runs1, distance1, color = 'orange', label="Greedy-Hillclimber")
-
-
 def dict_to_csv(total_distance, algorithm, neighbourhood):
     """
     Appends result to an csv file
     """
-    with open('results_'+ algorithm + neighbourhood +'_distance.csv', 'w', newline='') as infile:
+    with open('results_' + algorithm + neighbourhood + '_distance.csv', 'w', newline='') as infile:
         fields = ['Run', 'Total Distance']
         writer = csv.DictWriter(infile, fieldnames=fields)
         writer.writeheader()
@@ -229,12 +223,3 @@ def dict_to_csv(total_distance, algorithm, neighbourhood):
         for key, value in input.items():
             writer.writerow([key, value])
 
-# if __name__ == '__main__':
-#     data = load_results_runs('results_random_distance.csv')
-#     runs = data['Run']
-#     total_distance = data['Total Distance']
-#     plot_line(runs, total_distance)
-#     # house = load_houses('data/wijk1_huizen.csv')
-#     # result = load_results('results/Fixed_batteries/random_grid1.csv')
-#     # battery = cor_bat('data/wijk1_batterijen.txt')
-#     # show_grid(house, result, battery)

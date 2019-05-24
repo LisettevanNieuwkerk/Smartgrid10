@@ -10,7 +10,7 @@ Deze codebase is volledig geschreven in Python3.6.3. In requirements.txt staan a
 pip install -r requirements.txt
 
 ----------------------------------------------------------------------------------
-Structuur (Structure)
+<b>Structuur (Structure)</b>
 
 De meeste Python scripts staan in de folder Code. In de map Data zitten alle input waardes en in de map resultaten worden alle resultaten opgeslagen door de code.
 

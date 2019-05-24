@@ -161,7 +161,7 @@ def plot_line(data, data1, data2):
     plt.ylabel('Total Distance')
     plt.xlim(0, len(runs))
     plt.ylim((min(distance) - 10), max(distance))
-    
+
     # Shows Grid
     plt.grid(True)
 

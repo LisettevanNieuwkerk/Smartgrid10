@@ -1,12 +1,8 @@
-<<<<<<< HEAD
-'''A Greedy algorithm is performed, followed by a algorithm that adds the last missing houses to connections.
-At last a hillclimber will be performed to improve the result'''
-=======
+
 """
-A Greedy algorithm is performed, followed by a algorithm that adds the last missing houses to connections. 
+A Greedy algorithm is performed, followed by a algorithm that adds the last missing houses to connections.
 At last a hillclimber will be performed to improve the result
 """
->>>>>>> 305525663ff36e919524120db4823e2d4ff2556f
 
 import visualiser as vis
 
@@ -234,17 +230,11 @@ def hillclimber(self, results):
                                     break
                         last_connection2 -= 1
                     if switched == True:
-<<<<<<< HEAD
                         break
                 possible_battery += 1
             last_connection1 -= 1
         # vis.dict_to_csv(distances_total)
         print(total_distance)
-=======
-                        break                    
-                possible_battery += 1        
-            last_connection1 -= 1    
         # Saves the dict to a csv
         vis.dict_to_csv(distances_total)
->>>>>>> 305525663ff36e919524120db4823e2d4ff2556f
     return [total_distance, connections]

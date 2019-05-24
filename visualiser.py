@@ -106,7 +106,8 @@ def load_results_runs(filename):
 
 def load_results_bounds(filename):
     """
-    Inputs a csv data into panda
+    Inputs a csv data into panda. Used for the visualisation of the scatterplot
+    in the presentation.
     """
     # Load the necessary columns from the csv into panda
     data = pd.read_csv(filename)
@@ -120,7 +121,8 @@ def load_results_bounds(filename):
 
 def plot_scatter(data):
     """
-    Plots a scatterplot of the inserted data
+    Plots a scatterplot of the inserted data. Used for the visualisation of the scatterplot
+    in the presentation.
     """
     minimum = data[data.columns[0]]
     distance = data[data.columns[1]]
@@ -138,10 +140,6 @@ def plot_scatter(data):
 
     # Actually shows the scatterplot
     plt.show()
-
-    # To use in main
-    bounds = vis.load_results_bounds('bounds_test.csv')
-    vis.plot_scatter(bounds)
 
 def plot_line(data, algorithm):
     """
